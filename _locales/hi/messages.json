@@ -1,0 +1,22 @@
+{
+  "hi": {
+    "message": "नमस्ते",
+    "description": "user greeting"
+  },
+  "NotLoggedTitle": {
+    "message": "एक खाता बनाएं और पता करना शुरू करें कि आप किससे सहमत हैं।",
+    "description": "title when not logged in"
+  },
+  "ifAccountText": {
+    "message": "साइन अप करें",
+    "description": "sign up button"
+  },
+  "buttonSingUp": {
+    "message": "साइन अप करें",
+    "description": "sign up button"
+  },
+  "buttonSingIn": {
+    "message": "लॉग इन करें",
+    "description": "sign in button"
+  }
+}

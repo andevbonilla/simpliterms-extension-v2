@@ -1,22 +1,22 @@
 {
   "hi": {
-    "message": "こんにちは",
+    "message": "你好",
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "アカウントを作成して、あなたが同意している内容を見つけ始めましょう。",
+    "message": "创建一个账户，开始了解您同意的内容。",
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "登録する",
+    "message": "注册",
     "description": "sign up button"
   },
   "buttonSingUp": {
-    "message": "登録する",
+    "message": "注册",
     "description": "sign up button"
   },
   "buttonSingIn": {
-    "message": "ログイン",
+    "message": "登录",
     "description": "sign in button"
   }
 }

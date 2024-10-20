@@ -1,0 +1,22 @@
+{
+  "hi": {
+    "message": "Hola",
+    "description": "user greeting"
+  },
+  "NotLoggedTitle": {
+    "message": "Crea una cuenta y empieza a descubrir con qué estás de acuerdo.",
+    "description": "title when not logged in"
+  },
+  "ifAccountText": {
+    "message": "REGÍSTRATE",
+    "description": "sign up button"
+  },
+  "buttonSingUp": {
+    "message": "REGÍSTRATE",
+    "description": "sign up button"
+  },
+  "buttonSingIn": {
+    "message": "Iniciar sesión",
+    "description": "sign in button"
+  }
+}

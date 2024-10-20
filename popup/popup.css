@@ -1,0 +1,190 @@
+/* sign up pages */
+.not-logged{
+    display: none;
+    text-align: center;
+}
+.not-logged h2{
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+}
+.sign{
+    background-color: #5712DF;
+    color: white;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.bottom-text{
+    margin-top: 3rem;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* logged pages */
+.logged{
+    display: none;
+}
+
+.container{
+    margin: 0;
+    height: 100%;
+    width: 20rem;
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+h2{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+.logo{
+    border-radius: 100%;
+    margin-right: 0.5rem;
+}
+
+.simpli-summary{
+    padding: 1rem 0;
+    margin: 0;
+    line-height: 1.5rem;
+    list-style: none;
+}
+
+.simpli-summary h3{
+    font-size: 1rem;
+    margin: 0;
+}
+
+.simpli-summary p{
+    font-size: .8rem;
+}
+
+.semi-important{
+    font-weight: 600;
+}
+.important{
+    font-weight: 900;
+}
+
+.options-menu{
+    display: flex;
+    width: 100%;
+}
+
+.options-menu button{
+    background-color: transparent;
+    border-bottom: #5712DF solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    cursor: pointer;
+    padding: .5rem 0;
+}
+
+.selected{
+    font-weight: bold;
+    color: #5712DF;
+}
+
+.disclaimer{
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.error-message{
+    font-size: 1rem;
+}
+
+.greeting{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    display: none;
+}
+
+.greeting p{
+    margin: 0 !important;
+}
+
+.greeting h1{
+    font-size: 1rem;
+    margin: 0 !important;
+}
+
+.sub-type{
+    color: white;
+    border-radius: .2rem;
+    padding: .3rem .5rem;
+    font-size: .6rem;
+}
+
+.account-link{
+   text-decoration: none;
+}
+
+.loading-container{
+    margin: 4rem .5rem 1rem .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-container h2{
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0 2rem;
+}
+
+.loading-container-policy{
+    margin: 4rem .5rem 1rem .5rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-container-policy h2{
+    text-align: center;
+    margin-top: 2rem;
+    padding: 0 2rem;
+}
+
+
+
+.loading-logo{
+    border-radius: 100%;
+   animation: rotate 1s ease 0s infinite;
+}
+
+#simpli-summary-privacy{
+    display: none;
+}
+
+.static-info{
+    display: none;
+    font-size: 1rem;
+    color: rgba(87, 18, 223, 1);
+}
+
+.bold{
+    font-weight: bold;
+}
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
