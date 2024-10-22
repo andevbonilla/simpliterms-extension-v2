@@ -1,3 +1,16 @@
+// set translations text to the HTML
+// ========================================================================================
+const pMsgHi = document.getElementById("msg-h");
+pMsgHi.textContent = chrome.i18n.getMessage('hi');
+
+const h2MsgNotLogged = document.getElementById("title-notlogged");
+h2MsgNotLogged.textContent = chrome.i18n.getMessage('NotLoggedTitle');
+
+const linkSignup = document.getElementById("link-signup");
+linkSignup.textContent = chrome.i18n.getMessage('buttonSingUp');
+
+// ========================================================================================
+
 // "use strict";
 
 // console.log("Hello, world from popup!")
