@@ -179,9 +179,11 @@ document.addEventListener("DOMContentLoaded", async() => {
             // isn't loading
             loadingContainer.style.display = "none";
             navbarContainer.style.display = "flex";
-            mainContainer.style.display = "block";
+            mainContainer.style.display = "flex";
         }
     };
+
+    setIsLoading(false)
 
 // ========================================================================================
 

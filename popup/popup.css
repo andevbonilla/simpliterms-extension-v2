@@ -34,7 +34,7 @@
 
 /* logged pages */
 .logged{
-    display: none;
+    display: flex;
 }
 
 .container{
@@ -51,7 +51,7 @@ h2{
 }
 
 .navbar{
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: .5rem;
@@ -86,23 +86,40 @@ h2{
 
 .options-menu{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
 
 .options-menu button{
-    background-color: transparent;
-    border-bottom: #5712DF solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+    background-color: #3a118c;
+    color: #ffffff;
     width: 100%;
     cursor: pointer;
-    padding: .5rem 0;
+    padding: .5rem 1.5rem;
+    border-top: black solid .1rem;
+    border-bottom: black solid .1rem;
+    border-right: black solid .5rem;
+    border-left: black solid .5rem;
 }
 
-.selected{
+.options-menu button:first-child{
+    border-right: none;
+}
+.options-menu button:last-child{
+    border-left: none;
+}
+
+.terms-selected{
+    background-color: #5712DF !important;
     font-weight: bold;
-    color: #5712DF;
+    border-left: black solid .1rem !important;
+}
+
+.privacy-selected{
+    background-color: #5712DF !important;
+    font-weight: bold;
+    border-right: black solid .1rem !important;
 }
 
 .disclaimer{
@@ -114,7 +131,6 @@ h2{
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    display: none;
 }
 
 .greeting p{
@@ -161,6 +177,10 @@ h2{
 
 .bold{
     font-weight: bold;
+}
+
+.main-content{
+    display: block;
 }
 
 
