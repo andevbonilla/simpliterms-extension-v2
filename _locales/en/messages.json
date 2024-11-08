@@ -34,5 +34,13 @@
   "loadingPrivacyPoliciesText": {
     "message": "Summarizing privacy policies...",
     "description": "text of the loading screen while generating summaries"
+  },
+  "warningClosePopup": {
+    "message": "Warning: Closing the extension window while it is loading will cause progress to be lost and credits needed to generate the summary will still be charged.",
+    "description": "displays the warning that the summary is lost when you close the window"
+  },
+  "warningInfo": {
+    "message": "Warning: This summary has been generated with Artificial Intelligence and may contain errors or missing information. If you are concerned about a specific issue, we recommend that you review the original policy and consult with an attorney.",
+    "description": "displays a warning that this summary may contain errors."
   }
 }

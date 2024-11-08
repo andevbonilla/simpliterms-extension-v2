@@ -34,5 +34,13 @@
   "loadingPrivacyPoliciesText": {
     "message": "Résumé des politiques de confidentialité...",
     "description": "text of the loading screen while generating summaries"
+  },
+    "warningClosePopup": {
+    "message": "Avertissement : La fermeture de la fenêtre de l'extension pendant le chargement entraînera la perte de la progression, et les crédits nécessaires pour générer le résumé seront tout de même débités.",
+    "description": "affiche l'avertissement que le résumé est perdu lorsque vous fermez la fenêtre"
+  },
+  "warningInfo": {
+    "message": "Avertissement : Ce résumé a été généré par Intelligence Artificielle et peut contenir des erreurs ou des informations manquantes. Si vous êtes concerné par un problème spécifique, nous vous recommandons de consulter la politique originale et de consulter un avocat.",
+    "description": "affiche un avertissement que ce résumé peut contenir des erreurs."
   }
 }

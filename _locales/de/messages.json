@@ -34,5 +34,13 @@
   "loadingPrivacyPoliciesText": {
     "message": "Fasse Datenschutzrichtlinien zusammen...",
     "description": "text of the loading screen while generating summaries"
+  },
+  "warningClosePopup": {
+    "message": "Warnung: Wenn Sie das Erweiterungsfenster während des Ladens schließen, geht der Fortschritt verloren und die zum Generieren der Zusammenfassung benötigten Credits werden dennoch berechnet.",
+    "description": "zeigt die Warnung an, dass die Zusammenfassung verloren geht, wenn Sie das Fenster schließen"
+  },
+  "warningInfo": {
+    "message": "Warnung: Diese Zusammenfassung wurde mit künstlicher Intelligenz erstellt und kann Fehler oder fehlende Informationen enthalten. Wenn Sie sich um ein bestimmtes Problem sorgen, empfehlen wir Ihnen, die Originalrichtlinie zu überprüfen und einen Anwalt zu konsultieren.",
+    "description": "zeigt eine Warnung an, dass diese Zusammenfassung Fehler enthalten kann."
   }
 }

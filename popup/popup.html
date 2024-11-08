@@ -66,22 +66,12 @@
 
               <h2 class="semi-important">You're in: <span class="important" id="default-hostname"></span></h2>
               
+              <!-- select menu -->
               <div class="options-menu">
                 <button id="terms-buttom" class="selected"></button>
                 <button id="privacy-button"></button>
               </div>
-              
-              <!-- Loading page when terms of use -->
-              <div class="loading-container-policy" id="loading-container-terms">
-                    <img class="loading-logo" src="../images/simpliterms-logo.png" alt="Logo de simpliterms" width="30px" height="30px"/>
-                    <h2 id="loading-terms-of-use-text"></h2>
-              </div>
-              <!-- Loading page when privacy terms -->
-              <div class="loading-container-policy" id="loading-container-privacy">
-                    <img class="loading-logo" src="../images/simpliterms-logo.png" alt="Logo de simpliterms" width="30px" height="30px"/>
-                    <h2 id="loading-privacy-policies-text"></h2>
-              </div>  
-      
+                    
               <!-- list of the summary -->
               <ul id="simpli-summary-terms" class="simpli-summary">  
               </ul>
@@ -89,9 +79,9 @@
               <ul id="simpli-summary-privacy" class="simpli-summary"> 
               </ul>
       
-              <p id="disclaimer" class="disclaimer">
-                Warning: Closing the extension window while it is loading will cause progress to be lost and credits needed to generate the summary will still be charged.
-              </p>
+              <!-- warning messages -->
+              <p id="warning-info" class="disclaimer"></p>
+              <p id="warning-close-popup" class="disclaimer"></p>
 
           </div>
           

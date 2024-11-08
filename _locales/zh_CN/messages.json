@@ -34,5 +34,13 @@
   "loadingPrivacyPoliciesText": {
     "message": "正在总结隐私政策...",
     "description": "text of the loading screen while generating summaries"
+  },
+  "warningClosePopup": {
+    "message": "警告：在加载时关闭扩展窗口将导致进度丢失，生成摘要所需的积分仍将被扣除。",
+    "description": "显示在关闭窗口时摘要将丢失的警告"
+  },
+  "warningInfo": {
+    "message": "警告：此摘要由人工智能生成，可能包含错误或缺失的信息。如果您担心特定问题，我们建议您查看原始政策并咨询律师。",
+    "description": "显示此摘要可能包含错误的警告。"
   }
 }
