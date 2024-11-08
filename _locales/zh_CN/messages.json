@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "创建一个账户，开始了解您同意的内容。",
+    "message": "创建一个账户，开始了解您正在接受的内容。",
     "description": "title when not logged in"
   },
   "ifAccountText": {

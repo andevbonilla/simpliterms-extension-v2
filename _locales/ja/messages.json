@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "アカウントを作成して、同意内容を確認し始めましょう。",
+    "message": "アカウントを作成して、何を受け入れているか確認し始めましょう。",
     "description": "title when not logged in"
   },
   "ifAccountText": {

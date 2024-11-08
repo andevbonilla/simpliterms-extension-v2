@@ -4,12 +4,12 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Create an account and start finding out what you are agreeing to.",
+    "message": "Create an account and start finding out what you are accepting.",
     "description": "title when not logged in"
   },
   "ifAccountText": {
     "message": "Already have an account?",
-    "description": "in case the user already have an account"
+    "description": "in case the user already has an account"
   },
   "buttonSingUp": {
     "message": "SIGN UP",

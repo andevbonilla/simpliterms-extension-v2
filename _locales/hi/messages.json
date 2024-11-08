@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "एक खाता बनाएं और पता लगाना शुरू करें कि आप किससे सहमत हैं।",
+    "message": "एक खाता बनाएं और जानना शुरू करें कि आप क्या स्वीकार कर रहे हैं।",
     "description": "title when not logged in"
   },
   "ifAccountText": {

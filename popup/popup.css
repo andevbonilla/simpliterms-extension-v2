@@ -17,9 +17,19 @@
     font-weight: bold;
     font-size: 1rem;
 }
+.sign:hover{
+    background-color: #4f11ca;
+    transition: all;
+    transition-duration: 200ms;
+}
 .bottom-text{
-    margin-top: 3rem;
+    font-size: .8rem;
+    margin: 3rem 0 .5rem 0;
     color: rgba(0, 0, 0, 0.7);
+}
+.signin{
+    font-size: .8rem;
+    color: #5712DF;
 }
 
 /* logged pages */
@@ -30,8 +40,8 @@
 .container{
     margin: 0;
     height: 100%;
-    width: 20rem;
-    padding: 5%;
+    width: 25rem;
+    padding: 5% 10%;
     box-sizing: border-box;
 }
 

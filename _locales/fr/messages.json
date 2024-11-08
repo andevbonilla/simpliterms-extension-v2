@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Créez un compte et commencez à découvrir ce à quoi vous consentez.",
+    "message": "Créez un compte et commencez à découvrir ce que vous acceptez.",
     "description": "title when not logged in"
   },
   "ifAccountText": {

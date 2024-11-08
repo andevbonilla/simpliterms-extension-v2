@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Создайте аккаунт и начните узнавать, с чем вы соглашаетесь.",
+    "message": "Создайте аккаунт и начните узнавать, что вы принимаете.",
     "description": "title when not logged in"
   },
   "ifAccountText": {

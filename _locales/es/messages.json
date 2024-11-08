@@ -4,10 +4,10 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Crea una cuenta y comienza a descubrir en qué estás de acuerdo.",
+    "message": "Crea una cuenta y comienza a descubrir qué estás aceptando.",
     "description": "title when not logged in"
   },
-    "ifAccountText": {
+  "ifAccountText": {
     "message": "¿Ya tienes una cuenta?",
     "description": "en caso de que el usuario ya tenga una cuenta"
   },
