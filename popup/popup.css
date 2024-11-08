@@ -1,6 +1,6 @@
 /* sign up pages */
 .not-logged{
-    display: flex;
+    display: none;
     flex-direction: column;
     text-align: center;
 }
@@ -51,7 +51,7 @@ h2{
 }
 
 .navbar{
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     margin-bottom: .5rem;
@@ -142,8 +142,8 @@ h2{
 }
 
 .loading-container{
-    margin: 4rem .5rem 1rem .5rem;
-    display: none;
+    margin: 4rem .5rem 4rem .5rem;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -166,14 +166,12 @@ h2{
 .loading-container-policy h2{
     text-align: center;
     margin-top: 2rem;
-    padding: 0 2rem;
+    padding: 0;
 }
-
-
 
 .loading-logo{
     border-radius: 100%;
-   animation: rotate 1s ease 0s infinite;
+    animation: rotate 1s ease 0s infinite;
 }
 
 #simpli-summary-privacy{

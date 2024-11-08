@@ -13,6 +13,19 @@
 
     <div class="container">
 
+      <!-- loading page -->
+      <div class="loading-container" id="loading-container">
+          <img 
+              class="loading-logo" 
+              src="../images/simpliterms-logo.png" 
+              alt="Logo de simpliterms" 
+              width="45px" 
+              height="45px"
+          />
+          <h2 id="loading-text"></h2>
+      </div>
+
+
       <!-- Navbar Part -->
       <nav class="navbar">
         <div class="navbar">
@@ -44,12 +57,6 @@
           <a id="link-signup" class="sign" href="http://localhost:3000/auth/register" target="_blank"></a>
           <p id="msg-notaccount" class="bottom-text"></p>
           <a id="link-signin" class="signin" href="http://localhost:3000/auth/login" target="_blank"></a>
-        </div>
-
-        <!-- loading page -->
-        <div class="loading-container" id="loading-container">
-            <img class="loading-logo" src="../images/simpliterms-logo.png" alt="Logo de simpliterms" width="30px" height="30px"/>
-            <h2 id="loading-text">Please wait while the summary is generated.</h2>
         </div>
 
         <!-- content page -->
