@@ -27,15 +27,7 @@
     "message": "गोपनीयता",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "नियमों और शर्तों का सारांश बना रहे हैं...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "गोपनीयता नीतियों का सारांश बना रहे हैं...",
-    "description": "text of the loading screen while generating summaries"
-  },
-    "warningClosePopup": {
+  "warningClosePopup": {
     "message": "चेतावनी: लोड होने के दौरान एक्सटेंशन विंडो को बंद करने से प्रगति खो जाएगी और सारांश उत्पन्न करने के लिए आवश्यक क्रेडिट अभी भी काटे जाएंगे।",
     "description": "जब आप विंडो बंद करते हैं तो सारांश खो जाने की चेतावनी प्रदर्शित करता है"
   },

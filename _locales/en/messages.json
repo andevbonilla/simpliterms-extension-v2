@@ -27,14 +27,6 @@
     "message": "Privacy",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "Summarizing terms of use...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "Summarizing privacy policies...",
-    "description": "text of the loading screen while generating summaries"
-  },
   "warningClosePopup": {
     "message": "Warning: Closing the extension window while it is loading will cause progress to be lost and credits needed to generate the summary will still be charged.",
     "description": "displays the warning that the summary is lost when you close the window"

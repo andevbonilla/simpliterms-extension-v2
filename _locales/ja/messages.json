@@ -27,14 +27,6 @@
     "message": "プライバシー",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "利用規約を要約中...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "プライバシーポリシーを要約中...",
-    "description": "text of the loading screen while generating summaries"
-  },
   "warningClosePopup": {
     "message": "警告：読み込み中に拡張ウィンドウを閉じると進行状況が失われ、要約を生成するために必要なクレジットは引き続き請求されます。",
     "description": "ウィンドウを閉じると要約が失われるという警告を表示します"

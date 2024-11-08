@@ -27,14 +27,6 @@
     "message": "隐私",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "正在总结使用条款...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "正在总结隐私政策...",
-    "description": "text of the loading screen while generating summaries"
-  },
   "warningClosePopup": {
     "message": "警告：在加载时关闭扩展窗口将导致进度丢失，生成摘要所需的积分仍将被扣除。",
     "description": "显示在关闭窗口时摘要将丢失的警告"

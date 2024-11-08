@@ -27,14 +27,6 @@
     "message": "Datenschutz",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "Fasse Nutzungsbedingungen zusammen...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "Fasse Datenschutzrichtlinien zusammen...",
-    "description": "text of the loading screen while generating summaries"
-  },
   "warningClosePopup": {
     "message": "Warnung: Wenn Sie das Erweiterungsfenster während des Ladens schließen, geht der Fortschritt verloren und die zum Generieren der Zusammenfassung benötigten Credits werden dennoch berechnet.",
     "description": "zeigt die Warnung an, dass die Zusammenfassung verloren geht, wenn Sie das Fenster schließen"

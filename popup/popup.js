@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // set translations text to the HTML
     // ========================================================================================
-
     const pMsgHi = document.getElementById("msg-hi");
     pMsgHi.textContent = chrome.i18n.getMessage('hi');
 
@@ -18,17 +17,17 @@ document.addEventListener("DOMContentLoaded", async() => {
     const linkSignIn = document.getElementById("link-signin");
     linkSignIn.textContent = chrome.i18n.getMessage('buttonSingIn');
 
-    const pLoadingTermsOfUSE = document.getElementById("loading-terms-of-use-text");
-    pLoadingTermsOfUSE.textContent = chrome.i18n.getMessage('loadingTermsOfUseText');
-
-    const pLoadingPrivacyPolicies = document.getElementById("loading-privacy-policies-text");
-    pLoadingPrivacyPolicies.textContent = chrome.i18n.getMessage('loadingPrivacyPoliciesText');
-
     const selectTermsButton = document.getElementById("terms-buttom");
     selectTermsButton.textContent = chrome.i18n.getMessage('buttonTerms');
 
     const selectPrivacyButton = document.getElementById("privacy-button");
     selectPrivacyButton.textContent = chrome.i18n.getMessage('buttonPrivacy');
+
+    const warningClosePopup = document.getElementById("warning-close-popup");
+    warningClosePopup.textContent = chrome.i18n.getMessage('warningClosePopup');
+    
+    const warningInfo = document.getElementById("warning-info");
+    warningInfo.textContent = chrome.i18n.getMessage('warningInfo');
 
     // randomly display curious data 
     let idiom = chrome.i18n.getMessage('@@ui_locale').split("_")[0]

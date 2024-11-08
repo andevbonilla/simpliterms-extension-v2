@@ -27,15 +27,7 @@
     "message": "Privacidad",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "Resumiendo los términos de uso...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "Resumiendo las políticas de privacidad...",
-    "description": "text of the loading screen while generating summaries"
-  },
-    "warningClosePopup": {
+  "warningClosePopup": {
     "message": "Advertencia: Cerrar la ventana de la extensión mientras se está cargando provocará la pérdida del progreso y los créditos necesarios para generar el resumen aún serán cobrados.",
     "description": "muestra la advertencia de que el resumen se pierde cuando cierras la ventana"
   },

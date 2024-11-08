@@ -27,14 +27,6 @@
     "message": "Конфиденциальность",
     "description": "Select the summary of privacy policies"
   },
-  "loadingTermsOfUseText": {
-    "message": "Суммирование условий использования...",
-    "description": "text of the loading screen while generating summaries"
-  },
-  "loadingPrivacyPoliciesText": {
-    "message": "Суммирование политик конфиденциальности...",
-    "description": "text of the loading screen while generating summaries"
-  },
   "warningClosePopup": {
     "message": "Предупреждение: Закрытие окна расширения во время загрузки приведет к потере прогресса, и кредиты, необходимые для создания резюме, все равно будут списаны.",
     "description": "отображает предупреждение, что резюме будет потеряно при закрытии окна"
