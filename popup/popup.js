@@ -161,6 +161,29 @@ document.addEventListener("DOMContentLoaded", async() => {
     const loadingText = document.getElementById("loading-text");
     loadingText.textContent = curiosidades[Math.floor(Math.random() * curiosidades.length)];
 
+    // call othe DOM elements
+    // ========================================================================================
+    const loadingContainer = document.getElementById("loading-container");
+    const navbarContainer = document.getElementById("navbar");
+    const mainContainer = document.getElementById("main-content");
+
+    // set UI functions
+    // ========================================================================================
+
+    const setIsLoading = (loading) => {
+        if (!!loading) {
+            // is loading
+            loadingContainer.style.display = "flex";
+            navbarContainer.style.display = "none";
+            mainContainer.style.display = "none";
+        }else{
+            // isn't loading
+            loadingContainer.style.display = "none";
+            navbarContainer.style.display = "flex";
+            mainContainer.style.display = "block";
+        }
+    };
+
 // ========================================================================================
 
 // "use strict";
