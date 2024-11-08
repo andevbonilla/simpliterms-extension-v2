@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Crea una cuenta y empieza a descubrir con qué estás de acuerdo.",
+    "message": "Crea una cuenta y comienza a descubrir en qué estás de acuerdo.",
     "description": "title when not logged in"
   },
   "ifAccountText": {
@@ -18,5 +18,21 @@
   "buttonSingIn": {
     "message": "Iniciar sesión",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "Términos",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "Privacidad",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "Resumiendo los términos de uso...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "Resumiendo las políticas de privacidad...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

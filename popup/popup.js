@@ -1,5 +1,6 @@
 // set translations text to the HTML
 // ========================================================================================
+
 const pMsgHi = document.getElementById("msg-h");
 pMsgHi.textContent = chrome.i18n.getMessage('hi');
 
@@ -8,6 +9,24 @@ h2MsgNotLogged.textContent = chrome.i18n.getMessage('NotLoggedTitle');
 
 const linkSignup = document.getElementById("link-signup");
 linkSignup.textContent = chrome.i18n.getMessage('buttonSingUp');
+
+const pNotAccount = document.getElementById("msg-notaccount");
+pNotAccount.textContent = chrome.i18n.getMessage('ifAccountText');
+
+const linkSignIn = document.getElementById("link-signin");
+linkSignIn.textContent = chrome.i18n.getMessage('buttonSingIn');
+
+const pLoadingTermsOfUSE = document.getElementById("loading-terms-of-use-text");
+pLoadingTermsOfUSE.textContent = chrome.i18n.getMessage('loadingTermsOfUseText');
+
+const pLoadingPrivacyPolicies = document.getElementById("loading-privacy-policies-text");
+pLoadingPrivacyPolicies.textContent = chrome.i18n.getMessage('loadingPrivacyPoliciesText');
+
+const selectTermsButton = document.getElementById("terms-buttom");
+selectTermsButton.textContent = chrome.i18n.getMessage('buttonTerms');
+
+const selectPrivacyButton = document.getElementById("privacy-button");
+selectPrivacyButton.textContent = chrome.i18n.getMessage('buttonPrivacy');
 
 // ========================================================================================
 

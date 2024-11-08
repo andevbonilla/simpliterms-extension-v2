@@ -4,19 +4,35 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "アカウントを作成して、あなたが同意している内容を見つけ始めましょう。",
+    "message": "アカウントを作成して、同意内容を確認し始めましょう。",
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "登録する",
+    "message": "サインアップ",
     "description": "sign up button"
   },
   "buttonSingUp": {
-    "message": "登録する",
+    "message": "サインアップ",
     "description": "sign up button"
   },
   "buttonSingIn": {
     "message": "ログイン",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "利用規約",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "プライバシー",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "利用規約を要約中...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "プライバシーポリシーを要約中...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

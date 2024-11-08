@@ -18,5 +18,21 @@
   "buttonSingIn": {
     "message": "登录",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "条款",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "隐私",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "正在总结使用条款...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "正在总结隐私政策...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

@@ -1,6 +1,6 @@
 {
   "hi": {
-    "message": "Salut",
+    "message": "Bonjour",
     "description": "user greeting"
   },
   "NotLoggedTitle": {
@@ -8,15 +8,31 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "S'INSCRIRE",
+    "message": "INSCRIPTION",
     "description": "sign up button"
   },
   "buttonSingUp": {
-    "message": "S'INSCRIRE",
+    "message": "INSCRIPTION",
     "description": "sign up button"
   },
   "buttonSingIn": {
     "message": "Se connecter",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "Conditions",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "Confidentialité",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "Résumé des conditions d'utilisation...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "Résumé des politiques de confidentialité...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

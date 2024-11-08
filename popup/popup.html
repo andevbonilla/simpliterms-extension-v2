@@ -41,8 +41,8 @@
         <!-- login page -->
         <div class="not-logged" id="not-logged">
           <h2 id="title-notlogged"></h2> 
-          <a id="link-signup" class="sign" href="http://localhost:3000/auth/register" target="_blank">__MSG_buttonSingUp__</a>
-          <p class="bottom-text">__MSG_ifAccountText__ <a href="http://localhost:3000/auth/login" target="_blank">__MSG_buttonSingIn__</a></p>
+          <a id="link-signup" class="sign" href="http://localhost:3000/auth/register" target="_blank"></a>
+          <p id="msg-notaccount" class="bottom-text"><a id="link-signin" href="http://localhost:3000/auth/login" target="_blank"></a></p>
         </div>
 
         <!-- loading page -->
@@ -59,19 +59,19 @@
               <h2 class="semi-important">You're in: <span class="important" id="default-hostname"></span></h2>
               
               <div class="options-menu">
-                <button id="terms-buttom" class="selected">Terms</button>
-                <button id="privacy-button">Privacy</button>
+                <button id="terms-buttom" class="selected"></button>
+                <button id="privacy-button"></button>
               </div>
-
-              <p class="static-info" id="static-info">This static summary was generated on: <span class="bold" id="static-summary-date"></span> by user: <span class="bold" id="static-summary-username"></span> </p>
               
+              <!-- Loading page when terms of use -->
               <div class="loading-container-policy" id="loading-container-terms">
                     <img class="loading-logo" src="../images/simpliterms-logo.png" alt="Logo de simpliterms" width="30px" height="30px"/>
-                    <h2>Please wait while the Terms of Use summary is generated.</h2>
+                    <h2 id="loading-terms-of-use-text"></h2>
               </div>
+              <!-- Loading page when privacy terms -->
               <div class="loading-container-policy" id="loading-container-privacy">
                     <img class="loading-logo" src="../images/simpliterms-logo.png" alt="Logo de simpliterms" width="30px" height="30px"/>
-                    <h2>Please wait while the Privacy Policies summary is generated.</h2>
+                    <h2 id="loading-privacy-policies-text"></h2>
               </div>  
       
               <!-- list of the summary -->

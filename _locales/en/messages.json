@@ -18,5 +18,21 @@
   "buttonSingIn": {
     "message": "Log in",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "Terms",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "Privacy",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "Summarizing terms of use...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "Summarizing privacy policies...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

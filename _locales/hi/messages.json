@@ -4,7 +4,7 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "एक खाता बनाएं और पता करना शुरू करें कि आप किससे सहमत हैं।",
+    "message": "एक खाता बनाएं और पता लगाना शुरू करें कि आप किससे सहमत हैं।",
     "description": "title when not logged in"
   },
   "ifAccountText": {
@@ -18,5 +18,21 @@
   "buttonSingIn": {
     "message": "लॉग इन करें",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "नियम और शर्तें",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "गोपनीयता",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "नियमों और शर्तों का सारांश बना रहे हैं...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "गोपनीयता नीतियों का सारांश बना रहे हैं...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

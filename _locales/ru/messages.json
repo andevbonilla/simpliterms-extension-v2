@@ -18,5 +18,21 @@
   "buttonSingIn": {
     "message": "Войти",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "Условия",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "Конфиденциальность",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "Суммирование условий использования...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "Суммирование политик конфиденциальности...",
+    "description": "text of the loading screen while generating summaries"
   }
 }

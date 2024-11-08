@@ -4,19 +4,35 @@
     "description": "user greeting"
   },
   "NotLoggedTitle": {
-    "message": "Erstellen Sie ein Konto und finden Sie heraus, womit Sie einverstanden sind.",
+    "message": "Erstellen Sie ein Konto und beginnen Sie herauszufinden, worauf Sie sich einlassen.",
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "ANMELDEN",
+    "message": "REGISTRIEREN",
     "description": "sign up button"
   },
   "buttonSingUp": {
-    "message": "ANMELDEN",
+    "message": "REGISTRIEREN",
     "description": "sign up button"
   },
   "buttonSingIn": {
-    "message": "Einloggen",
+    "message": "Anmelden",
     "description": "sign in button"
+  },
+  "buttonTerms": {
+    "message": "Nutzungsbedingungen",
+    "description": "Select the summary of terms"
+  },
+  "buttonPrivacy": {
+    "message": "Datenschutz",
+    "description": "Select the summary of privacy policies"
+  },
+  "loadingTermsOfUseText": {
+    "message": "Fasse Nutzungsbedingungen zusammen...",
+    "description": "text of the loading screen while generating summaries"
+  },
+  "loadingPrivacyPoliciesText": {
+    "message": "Fasse Datenschutzrichtlinien zusammen...",
+    "description": "text of the loading screen while generating summaries"
   }
 }
