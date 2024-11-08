@@ -109,10 +109,6 @@ h2{
     color: rgba(0, 0, 0, 0.4);
 }
 
-.error-message{
-    font-size: 1rem;
-}
-
 .greeting{
     display: flex;
     flex-direction: column;
@@ -152,21 +148,6 @@ h2{
 .loading-container h2{
     text-align: center;
     margin-top: 2rem;
-    padding: 0 2rem;
-}
-
-.loading-container-policy{
-    margin: 4rem .5rem 1rem .5rem;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.loading-container-policy h2{
-    text-align: center;
-    margin-top: 2rem;
-    padding: 0;
 }
 
 .loading-logo{
@@ -176,12 +157,6 @@ h2{
 
 #simpli-summary-privacy{
     display: none;
-}
-
-.static-info{
-    display: none;
-    font-size: 1rem;
-    color: rgba(87, 18, 223, 1);
 }
 
 .bold{
