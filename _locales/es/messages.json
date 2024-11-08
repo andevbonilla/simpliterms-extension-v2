@@ -7,9 +7,9 @@
     "message": "Crea una cuenta y comienza a descubrir en qué estás de acuerdo.",
     "description": "title when not logged in"
   },
-  "ifAccountText": {
-    "message": "REGÍSTRATE",
-    "description": "sign up button"
+    "ifAccountText": {
+    "message": "¿Ya tienes una cuenta?",
+    "description": "en caso de que el usuario ya tenga una cuenta"
   },
   "buttonSingUp": {
     "message": "REGÍSTRATE",

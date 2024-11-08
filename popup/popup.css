@@ -1,6 +1,7 @@
 /* sign up pages */
 .not-logged{
     display: flex;
+    flex-direction: column;
     text-align: center;
 }
 .not-logged h2{

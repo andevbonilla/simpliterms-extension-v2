@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
-
     // set translations text to the HTML
     // ========================================================================================
 

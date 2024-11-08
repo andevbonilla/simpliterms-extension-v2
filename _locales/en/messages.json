@@ -8,8 +8,8 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "SIGN UP",
-    "description": "sign up button"
+    "message": "Already have an account?",
+    "description": "in case the user already have an account"
   },
   "buttonSingUp": {
     "message": "SIGN UP",

@@ -8,8 +8,8 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "ЗАРЕГИСТРИРОВАТЬСЯ",
-    "description": "sign up button"
+    "message": "Уже есть аккаунт?",
+    "description": "в случае, если у пользователя уже есть аккаунт"
   },
   "buttonSingUp": {
     "message": "ЗАРЕГИСТРИРОВАТЬСЯ",

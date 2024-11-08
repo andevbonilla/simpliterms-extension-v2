@@ -8,8 +8,8 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "साइन अप करें",
-    "description": "sign up button"
+    "message": "क्या आपके पास पहले से ही एक खाता है?",
+    "description": "यदि उपयोगकर्ता के पास पहले से एक खाता है"
   },
   "buttonSingUp": {
     "message": "साइन अप करें",

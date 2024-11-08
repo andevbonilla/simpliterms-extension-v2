@@ -8,8 +8,8 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "注册",
-    "description": "sign up button"
+    "message": "已经有账户了？",
+    "description": "如果用户已经有一个账户"
   },
   "buttonSingUp": {
     "message": "注册",

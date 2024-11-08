@@ -8,8 +8,8 @@
     "description": "title when not logged in"
   },
   "ifAccountText": {
-    "message": "REGISTRIEREN",
-    "description": "sign up button"
+    "message": "Haben Sie bereits ein Konto?",
+    "description": "falls der Benutzer bereits ein Konto hat"
   },
   "buttonSingUp": {
     "message": "REGISTRIEREN",
