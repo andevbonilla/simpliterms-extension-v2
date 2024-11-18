@@ -166,7 +166,29 @@ document.addEventListener("DOMContentLoaded", async() => {
     const navbarContainer = document.getElementById("navbar");
     const mainContainer = document.getElementById("main-content");
 
-    // set UI functions
+    const termsUL = document.getElementById("simpli-summary-terms");
+    const privacyUL = document.getElementById("simpli-summary-privacy");
+
+
+    // UX functions
+    // ========================================================================================
+
+    const changeTypeOfSummary = (type) => {
+        // 0 -> terms
+        // 1 -> privacy
+        if (type === 1) {
+            termsUL.style.display = "flex";
+            privacyUL.style.display = "none";
+        }else if(type === 2){
+            termsUL.style.display = "none";
+            privacyUL.style.display = "flex";
+        }else{
+            return;
+        };
+
+    };
+
+    // set programming UI functions
     // ========================================================================================
 
     const setIsLoading = (loading) => {
@@ -184,6 +206,9 @@ document.addEventListener("DOMContentLoaded", async() => {
     };
 
     setIsLoading(false)
+
+
+
 
 // ========================================================================================
 
