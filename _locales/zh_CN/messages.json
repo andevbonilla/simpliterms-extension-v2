@@ -34,5 +34,21 @@
   "warningInfo": {
     "message": "警告：此摘要由人工智能生成，可能包含错误或缺失的信息。如果您担心特定问题，我们建议您查看原始政策并咨询律师。",
     "description": "显示此摘要可能包含错误的警告。"
+  },
+  "labelCurrentPage": {
+    "message": "当前页面：",
+    "description": "指示用户当前所在的页面"
+  },
+  "labelTermsPage": {
+    "message": "条款来源页面：",
+    "description": "指示获取使用条款的页面"
+  },
+  "labelPrivacyPage": {
+    "message": "政策来源页面：",
+    "description": "指示获取隐私政策的页面"
+  },
+  "labelAboutSimpli": {
+    "message": "关于SimpliTerms：",
+    "description": "提供SimpliTerms的简要概述"
   }
 }

@@ -34,5 +34,21 @@
   "warningInfo": {
     "message": "Warning: This summary has been generated with Artificial Intelligence and may contain errors or missing information. If you are concerned about a specific issue, we recommend that you review the original policy and consult with an attorney.",
     "description": "displays a warning that this summary may contain errors."
+  },
+  "labelCurrentPage": {
+    "message": "Current page:",
+    "description": "Indicates the page the user is currently on"
+  },
+  "labelTermsPage": {
+    "message": "The terms were retrieved from this page:",
+    "description": "Indicates the page where the Terms of Use were obtained"
+  },
+  "labelPrivacyPage": {
+    "message": "The policies were retrieved from this page:",
+    "description": "Indicates the page where the Privacy Policy was obtained"
+  },
+  "labelAboutSimpli": {
+    "message": "About SimpliTerms:",
+    "description": "Provides a brief overview of SimpliTerms"
   }
 }

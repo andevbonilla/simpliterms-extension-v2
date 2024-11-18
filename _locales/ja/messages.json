@@ -34,5 +34,21 @@
   "warningInfo": {
     "message": "警告：この要約は人工知能によって生成されており、誤りや不足している情報が含まれる可能性があります。特定の問題について懸念がある場合は、元のポリシーを確認し、弁護士に相談することをお勧めします。",
     "description": "この要約に誤りが含まれる可能性があるという警告を表示します。"
+  },
+  "labelCurrentPage": {
+    "message": "現在のページ:",
+    "description": "ユーザーが現在いるページを示します"
+  },
+  "labelTermsPage": {
+    "message": "利用規約はこのページから取得されました:",
+    "description": "利用規約が取得されたページを示します"
+  },
+  "labelPrivacyPage": {
+    "message": "ポリシーはこのページから取得されました:",
+    "description": "プライバシーポリシーが取得されたページを示します"
+  },
+  "labelAboutSimpli": {
+    "message": "SimpliTermsについて:",
+    "description": "SimpliTermsの概要を簡潔に説明します"
   }
 }

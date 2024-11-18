@@ -34,5 +34,21 @@
   "warningInfo": {
     "message": "Warnung: Diese Zusammenfassung wurde mit künstlicher Intelligenz erstellt und kann Fehler oder fehlende Informationen enthalten. Wenn Sie sich um ein bestimmtes Problem sorgen, empfehlen wir Ihnen, die Originalrichtlinie zu überprüfen und einen Anwalt zu konsultieren.",
     "description": "zeigt eine Warnung an, dass diese Zusammenfassung Fehler enthalten kann."
+  },
+  "labelCurrentPage": {
+    "message": "Aktuelle Seite:",
+    "description": "Zeigt die Seite an, auf der sich der Benutzer gerade befindet"
+  },
+  "labelTermsPage": {
+    "message": "Die Bedingungen wurden von dieser Seite übernommen:",
+    "description": "Zeigt die Seite, von der die Nutzungsbedingungen stammen"
+  },
+  "labelPrivacyPage": {
+    "message": "Die Richtlinien wurden von dieser Seite übernommen:",
+    "description": "Zeigt die Seite, von der die Datenschutzrichtlinien stammen"
+  },
+  "labelAboutSimpli": {
+    "message": "Über SimpliTerms:",
+    "description": "Bietet eine kurze Übersicht über SimpliTerms"
   }
 }

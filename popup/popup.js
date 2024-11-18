@@ -29,6 +29,20 @@ document.addEventListener("DOMContentLoaded", async() => {
     const warningInfo = document.getElementById("warning-info");
     warningInfo.textContent = chrome.i18n.getMessage('warningInfo');
 
+    const labelCurrentPage = document.getElementById("current-page-label");
+    labelCurrentPage.textContent = chrome.i18n.getMessage('labelCurrentPage');
+
+    const labelPrivacyPage = document.getElementById("privacy-page-label");
+    labelPrivacyPage.textContent = chrome.i18n.getMessage('labelPrivacyPage');
+
+    const labelTermsPage = document.getElementById("terms-page-label");
+    labelTermsPage.textContent = chrome.i18n.getMessage('labelTermsPage');
+
+    const labelAboutSimpli = document.getElementById("about-simpli-label");
+    labelAboutSimpli.textContent = chrome.i18n.getMessage('labelAboutSimpli');
+
+
+
     // randomly display curious data 
     let idiom = chrome.i18n.getMessage('@@ui_locale').split("_")[0]
     let curiosidades = [
