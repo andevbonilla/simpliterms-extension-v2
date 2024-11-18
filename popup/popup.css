@@ -56,6 +56,13 @@ h2{
     align-items: center;
     margin-bottom: .5rem;
 }
+.nav-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+}
 .logo{
     border-radius: 100%;
     margin-right: 0.5rem;
@@ -131,6 +138,7 @@ h2{
     flex-direction: column;
     justify-content: start;
     align-items: start;
+    margin-bottom: 1rem;
 }
 
 .greeting p{
@@ -181,6 +189,89 @@ h2{
 
 .main-content{
     display: block;
+}
+
+.msg-hi{
+    font-size: .9rem;
+}
+
+/* .navbar-icon{
+    width: 25px;
+    height: 25px;
+    color: black;
+} */
+
+.navbar-icon-button:first-of-type{
+    margin-right: .8rem;
+}
+
+.navbar-icon-button{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    padding: .57rem;
+    background-color: #F5F5F5;
+    border: none;
+}
+
+.navbar-icon-button svg{
+    width: 100%;
+    height: 100%;
+    color: black;
+}
+
+.odometer{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+}
+
+.grade-explanation{
+    margin-left: 2rem;
+}
+.grade-explanation h2{
+    font-size: .9rem;
+    font-weight: bold;
+    margin-bottom: .1rem;
+}
+
+.traffic-light{
+    background-color: black;
+    border-radius: 1rem;
+    padding: .5rem .8rem;
+}
+
+.red-light-ball,.yellow-light-ball,.green-light-ball {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 100%;
+}
+
+.red-light-ball{
+    opacity: 50%;
+    background-color: red;
+    margin-bottom: .5rem;
+}
+.yellow-light-ball{
+    opacity: 50%;
+    background-color: yellow;
+    margin-bottom: .5rem;
+}
+.green-light-ball {
+    box-shadow: 
+    0 0 20px rgb(0, 182, 0),
+    0 0 40px rgb(0, 182, 0),
+    0 0 80px rgb(0, 182, 0),
+    0 0 120px rgb(0, 182, 0);
+    background-color: rgb(0, 182, 0);
 }
 
 
