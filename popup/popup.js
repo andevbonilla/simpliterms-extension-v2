@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     labelAboutSimpli.textContent = chrome.i18n.getMessage('labelAboutSimpli');
 
 
-
     // randomly display curious data 
     let idiom = chrome.i18n.getMessage('@@ui_locale').split("_")[0]
     let curiosidades = [
@@ -183,24 +182,59 @@ document.addEventListener("DOMContentLoaded", async() => {
     const termsUL = document.getElementById("simpli-summary-terms");
     const privacyUL = document.getElementById("simpli-summary-privacy");
 
+    const infoButton = document.getElementById("info-button");
+    const closeInfoButton = document.getElementById("close-info-button");
+
+    const notErrorContainer = document.getElementById("not-error");
+    const infoTabContainer = document.getElementById("info-tab");
 
     // UX functions
     // ========================================================================================
 
+    // terms and privacy menu bar
     const changeTypeOfSummary = (type) => {
         // 0 -> terms
         // 1 -> privacy
         if (type === 1) {
             termsUL.style.display = "flex";
             privacyUL.style.display = "none";
-        }else if(type === 2){
+            selectPrivacyButton.classList.add("privacy-selected");
+            selectTermsButton.classList.remove("terms-selected");
+        }else{
             termsUL.style.display = "none";
             privacyUL.style.display = "flex";
-        }else{
-            return;
-        };
-
+            selectTermsButton.classList.add("terms-selected");
+            selectPrivacyButton.classList.remove("privacy-selected");
+        }
     };
+
+    selectTermsButton.addEventListener("click", ()=>{
+        changeTypeOfSummary(0);
+    });
+
+    selectPrivacyButton.addEventListener("click", ()=>{
+        changeTypeOfSummary(1);
+    });
+
+    // open info page
+    infoButton.addEventListener("click", ()=>{
+
+        infoButton.style.display = "none";
+        closeInfoButton.style.display = "block";
+
+        infoTabContainer.style.display = "block";
+        notErrorContainer.style.display = "none";
+
+    });
+    closeInfoButton.addEventListener("click", ()=>{
+
+        infoButton.style.display = "block";
+        closeInfoButton.style.display = "none";
+
+        infoTabContainer.style.display = "none";
+        notErrorContainer.style.display = "block";
+
+    });
 
     // set programming UI functions
     // ========================================================================================
