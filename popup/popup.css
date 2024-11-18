@@ -292,7 +292,9 @@ h2{
     color: white;
 }
 
-
+.info-tab{
+    display: none;
+}
 
 @keyframes rotate {
   from {
