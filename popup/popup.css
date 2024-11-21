@@ -292,9 +292,48 @@ h2{
     color: white;
 }
 
-.info-tab{
+.info-page{
     display: none;
 }
+
+.dashboard-page{
+    display: none;
+}
+
+.question-page{
+    margin: 4rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-page h1{
+    text-align: center;
+    font-size: 1rem;
+    padding: 0 .5rem;
+    margin: 0 0 .5rem 0;
+}
+
+.question-page h2{
+    opacity: 60%;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 1.4rem;
+    margin: 0 0 2rem 0;
+}
+
+.question-page button{
+    background-color: #5712DF;
+    color: white;
+    font-weight: bold;
+    padding: 1.1rem 2.6rem;
+    border-radius: 3rem;
+    border: none;
+    cursor: pointer;
+}
+
+
 
 @keyframes rotate {
   from {

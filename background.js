@@ -1,16 +1,4 @@
-// "use strict"
-
-// function setBadgeText(enabled) {
-//     const text = enabled ? "ON" : "OFF"
-//     void chrome.action.setBadgeText({text: text})
-// }
-
-// function startUp() {
-//     chrome.storage.sync.get("enabled", (data) => {
-//         setBadgeText(!!data.enabled)
-//     })
-// }
-
-// // Ensure the background script always runs.
-// chrome.runtime.onStartup.addListener(startUp)
-// chrome.runtime.onInstalled.addListener(startUp)
+chrome.action.onClicked.addListener((tab) => {
+  console.log('El usuario hizo clic en el ícono de la extensión.');
+  // Aquí puedes agregar la lógica adicional que desees ejecutar
+});
