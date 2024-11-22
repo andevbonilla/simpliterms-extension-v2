@@ -188,6 +188,8 @@ document.addEventListener("DOMContentLoaded", async() => {
     const notErrorContainer = document.getElementById("not-error");
     const infoTabContainer = document.getElementById("info-tab");
 
+    const startButton = document.getElementById("start-button")
+
     // UX functions
     // ========================================================================================
 
@@ -253,7 +255,12 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     };
 
-    setIsLoading(false)
+    setIsLoading(false);
+
+    startButton.addEventListener("click", ()=>{
+        console.log("enviado")
+        chrome.runtime.sendMessage({ action: 'makeRequestToBackend' });
+    })
 
 
 

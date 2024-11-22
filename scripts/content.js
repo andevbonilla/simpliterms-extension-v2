@@ -1,0 +1,7 @@
+
+console.log("asddddddddddd")
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'makeRequestToBackend') {
+    console.log("recibidoooo")
+  }
+});

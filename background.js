@@ -1,4 +1,9 @@
-chrome.action.onClicked.addListener((tab) => {
-  console.log('El usuario hizo clic en el ícono de la extensión.');
-  // Aquí puedes agregar la lógica adicional que desees ejecutar
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'makeRequestToBackend') {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs[0]) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: 'makeRequestToBackend' });
+            }
+        });
+  }
 });
