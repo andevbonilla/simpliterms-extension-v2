@@ -188,10 +188,44 @@ document.addEventListener("DOMContentLoaded", async() => {
     const notErrorContainer = document.getElementById("not-error");
     const infoTabContainer = document.getElementById("info-tab");
 
-    const startButton = document.getElementById("start-button")
+    const startButton = document.getElementById("start-button");
+
+    const notLoggedPage = document.getElementById("not-logged");
+    const loggedPage = document.getElementById("logged");
+
+    // set programming UI functions
+    // ========================================================================================
+
+    const setIsLoading = (loading) => {
+        if (!!loading) {
+            // is loading
+            loadingContainer.style.display = "flex";
+            navbarContainer.style.display = "none";
+            mainContainer.style.display = "none";
+        }else{
+            // isn't loading
+            loadingContainer.style.display = "none";
+            navbarContainer.style.display = "flex";
+            mainContainer.style.display = "flex";
+        }
+    };
+
+    const validateIsAuthenticated = (result) => {
+        if (result.data && result.data.msj && result.data.msj === "Auth failed" && result.data.res === false) {
+            return false;
+        }else{
+            return true;
+        }
+    };
 
     // UX functions
     // ========================================================================================
+
+    // make the resques to backend
+    startButton.addEventListener("click", ()=>{
+        setIsLoading(true);
+        chrome.runtime.sendMessage({ action: 'makeRequestToBackend' });
+    });
 
     // terms and privacy menu bar
     const changeTypeOfSummary = (type) => {
@@ -238,35 +272,37 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     });
 
-    // set programming UI functions
-    // ========================================================================================
-
-    const setIsLoading = (loading) => {
-        if (!!loading) {
-            // is loading
-            loadingContainer.style.display = "flex";
-            navbarContainer.style.display = "none";
-            mainContainer.style.display = "none";
-        }else{
-            // isn't loading
-            loadingContainer.style.display = "none";
-            navbarContainer.style.display = "flex";
-            mainContainer.style.display = "flex";
-        }
-    };
-
-    setIsLoading(false);
-
-    startButton.addEventListener("click", ()=>{
-        console.log("enviado")
-        chrome.runtime.sendMessage({ action: 'makeRequestToBackend' });
-    })
-
-
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.action === 'termsRespond') {
+
             console.log('Resultado de TERMS recibido:', message.result);
+            // 1. validate not server error
+            // 2. validate is auth
+            const isAuth = validateIsAuthenticated(message.result);
+            if (!isAuth) {
+                setIsLoading(false);
+                notLoggedPage.style.display = "flex";
+                loggedPage.style.display = "none";
+                return;
+            };
+            // 3. show error or result
+
+            
         } else if (message.action === 'privacyRespond') {
+
+            // 1. validate not server error
+            // 2. validate is auth
+            const isAuth = validateIsAuthenticated(message.result);
+            if (!isAuth) {
+                setIsLoading(false);
+                notLoggedPage.style.display = "flex";
+                loggedPage.style.display = "none";
+                return;
+            };
+            // 3. if other error show it
+            loggedPage.style.display = "flex";
+
+
             console.log('Resultado de PRIVACY recibido:', message.result);
         }
     });

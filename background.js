@@ -4,38 +4,35 @@ let token = "";
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
-  if (message.action === 'makeRequestToBackend') {
+    if (message.action === 'makeRequestToBackend') {
 
-      const payloadTerms = {
-        urlList: termsLinksFound, 
-        politicsType: "terms"   
+        const payloadTerms = {
+          urlList: termsLinksFound, 
+          politicsType: "terms"   
+        };
+        const payloadPrivacy = {
+          urlList: privacyLinksFound, 
+          politicsType: "privacy"   
+        };
+
+        const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
+
+        chrome.runtime.sendMessage({ action: 'termsRespond', result: resultTERMS});
+        chrome.runtime.sendMessage({ action: 'privacyRespond', result: resultPRIVACY});
+        
+    };
+
+    if (message.termsLinks) {
+      if (message.termsLinks.length <= 10) {
+        termsLinksFound = message.termsLinks;
       };
-      const payloadPrivacy = {
-        urlList: privacyLinksFound, 
-        politicsType: "privacy"   
+    };
+
+    if (message.privacyLinks) {
+      if (message.privacyLinks.length <= 10) {
+        privacyLinksFound = message.privacyLinks;
       };
-
-      const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
-      console.log(resultTERMS, resultPRIVACY);
-
-      chrome.runtime.sendMessage({ action: 'termsRespond', result: resultTERMS});
-      chrome.runtime.sendMessage({ action: 'privacyRespond', result: resultPRIVACY});
-      
-  };
-
-  if (message.termsLinks) {
-    if (message.termsLinks.length <= 10) {
-      termsLinksFound = message.termsLinks;
-    }
-    console.log('terms:', message.termsLinks);
-  };
-
-  if (message.privacyLinks) {
-    if (message.privacyLinks.length <= 10) {
-      privacyLinksFound = message.privacyLinks;
-    }
-    console.log('privacy:', message.privacyLinks);
-  };
+    };
 
 });
 

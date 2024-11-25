@@ -50,28 +50,28 @@
       <!-- main content -->
       <main id="main-content" class="main-content">
 
-        <!-- NOT LOGGED: login page -->
-        <div class="not-logged" id="not-logged">
+        <!-- Authentication page -->
+        <div class="auth-page" id="auth-page">
           <h2 id="title-notlogged"></h2> 
           <a id="link-signup" class="sign" href="http://localhost:3000/auth/register" target="_blank"></a>
           <p id="msg-notaccount" class="bottom-text"></p>
           <a id="link-signin" class="signin" href="http://localhost:3000/auth/login" target="_blank"></a>
         </div>
 
-        <!-- LOGGED: content page -->
-        <div class="logged" id="logged">
+        <!-- Ask user if want to make the summary -->
+        <div class="question-page" id="question-page">
 
-          <!-- ASK: Page where the user is asked if he/she wants to do the summary -->
-          <div class="question-page" id="question-page">
+          <h1 class="" id="">Find out what the legal and privacy terms say about this page:</h1>
+          <h2>www.google.com</h2>
+          <button id="start-button">Start</button>
 
-            <h1 class="" id="">Find out what the legal and privacy terms say about this page:</h1>
-            <h2>www.google.com</h2>
-            <button id="start-button">Start</button>
+        </div>
 
-          </div>
+        <!-- Dashboard-->
+        <div class="dashboard-page" id="dashboard-page">
           
           <!-- Dashboard: Principal page to show info -->
-          <div class="dashboard-page" id="dashboard-page">
+          <div class="dashboard" id="dashboard">
 
               <div class="greeting" id="greeting">
                 <p id="msg-hi" class="msg-hi"></p>
@@ -120,7 +120,7 @@
           </div>
 
           <!-- INFO: When click in info button -->
-          <div class="info-page" id="info-tab">
+          <div class="info" id="info">
 
             <!-- current page -->
             <div>
