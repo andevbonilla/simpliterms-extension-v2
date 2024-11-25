@@ -83,6 +83,7 @@ const privacyKeyWords = [
 ];
 
 const termsKeyWords = [
+    // Alemán
     'nutzungsbedingungen',
     'agb', // allgemeine geschäftsbedingungen
     'bedingungen',
@@ -93,6 +94,16 @@ const termsKeyWords = [
     'rechtlichehinweise',
     'nutzungsvereinbarung',
     'geschäftsbedingungen',
+    'benutzungsbedingungen',
+    'nutzungsregeln',
+    'rechtsbelehrung',
+    'impressum',
+    'nutzungsbedingungenunddatenschutz',
+    'allgemeinebedingungen',
+    'geschaeftsbedingungen',
+    'nutzungsvertrag',
+    'haftungsausschluss',
+    // Inglés
     'terms',
     'termsofuse',
     'termsandconditions',
@@ -103,16 +114,37 @@ const termsKeyWords = [
     'serviceagreement',
     'usagepolicy',
     'legalnotice',
+    'legalterms',
+    'legalagreement',
+    'userterms',
+    'userconditions',
+    'eula', // end user license agreement
+    'enduserlicenseagreement',
+    'disclaimer',
+    'acceptableusepolicy',
+    'aup',
+    'legaldisclaimer',
+    'licenseagreement',
+    'licensingterms',
+    // Español
     'términos',
     'términosdeuso',
     'términosycondiciones',
     'acuerdodeusuario',
     'términosdelservicio',
     'condicionesdeuso',
+    'condicionesdelservicio',
     'acuerdo',
     'acuerdodelservicio',
     'políticadeuso',
+    'términosycondicionesdeuso',
+    'condicionesgenerales',
+    'términoslegales',
     'avisolegal',
+    'descargoderesponsabilidad',
+    'contratodeuso',
+    'condicionesgeneralesdecontratación',
+    // Francés
     'conditions',
     'conditionsdutilisation',
     'conditionsgénérales',
@@ -123,6 +155,15 @@ const termsKeyWords = [
     'politiqueutilisation',
     'avislégal',
     'accord',
+    'termesetconditions',
+    'termesdeservice',
+    'accorddeservice',
+    'avisjuridique',
+    'termesdutilisation',
+    'déniresponsabilité',
+    'contratd\'utilisation',
+    'licenced\'utilisateur',
+    // Hindi
     'नियम',
     'नियमऔरशर्तें',
     'उपयोगकीशर्तें',
@@ -133,6 +174,10 @@ const termsKeyWords = [
     'उपयोगनीति',
     'कानूनीसूचना',
     'शर्तें',
+    'अस्वीकरण',
+    'उपयोगकेनियम',
+    'कानूनीनियम',
+    // Japonés
     '利用規約',
     'ご利用条件',
     'ご利用規則',
@@ -143,6 +188,16 @@ const termsKeyWords = [
     '同意書',
     '使用許諾契約',
     '法的通知',
+    '条件と規約',
+    'サービス約款',
+    '条件',
+    'サイトポリシー',
+    '使用規定',
+    '約款',
+    '利用約款',
+    '免責事項',
+    'ライセンス契約',
+    // Ruso
     'условияиспользования',
     'условияиограничения',
     'пользовательскоесоглашение',
@@ -153,6 +208,11 @@ const termsKeyWords = [
     'правоваяинформация',
     'политикаиспользования',
     'юридическоесообщение',
+    'условияпредоставленияуслуг',
+    'лицензионноесоглашение',
+    'правиласервиса',
+    'отказотответственности',
+    // Chino (Simplificado)
     '使用条款',
     '条款和条件',
     '用户协议',
@@ -162,8 +222,12 @@ const termsKeyWords = [
     '使用协议',
     '法律声明',
     '使用政策',
-    '免责声明'
+    '免责声明',
+    '许可协议',
+    '使用须知',
+    '法律公告'
 ];
+
 
 let termsLinks = [];
 let privacyLinks = [];
