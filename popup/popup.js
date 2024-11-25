@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
+    // principal pages
+    // ========================================================================================
+    const questionPage = document.getElementById("question-page");
+    const authPage = document.getElementById("auth-page");
+    const loadingContainer = document.getElementById("loading-container");
+    const dashboardPage = document.getElementById("dashboard-page");
+
+
     // set translations text to the HTML
     // ========================================================================================
+
+    
     const pMsgHi = document.getElementById("msg-hi");
     pMsgHi.textContent = chrome.i18n.getMessage('hi');
 
@@ -175,7 +185,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // call othe DOM elements
     // ========================================================================================
-    const loadingContainer = document.getElementById("loading-container");
     const navbarContainer = document.getElementById("navbar");
     const mainContainer = document.getElementById("main-content");
 
@@ -190,8 +199,9 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const startButton = document.getElementById("start-button");
 
-    const notLoggedPage = document.getElementById("not-logged");
-    const loggedPage = document.getElementById("logged");
+    const dashboard = document.getElementById("dashboard");
+    const errorBox = document.getElementById("error-box");
+
 
     // set programming UI functions
     // ========================================================================================
@@ -281,8 +291,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
                 setIsLoading(false);
-                notLoggedPage.style.display = "flex";
-                loggedPage.style.display = "none";
+                authPage.style.display = "flex";
+                questionPage.style.display = "none";
                 return;
             };
             // 3. show error or result
@@ -295,12 +305,15 @@ document.addEventListener("DOMContentLoaded", async() => {
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
                 setIsLoading(false);
-                notLoggedPage.style.display = "flex";
-                loggedPage.style.display = "none";
+                authPage.style.display = "flex";
+                questionPage.style.display = "none";
                 return;
             };
-            // 3. if other error show it
-            loggedPage.style.display = "flex";
+            // 3. if other error: show it
+            dashboardPage.style.display = "flex";
+            dashboard.style.display = "flex";
+            errorBox.style.display = "flex";
+            // 4. if success request
 
 
             console.log('Resultado de PRIVACY recibido:', message.result);
