@@ -1,9 +1,11 @@
 let termsLinksFound = [];
 let privacyLinksFound = [];
+let token = "";
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
   if (message.action === 'makeRequestToBackend') {
+
       const payloadTerms = {
         urlList: termsLinksFound, 
         politicsType: "terms"   
@@ -12,9 +14,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         urlList: privacyLinksFound, 
         politicsType: "privacy"   
       };
-      const resultTERMS = await sendDataToAPI(payloadTerms);
-      const resultPRIVACY = await sendDataToAPI(payloadPrivacy);
+
+      const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
       console.log(resultTERMS, resultPRIVACY);
+
+      chrome.runtime.sendMessage({ action: 'termsRespond', result: resultTERMS});
+      chrome.runtime.sendMessage({ action: 'privacyRespond', result: resultPRIVACY});
+      
   };
 
   if (message.termsLinks) {
@@ -38,20 +44,14 @@ async function sendDataToAPI(payload) {
 
   try {
 
-    const response = await fetch('http://localhost:3000/api/summary/generate', {
+    const response = await fetch('http://localhost:4200/api/summary/generate', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(payload)
     });
-
-    if (!response.ok) {
-      return {
-        error: true,
-        message: "Ups, there were a server error."
-      };
-    }
 
     const data = await response.json();
     return {
@@ -62,7 +62,7 @@ async function sendDataToAPI(payload) {
   } catch (error) {
     return {
         error: true,
-        message: error.toString()
+        message: "Ups! Something went wrong, please try again."
       };
   }
 }

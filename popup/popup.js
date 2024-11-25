@@ -263,6 +263,13 @@ document.addEventListener("DOMContentLoaded", async() => {
     })
 
 
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message.action === 'termsRespond') {
+            console.log('Resultado de TERMS recibido:', message.result);
+        } else if (message.action === 'privacyRespond') {
+            console.log('Resultado de PRIVACY recibido:', message.result);
+        }
+    });
 
 
 // ========================================================================================
