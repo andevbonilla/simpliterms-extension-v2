@@ -200,7 +200,11 @@ document.addEventListener("DOMContentLoaded", async() => {
     const startButton = document.getElementById("start-button");
 
     const dashboard = document.getElementById("dashboard");
+
+    const odometer = document.getElementById("odometer");
+
     const errorBox = document.getElementById("error-box");
+    const errorBoxBody = document.getElementById("error-box-body");
 
 
     // set programming UI functions
@@ -225,6 +229,29 @@ document.addEventListener("DOMContentLoaded", async() => {
             return false;
         }else{
             return true;
+        }
+    };
+
+    const isBackendError = (result) => {
+        if (result.data && result.data.res === false && !result.data.status) {
+
+            termsUL.style.display = "none";
+            privacyUL.style.display = "none";
+            odometer.style.display = "none";
+            warningInfo.style.display = "none";
+            warningClosePopup.style.display = "none";
+
+            dashboardPage.style.display = "flex";
+            dashboard.style.display = "flex";
+            errorBox.style.display = "flex";
+            errorBoxBody.textContent = result.data.message;
+
+            return true;
+
+        }else{
+
+            return false;
+
         }
     };
 
@@ -283,6 +310,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     });
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        
         if (message.action === 'termsRespond') {
 
             console.log('Resultado de TERMS recibido:', message.result);
@@ -295,11 +323,17 @@ document.addEventListener("DOMContentLoaded", async() => {
                 questionPage.style.display = "none";
                 return;
             };
-            // 3. show error or result
+            // 3. if other error: show it
+            const isBackError = isBackendError(message.result);
+            if (!!isBackError) {
+                return;
+            }
+            // 4. if success requestt
 
             
         } else if (message.action === 'privacyRespond') {
 
+            console.log('Resultado de PRIVACY recibido:', message.result);
             // 1. validate not server error
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
@@ -310,13 +344,12 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 3. if other error: show it
-            dashboardPage.style.display = "flex";
-            dashboard.style.display = "flex";
-            errorBox.style.display = "flex";
+            const isBackError = isBackendError(message.result);
+            if (!!isBackError) {
+                return;
+            }
             // 4. if success request
 
-
-            console.log('Resultado de PRIVACY recibido:', message.result);
         }
     });
 
