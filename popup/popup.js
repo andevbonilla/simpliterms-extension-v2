@@ -279,11 +279,21 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     };
 
-    const showSummariesResult = (result) => {
+    const showSummariesResult = (result, type) => {
         if (result.data && result.data.policiesSummary && result.data.userDB) {
             setIsLoading(false);
-        }else{
-
+            dashboardPage.style.display = "block";
+            dashboard.style.display = "block";
+            warningInfo.style.display = "block";
+            if (type === "terms") {
+                termsUL.style.display = "block";
+                odometer.style.display = "block";
+                // TODO: finish how the info is shown
+            }
+            if (type === "privacy") {
+                privacyUL.style.display = "block";
+                odometer.style.display = "block";
+            }
         }
     };
 
@@ -363,7 +373,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request
-            showSummariesResult(message.result);
+            showSummariesResult(message.result, "terms");
 
             
         } else if (message.action === 'privacyRespond') {
@@ -390,7 +400,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request
-            showSummariesResult(message.result);
+            showSummariesResult(message.result, "privacy");
         }
     });
 
