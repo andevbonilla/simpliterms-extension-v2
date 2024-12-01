@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     // set translations text to the HTML
     // ========================================================================================
 
-    
     const pMsgHi = document.getElementById("msg-hi");
     pMsgHi.textContent = chrome.i18n.getMessage('hi');
 
@@ -205,6 +204,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const errorBox = document.getElementById("error-box");
     const errorBoxBody = document.getElementById("error-box-body");
+    const infoOfThePage = document.getElementById("info");
 
 
     // set programming UI functions
@@ -226,24 +226,31 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const validateIsAuthenticated = (result) => {
         if (result.data && result.data.msj && result.data.msj === "Auth failed" && result.data.res === false) {
+            setIsLoading(false);
+            authPage.style.display = "flex";
+            questionPage.style.display = "none";
+            dashboardPage.style.display = "none";
             return false;
         }else{
             return true;
         }
     };
 
-    const isBackendError = (result) => {
+    const validateIfNormalError = (result) => {
         if (result.data && result.data.res === false && !result.data.status) {
 
+            setIsLoading(false);
+            questionPage.style.display = "none";
             termsUL.style.display = "none";
             privacyUL.style.display = "none";
             odometer.style.display = "none";
             warningInfo.style.display = "none";
             warningClosePopup.style.display = "none";
+            infoOfThePage.style.display = "none";
 
-            dashboardPage.style.display = "flex";
-            dashboard.style.display = "flex";
-            errorBox.style.display = "flex";
+            dashboardPage.style.display = "block";
+            dashboard.style.display = "block";
+            errorBox.style.display = "block";
             errorBoxBody.textContent = result.data.message;
 
             return true;
@@ -251,6 +258,40 @@ document.addEventListener("DOMContentLoaded", async() => {
         }else{
 
             return false;
+
+        }
+    };
+
+    const validateIfServerError = (result) => {
+        if (result.serverError && result.serverError === true) {
+
+            setIsLoading(false);
+            questionPage.style.display = "none";
+            infoOfThePage.style.display = "none";
+            termsUL.style.display = "none";
+            privacyUL.style.display = "none";
+            odometer.style.display = "none";
+            warningInfo.style.display = "none";
+            warningClosePopup.style.display = "none";
+
+            dashboardPage.style.display = "block";
+            dashboard.style.display = "block";
+            errorBox.style.display = "block";
+            errorBoxBody.textContent = result.message;
+
+            return true;
+
+        }else{
+
+            return false;
+
+        }
+    };
+
+    const showSummariesResult = (result) => {
+        if (result.data && result.data.policiesSummary && result.data.userDB) {
+            setIsLoading(false);
+        }else{
 
         }
     };
@@ -314,42 +355,51 @@ document.addEventListener("DOMContentLoaded", async() => {
         if (message.action === 'termsRespond') {
 
             console.log('Resultado de TERMS recibido:', message.result);
+
             // 1. validate not server error
+            const isServerError = validateIfServerError(message.result);
+            if (!!isServerError) {
+                return;
+            }
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
-                setIsLoading(false);
-                authPage.style.display = "flex";
-                questionPage.style.display = "none";
                 return;
             };
-            // 3. if other error: show it
-            const isBackError = isBackendError(message.result);
+            // 3. error: All types of errors except server errors
+            const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
             }
-            // 4. if success requestt
+            // 4. if success request
+            showSummariesResult(message.result);
 
             
         } else if (message.action === 'privacyRespond') {
 
             console.log('Resultado de PRIVACY recibido:', message.result);
+            
             // 1. validate not server error
+            const isServerError = validateIfServerError(message.result);
+            if (!!isServerError) {
+                return;
+            }
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
                 setIsLoading(false);
                 authPage.style.display = "flex";
                 questionPage.style.display = "none";
+                dashboardPage.style.display = "none";
                 return;
             };
-            // 3. if other error: show it
-            const isBackError = isBackendError(message.result);
+            // 3. error: All types of errors except server errors
+            const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
             }
             // 4. if success request
-
+            showSummariesResult(message.result);
         }
     });
 

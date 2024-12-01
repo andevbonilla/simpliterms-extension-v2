@@ -52,14 +52,13 @@ async function sendDataToAPI(payload) {
 
     const data = await response.json();
     return {
-        error: false,
         data
     };
 
   } catch (error) {
     return {
-        error: true,
-        message: "Ups! Something went wrong, please try again."
+        serverError: true,
+        message: "Oops sorry there was a server error please try again later."
       };
   }
 }
