@@ -186,25 +186,16 @@ document.addEventListener("DOMContentLoaded", async() => {
     // ========================================================================================
     const navbarContainer = document.getElementById("navbar");
     const mainContainer = document.getElementById("main-content");
-
     const termsUL = document.getElementById("simpli-summary-terms");
     const privacyUL = document.getElementById("simpli-summary-privacy");
-
     const infoButton = document.getElementById("info-button");
     const closeInfoButton = document.getElementById("close-info-button");
-
-    const notErrorContainer = document.getElementById("not-error");
-    const infoTabContainer = document.getElementById("info-tab");
-
     const startButton = document.getElementById("start-button");
-
     const dashboard = document.getElementById("dashboard");
-
     const odometer = document.getElementById("odometer");
-
     const errorBox = document.getElementById("error-box");
     const errorBoxBody = document.getElementById("error-box-body");
-    const infoOfThePage = document.getElementById("info");
+    const infoOfThePage = document.getElementById("info-tab");
 
 
     // set programming UI functions
@@ -336,8 +327,8 @@ document.addEventListener("DOMContentLoaded", async() => {
         infoButton.style.display = "none";
         closeInfoButton.style.display = "block";
 
-        infoTabContainer.style.display = "block";
-        notErrorContainer.style.display = "none";
+        infoOfThePage.style.display = "flex";
+        dashboard.style.display = "none";
 
     });
     closeInfoButton.addEventListener("click", ()=>{
@@ -345,8 +336,8 @@ document.addEventListener("DOMContentLoaded", async() => {
         infoButton.style.display = "block";
         closeInfoButton.style.display = "none";
 
-        infoTabContainer.style.display = "none";
-        notErrorContainer.style.display = "block";
+        infoOfThePage.style.display = "none";
+        dashboard.style.display = "block";
 
     });
 
