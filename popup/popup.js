@@ -196,6 +196,11 @@ document.addEventListener("DOMContentLoaded", async() => {
     const errorBox = document.getElementById("error-box");
     const errorBoxBody = document.getElementById("error-box-body");
     const infoOfThePage = document.getElementById("info-tab");
+    const gradeText = document.getElementById("grade-text");
+    const gradeLevel = document.getElementById("grade-level");
+    const redBall = document.getElementById("red-ball");
+    const yellowBall = document.getElementById("yellow-ball");
+    const greenBall = document.getElementById("green-ball");
 
 
     // set programming UI functions
@@ -279,16 +284,60 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     };
 
+    // aux functions for showSummariesResult
+    const adjustTitleAndLightGrade = (grade) => {
+        switch (grade) {
+            case "1": {
+                redBall.classList.remove("red-light-ball");
+                redBall.classList.add("red-light-ball-active");
+
+                yellowBall.classList.add("yellow-light-ball");
+                yellowBall.classList.remove("yellow-light-ball-active");
+
+                greenBall.classList.add("green-light-ball");
+                greenBall.classList.remove("green-light-ball-active");
+                return "Critical"
+            }
+            case "2": {
+                redBall.classList.add("red-light-ball");
+                redBall.classList.remove("red-light-ball-active");
+
+                yellowBall.classList.remove("yellow-light-ball");
+                yellowBall.classList.add("yellow-light-ball-active");
+
+                greenBall.classList.add("green-light-ball");
+                greenBall.classList.remove("green-light-ball-active");
+                return "Moderate"
+            }         
+            default:
+                redBall.classList.remove("red-light-ball");
+                redBall.classList.add("red-light-ball-active");
+
+                yellowBall.classList.add("yellow-light-ball");
+                yellowBall.classList.remove("yellow-light-ball-active");
+
+                greenBall.classList.remove("green-light-ball");
+                greenBall.classList.add("green-light-ball-active");
+                return "Minor"
+        }
+    }
+
     const showSummariesResult = (result, type) => {
-        if (result.data && result.data.policiesSummary && result.data.userDB) {
+        if (result.data && result.data.status && result.data.status === "success" && result.data.formatedResponse) {
             setIsLoading(false);
             dashboardPage.style.display = "block";
             dashboard.style.display = "block";
             warningInfo.style.display = "block";
             if (type === "terms") {
-                termsUL.style.display = "block";
+                const response = result.data.formatedResponse;
+                // odometer
                 odometer.style.display = "block";
-                // TODO: finish how the info is shown
+                gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
+                gradeText.textContent = response.gradeJustification;
+                // summary list
+                termsUL.style.display = "block";
+                
+                
             }
             if (type === "privacy") {
                 privacyUL.style.display = "block";

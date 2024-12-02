@@ -248,26 +248,49 @@ h2{
     width: 1.3rem;
     height: 1.3rem;
     border-radius: 100%;
+    opacity: 50%;
 }
 
 .red-light-ball{
-    opacity: 50%;
     background-color: red;
-    margin-bottom: .5rem;
 }
 .yellow-light-ball{
-    opacity: 50%;
     background-color: yellow;
-    margin-bottom: .5rem;
 }
 .green-light-ball {
-    box-shadow: 
-    0 0 20px rgb(0, 182, 0),
-    0 0 40px rgb(0, 182, 0),
-    0 0 80px rgb(0, 182, 0),
-    0 0 120px rgb(0, 182, 0);
     background-color: rgb(0, 182, 0);
 }
+
+.red-light-ball-active {
+    opacity: 100%;
+    background-color: red;
+    box-shadow: 
+        0 0 20px red,
+        0 0 40px red,
+        0 0 80px red,
+        0 0 120px red;
+}
+
+.yellow-light-ball-active {
+    opacity: 100%;
+    background-color: yellow;
+    box-shadow: 
+        0 0 20px yellow,
+        0 0 40px yellow,
+        0 0 80px yellow,
+        0 0 120px yellow;
+}
+
+.green-light-ball-active {
+    opacity: 100%;
+    background-color: rgb(0, 182, 0);
+    box-shadow: 
+        0 0 20px rgb(0, 182, 0),
+        0 0 40px rgb(0, 182, 0),
+        0 0 80px rgb(0, 182, 0),
+        0 0 120px rgb(0, 182, 0);
+}
+
 
 .error-box{
     margin-top: 2rem;
