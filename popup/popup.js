@@ -1,5 +1,15 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
+    let sumamriesOfCurrentPage = {
+        id: "",
+        terms: null,
+        privacy: null
+    }
+
+    if (sumamriesOfCurrentPage.id !== "" && sumamriesOfCurrentPage.terms && sumamriesOfCurrentPage.privacy) {
+        
+    }
+
     // principal pages
     // ========================================================================================
     const questionPage = document.getElementById("question-page");
@@ -201,7 +211,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     const redBall = document.getElementById("red-ball");
     const yellowBall = document.getElementById("yellow-ball");
     const greenBall = document.getElementById("green-ball");
-
 
     // set programming UI functions
     // ========================================================================================
@@ -447,7 +456,16 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (!!isBackError) {
                 return;
             }
-            // 4. if success request
+            // 4. if success request 
+
+            sumamriesOfCurrentPage.id = message.result.host;
+            sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
+
+            chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
+
+            }).catch((error) => {
+                console.error('Error storing the object:', error);
+            });
             showSummariesResult(message.result, "terms");
 
             
@@ -475,8 +493,19 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request
+
+            sumamriesOfCurrentPage.id = message.result.host;
+            sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
+
+            chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
+
+            }).catch((error) => {
+                console.error('Error storing the object:', error);
+            });
+
             showSummariesResult(message.result, "privacy");
         }
+
     });
 
 

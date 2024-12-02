@@ -1,5 +1,6 @@
 let termsLinksFound = [];
 let privacyLinksFound = [];
+let currentPage = "";
 let token = "";
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -17,21 +18,27 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
 
-        chrome.runtime.sendMessage({ action: 'termsRespond', result: resultTERMS});
-        chrome.runtime.sendMessage({ action: 'privacyRespond', result: resultPRIVACY});
+        chrome.runtime.sendMessage({ action: 'termsRespond', result: {...resultTERMS, host: currentPage}});
+        chrome.runtime.sendMessage({ action: 'privacyRespond', result: {...resultPRIVACY, host: currentPage}});
         
     };
 
     if (message.termsLinks) {
-      if (message.termsLinks.length <= 10) {
-        termsLinksFound = message.termsLinks;
-      };
+      if (message.termsLinks.length > 1) {
+          if (message.termsLinks.length <= 10) {
+              currentPage = message.termsLinks[0];
+              termsLinksFound = message.termsLinks.shift();
+          }; 
+      }
     };
 
     if (message.privacyLinks) {
-      if (message.privacyLinks.length <= 10) {
-        privacyLinksFound = message.privacyLinks;
-      };
+      if (message.privacyLinks.length > 1) {
+          if (message.privacyLinks.length <= 10) {
+              currentPage = message.privacyLinks[0];
+              privacyLinksFound = message.privacyLinks.shift();
+          };
+      }
     };
 
 });

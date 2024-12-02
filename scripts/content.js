@@ -229,8 +229,8 @@ const termsKeyWords = [
 ];
 
 
-let termsLinks = [];
-let privacyLinks = [];
+let termsLinks = [window.location.host];
+let privacyLinks = [window.location.host];
 
 const anchorTags = document.querySelectorAll('a');
 
