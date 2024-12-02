@@ -322,6 +322,29 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     }
 
+    const showKeyPointsOfSUMMARIES = (summary, policiesType) => {
+        let policiesUL = termsUL;
+        if (policiesType === "privacy") {
+            policiesUL = privacyUL;
+        }
+        policiesUL.style.display = "block";
+        for (const keyPoint of summary) {
+
+            const li = document.createElement("li");
+
+            const title = document.createElement("h3");
+            title.textContent = keyPoint.subtitle;
+
+            const text = document.createElement("p");
+            text.textContent = keyPoint.text;
+
+            li.appendChild(title);
+            li.appendChild(text);
+
+            policiesUL.appendChild(li);
+        };
+    }
+
     const showSummariesResult = (result, type) => {
         if (result.data && result.data.status && result.data.status === "success" && result.data.formatedResponse) {
             setIsLoading(false);
@@ -335,13 +358,16 @@ document.addEventListener("DOMContentLoaded", async() => {
                 gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
                 gradeText.textContent = response.gradeJustification;
                 // summary list
-                termsUL.style.display = "block";
-                
-                
+                showKeyPointsOfSUMMARIES(response.summary, "terms");      
             }
             if (type === "privacy") {
-                privacyUL.style.display = "block";
+                const response = result.data.formatedResponse;
+                // odometer
                 odometer.style.display = "block";
+                gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
+                gradeText.textContent = response.gradeJustification;
+                // summary list
+                showKeyPointsOfSUMMARIES(response.summary, "privacy");  
             }
         }
     };
