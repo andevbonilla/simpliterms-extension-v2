@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     setIsLoading(true);
     // Validate Info
     chrome.runtime.sendMessage({ action: "thereIsInfo" }, function(response) {
-        const {id, terms, privacy} = response.privacyAndTermsForPage;
+        const {id, terms, privacy} = response.privacyAndTermsForPage; 
         if (id !== "" && terms !== null && privacy !== null) {
             // there is already terms for the page
             // TODO: show the summary directly 
@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
 
-            chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(() => {
             }).catch((error) => {
                 console.error('Error storing the object:', error);
             });

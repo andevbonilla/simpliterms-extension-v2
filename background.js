@@ -50,8 +50,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.hostInfo) {
       currentPage = validateHost(message.hostInfo) ? message.hostInfo : "";
       chrome.storage.local.get([currentPage], function(result) {
-        if (result[host]) {
-          privacyAndTermsForPage = result[host];
+        if (result[currentPage]) {
+          privacyAndTermsForPage = result[currentPage];
         };
       });
     };
