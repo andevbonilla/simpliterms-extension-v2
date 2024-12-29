@@ -3,7 +3,15 @@ let privacyLinksFound = [];
 let currentPage = "";
 let token = "";
 
+let privacyAndTermsForPage = {
+  id: "",
+  terms: null,
+  privacy: null
+};
+
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+
+    // TODO: obtain the token and valide if user is authenticated
 
     if (message.action === 'makeRequestToBackend') {
 
@@ -24,7 +32,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     };
 
     if (message.action === 'thereIsInfo') {
-      sendResponse(validateHost(currentPage));
+      sendResponse({privacyAndTermsForPage});
     };
 
     if (message.termsLinks) {
@@ -39,9 +47,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       }
     };
 
-    if (hostInfo) {
-      currentPage = validateHost(hostInfo) ? hostInfo : "";
-    }
+    if (message.hostInfo) {
+      currentPage = validateHost(message.hostInfo) ? message.hostInfo : "";
+      chrome.storage.local.get([currentPage], function(result) {
+        if (result[host]) {
+          privacyAndTermsForPage = result[host];
+        };
+      });
+    };
 
 });
 

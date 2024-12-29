@@ -1,4 +1,6 @@
 
+chrome.runtime.sendMessage({ hostInfo: window.location.host });
+
 const privacyKeyWords = [
     'datenschutz',
     'datenschutzrichtlinie',
@@ -82,7 +84,8 @@ const privacyKeyWords = [
     '隐私信息'
 ];
 
-const termsKeyWords = [
+const termsKeyWords = 
+[
     // Alemán
     'nutzungsbedingungen',
     'agb', // allgemeine geschäftsbedingungen
@@ -231,7 +234,6 @@ const termsKeyWords = [
 
 let termsLinks = [];
 let privacyLinks = [];
-let hostInfo = indow.location.host;
 
 const anchorTags = document.querySelectorAll('a');
 
@@ -251,4 +253,4 @@ for (const anchorTag of anchorTags) {
 
 chrome.runtime.sendMessage({ termsLinks });
 chrome.runtime.sendMessage({ privacyLinks });
-chrome.runtime.sendMessage({ hostInfo });
+

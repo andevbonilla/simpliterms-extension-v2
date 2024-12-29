@@ -1,11 +1,5 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
-    let sumamriesOfCurrentPage = {
-        id: "",
-        terms: null,
-        privacy: null
-    }
-
     // principal pages
     // ========================================================================================
     const questionPage = document.getElementById("question-page");
@@ -386,7 +380,14 @@ document.addEventListener("DOMContentLoaded", async() => {
     setIsLoading(true);
     // Validate Info
     chrome.runtime.sendMessage({ action: "thereIsInfo" }, function(response) {
-        
+        const {id, terms, privacy} = response.privacyAndTermsForPage;
+        if (id !== "" && terms !== null && privacy !== null) {
+            // there is already terms for the page
+            // TODO: show the summary directly 
+            setIsLoading(false);
+        }else{ 
+            setIsLoading(false);
+        }
     });
 
     // make the resques to backend
@@ -462,7 +463,8 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request 
-            sumamriesOfCurrentPage.id = message.result.host;
+            // TODO: fill the info of the result into the summary page
+            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
 
             chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
@@ -496,7 +498,8 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request
-            sumamriesOfCurrentPage.id = message.result.host;
+            // TODO: fill the info of the result into the summary page
+            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
 
             chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
