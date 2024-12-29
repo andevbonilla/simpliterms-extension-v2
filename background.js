@@ -23,23 +23,25 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         
     };
 
+    if (message.action === 'thereIsInfo') {
+      sendResponse(validateHost(currentPage));
+    };
+
     if (message.termsLinks) {
-      if (message.termsLinks.length > 1) {
-          if (message.termsLinks.length <= 10) {
-              currentPage = message.termsLinks[0];
-              termsLinksFound = message.termsLinks.shift();
-          }; 
+      if (message.termsLinks.length > 1 && message.termsLinks.length <=10) {
+            termsLinksFound = message.termsLinks;
       }
     };
 
     if (message.privacyLinks) {
-      if (message.privacyLinks.length > 1) {
-          if (message.privacyLinks.length <= 10) {
-              currentPage = message.privacyLinks[0];
-              privacyLinksFound = message.privacyLinks.shift();
-          };
+      if (message.privacyLinks.length > 1 && message.privacyLinks.length <= 10) {
+            privacyLinksFound = message.privacyLinks;
       }
     };
+
+    if (hostInfo) {
+      currentPage = validateHost(hostInfo) ? hostInfo : "";
+    }
 
 });
 
@@ -68,4 +70,9 @@ async function sendDataToAPI(payload) {
         message: "Oops sorry there was a server error please try again later."
       };
   }
+}
+
+function validateHost(host) {
+  const urlRegex = /^(https?:\/\/)?((([a-zA-Z\d]([a-zA-Z\d-]*[a-zA-Z\d])*)\.)+[a-zA-Z]{2,}|localhost|(\d{1,3}\.){3}\d{1,3})(:\d+)?(\/[-a-zA-Z\d%@_.~+&:]*)*(\?[;&a-zA-Z\d%@_.,~+&:=-]*)?(#[-a-zA-Z\d_]*)?$/;
+  return urlRegex.test(host);
 }

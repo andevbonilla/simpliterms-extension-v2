@@ -6,10 +6,6 @@ document.addEventListener("DOMContentLoaded", async() => {
         privacy: null
     }
 
-    if (sumamriesOfCurrentPage.id !== "" && sumamriesOfCurrentPage.terms && sumamriesOfCurrentPage.privacy) {
-        
-    }
-
     // principal pages
     // ========================================================================================
     const questionPage = document.getElementById("question-page");
@@ -384,6 +380,15 @@ document.addEventListener("DOMContentLoaded", async() => {
     // UX functions
     // ========================================================================================
 
+    // Initializate: 
+    // IF info in session store, then show it
+    // If not, then show the answer page to make the request for AI response
+    setIsLoading(true);
+    // Validate Info
+    chrome.runtime.sendMessage({ action: "thereIsInfo" }, function(response) {
+        
+    });
+
     // make the resques to backend
     startButton.addEventListener("click", ()=>{
         setIsLoading(true);
@@ -457,12 +462,10 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request 
-
             sumamriesOfCurrentPage.id = message.result.host;
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
 
             chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
-
             }).catch((error) => {
                 console.error('Error storing the object:', error);
             });
@@ -493,12 +496,10 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             }
             // 4. if success request
-
             sumamriesOfCurrentPage.id = message.result.host;
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
 
             chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
-
             }).catch((error) => {
                 console.error('Error storing the object:', error);
             });

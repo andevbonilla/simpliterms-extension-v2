@@ -229,8 +229,9 @@ const termsKeyWords = [
 ];
 
 
-let termsLinks = [window.location.host];
-let privacyLinks = [window.location.host];
+let termsLinks = [];
+let privacyLinks = [];
+let hostInfo = indow.location.host;
 
 const anchorTags = document.querySelectorAll('a');
 
@@ -250,3 +251,4 @@ for (const anchorTag of anchorTags) {
 
 chrome.runtime.sendMessage({ termsLinks });
 chrome.runtime.sendMessage({ privacyLinks });
+chrome.runtime.sendMessage({ hostInfo });
