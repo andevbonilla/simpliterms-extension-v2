@@ -1,6 +1,3 @@
-
-chrome.runtime.sendMessage({ hostInfo: window.location.host });
-
 const privacyKeyWords = [
     'datenschutz',
     'datenschutzrichtlinie',
@@ -84,8 +81,7 @@ const privacyKeyWords = [
     '隐私信息'
 ];
 
-const termsKeyWords = 
-[
+const termsKeyWords = [
     // Alemán
     'nutzungsbedingungen',
     'agb', // allgemeine geschäftsbedingungen
@@ -232,6 +228,15 @@ const termsKeyWords =
 ];
 
 
+// send host to background
+chrome.runtime.sendMessage({ hostInfo: window.location.host });
+
+// if is in simpliterms.com sent the current id of the extension
+if (window.location.host === "simpliterms.com" || window.location.host === "www.simpliterms.com") {
+  const extensionId = chrome.runtime.id;
+  window.postMessage({ type: 'EXTENSION_ID', id: extensionId }, '*');  
+}
+
 let termsLinks = [];
 let privacyLinks = [];
 
@@ -251,6 +256,7 @@ for (const anchorTag of anchorTags) {
   
 };
 
+// send possible links of policies of the current page
 chrome.runtime.sendMessage({ termsLinks });
 chrome.runtime.sendMessage({ privacyLinks });
 
