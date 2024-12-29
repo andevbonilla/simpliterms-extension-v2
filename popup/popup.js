@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // If not, then show the answer page to make the request for AI response
     setIsLoading(true);
     // Validate Info
-    chrome.runtime.sendMessage({ action: "thereIsInfo" }, function(response) {
+    chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
         const {id, terms, privacy} = response.privacyAndTermsForPage; 
         if (id !== "" && terms !== null && privacy !== null) {
             // there is already terms for the page
@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // make the resques to backend
     startButton.addEventListener("click", ()=>{
         setIsLoading(true);
-        chrome.runtime.sendMessage({ action: 'makeRequestToBackend' });
+        chrome.runtime.sendMessage({ action: 'RESQUEST_SUMMARIES' });
     });
 
     // terms and privacy menu bar
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
-        if (message.action === 'termsRespond') {
+        if (message.action === 'TERMS_RESPOND') {
 
             console.log('Resultado de TERMS recibido:', message.result);
 
@@ -474,7 +474,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             showSummariesResult(message.result, "terms");
 
             
-        } else if (message.action === 'privacyRespond') {
+        } else if (message.action === 'PRIVACY_RESPOND') {
 
             console.log('Resultado de PRIVACY recibido:', message.result);
             
@@ -502,7 +502,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
 
-            chrome.storage.session.set({[message.result.host]: sumamriesOfCurrentPage}).then(() => {
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(() => {
             }).catch((error) => {
                 console.error('Error storing the object:', error);
             });

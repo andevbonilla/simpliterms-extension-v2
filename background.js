@@ -11,9 +11,24 @@ let privacyAndTermsForPage = {
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
-    // TODO: obtain the token and valide if user is authenticated
+    // listen for token from simpliterms.com webpage
+    // =================================================================================
+    if (message.type === 'SAVE_TOKEN') {
 
-    if (message.action === 'makeRequestToBackend') {
+      const { token } = message;
+
+      chrome.storage.local.set({ token }, () => {
+        console.log(token, "this is the token");
+        sendResponse({ status: true });
+      });
+
+      return true; // respond in async form
+      
+    }
+
+    // request two summaries and other info to backend
+    // =================================================================================
+    if (message.action === 'RESQUEST_SUMMARIES') {
 
         const payloadTerms = {
           urlList: termsLinksFound, 
@@ -26,27 +41,35 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
 
-        chrome.runtime.sendMessage({ action: 'termsRespond', result: {...resultTERMS, host: currentPage}});
-        chrome.runtime.sendMessage({ action: 'privacyRespond', result: {...resultPRIVACY, host: currentPage}});
+        chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: currentPage}});
+        chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: currentPage}});
         
     };
 
-    if (message.action === 'thereIsInfo') {
+    // review if there is already a summary info for the current host
+    // =================================================================================
+    if (message.action === 'CHECK_FOR_INFO') {
       sendResponse({privacyAndTermsForPage});
     };
 
+    // save links for possible terms of use pages
+    // =================================================================================
     if (message.termsLinks) {
       if (message.termsLinks.length > 1 && message.termsLinks.length <=10) {
             termsLinksFound = message.termsLinks;
       }
     };
 
+    // save links for possible privacy policies pages
+    // =================================================================================
     if (message.privacyLinks) {
       if (message.privacyLinks.length > 1 && message.privacyLinks.length <= 10) {
             privacyLinksFound = message.privacyLinks;
       }
     };
 
+    // save info of the current host page
+    // =================================================================================
     if (message.hostInfo) {
       currentPage = validateHost(message.hostInfo) ? message.hostInfo : "";
       chrome.storage.local.get([currentPage], function(result) {
