@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.add("green-light-ball");
                 greenBall.classList.remove("green-light-ball-active");
-                gradeLevel.style.color = "red"
+                gradeLevel.style.color = "red";
                 return "Critical"
             }
             case "2": {
@@ -313,7 +313,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.add("green-light-ball");
                 greenBall.classList.remove("green-light-ball-active");
-                gradeLevel.style.color = "yellow"
+                gradeLevel.style.color = "#F09500";
                 return "Moderate"
             }         
             default:
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.remove("green-light-ball");
                 greenBall.classList.add("green-light-ball-active");
-                gradeLevel.style.color = "rgb(0, 182, 0)"
+                gradeLevel.style.color = "#00D879";
                 return "Minor"
         }
     }
@@ -366,6 +366,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             infoOfThePage.style.display = "none";
             questionPage.style.display = "none";
             warningClosePopup.style.display = "none";
+            errorBox.style.display = "none";
             
 
             if (type === "terms") {
@@ -463,64 +464,53 @@ document.addEventListener("DOMContentLoaded", async() => {
         
         if (message.action === 'TERMS_RESPOND') {
 
-            console.log('Resultado de TERMS recibido:', message.result);
-
             // 1. validate not server error
             const isServerError = validateIfServerError(message.result);
             if (!!isServerError) {
                 return;
-            }
-            console.log("flagg 1 termos")
+            };
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
                 return;
             };
-            console.log("flagg 2 termos")
             // 3. error: All types of errors except server errors
             const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
-            }
-            console.log("flagg 3 termos")
+            };
             // 4. if success request 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage});
-            showSummariesResult(message.result, "terms");
-
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
+                showSummariesResult(message.result, "terms");
+            });
+            
             
         } else if (message.action === 'PRIVACY_RESPOND') {
 
-            console.log('Resultado de PRIVACY recibido:', message.result);
-            
             // 1. validate not server error
             const isServerError = validateIfServerError(message.result);
             if (!!isServerError) {
                 return;
             };
-            console.log("flagg 1 priva")
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
-                setIsLoading(false);
-                authPage.style.display = "flex";
-                questionPage.style.display = "none";
-                dashboardPage.style.display = "none";
                 return;
             };
-            console.log("flagg 2 priva")
             // 3. error: All types of errors except server errors
             const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
             };
-            console.log("flagg 3 priva")
-            // 4. if success request
+            // 4. if success request 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage});
-            showSummariesResult(message.result, "privacy");
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
+                showSummariesResult(message.result, "privacy");
+            });
+        
         }
 
     });
