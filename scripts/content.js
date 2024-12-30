@@ -238,13 +238,13 @@ const anchorTags = document.querySelectorAll('a');
 
 for (const anchorTag of anchorTags) {
 
-  const tagCleaned = anchorTag.textContent.toLowerCase().replace(/\s+/g, "");
+  const tagCleaned = anchorTag.textContent.toLowerCase().replaceAll(" ", "");
 
-  if (privacyKeyWords.includes(tagCleaned) && privacyLinks.length <= 10) {
+  if (privacyKeyWords.includes(tagCleaned)) {
     privacyLinks.push(anchorTag.href)
   }
 
-  if (termsKeyWords.includes(tagCleaned) && termsLinks.length <= 10) {
+  if (termsKeyWords.includes(tagCleaned)) {
     termsLinks.push(anchorTag.href)
   }
   
@@ -253,4 +253,5 @@ for (const anchorTag of anchorTags) {
 // send possible links of policies of the current page
 chrome.runtime.sendMessage({ termsLinks });
 chrome.runtime.sendMessage({ privacyLinks });
+chrome.runtime.sendMessage({ likos });
 

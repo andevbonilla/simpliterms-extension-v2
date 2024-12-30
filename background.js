@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // save links for possible terms of use pages
     // =================================================================================
     if (message.termsLinks) {
-      if (message.termsLinks.length > 1 && message.termsLinks.length <=10) {
+      if (message.termsLinks.length >= 1 && message.termsLinks.length <= 10) {
             termsLinksFound = message.termsLinks;
       }
     };
@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // save links for possible privacy policies pages
     // =================================================================================
     if (message.privacyLinks) {
-      if (message.privacyLinks.length > 1 && message.privacyLinks.length <= 10) {
+      if (message.privacyLinks.length >= 1 && message.privacyLinks.length <= 10) {
             privacyLinksFound = message.privacyLinks;
       }
     };
