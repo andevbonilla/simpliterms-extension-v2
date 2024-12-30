@@ -227,15 +227,9 @@ const termsKeyWords = [
     '法律公告'
 ];
 
-
 // send host to background
 chrome.runtime.sendMessage({ hostInfo: window.location.host });
-
-// if is in simpliterms.com sent the current id of the extension
-if (window.location.host === "simpliterms.com" || window.location.host === "www.simpliterms.com") {
-  const extensionId = chrome.runtime.id;
-  window.postMessage({ type: 'EXTENSION_ID', id: extensionId }, '*');  
-}
+chrome.runtime.sendMessage({ urlComplete: window.location });
 
 let termsLinks = [];
 let privacyLinks = [];

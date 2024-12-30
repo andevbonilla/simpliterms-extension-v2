@@ -1,6 +1,7 @@
 let termsLinksFound = [];
 let privacyLinksFound = [];
 let currentPage = "";
+let pageURLcomplete = {}; // object with all the info of url
 let token = "";
 
 let privacyAndTermsForPage = {
@@ -10,21 +11,6 @@ let privacyAndTermsForPage = {
 };
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
-
-    // listen for token from simpliterms.com webpage
-    // =================================================================================
-    if (message.type === 'SAVE_TOKEN') {
-
-      const { token } = message;
-
-      chrome.storage.local.set({ token }, () => {
-        console.log(token, "this is the token");
-        sendResponse({ status: true });
-      });
-
-      return true; // respond in async form
-      
-    }
 
     // request two summaries and other info to backend
     // =================================================================================
@@ -49,6 +35,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // review if there is already a summary info for the current host
     // =================================================================================
     if (message.action === 'CHECK_FOR_INFO') {
+      const simplitermsValidOrigins = ["www.simpliterms.com", "simpliterms.com", "localhost:3000"];
+      if (simplitermsValidOrigins.includes(currentPage)) {
+       chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
+          if (cookie && cookie.value && cookie.value !== "") {
+            token = cookie.value;
+          }
+        }); 
+      };
       sendResponse({privacyAndTermsForPage});
     };
 
@@ -79,6 +73,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       });
     };
 
+    // save info of the current host page
+    // =================================================================================
+    if (message.urlComplete) {
+      pageURLcomplete = message.urlComplete;
+    };
+
 });
 
 
@@ -86,6 +86,7 @@ async function sendDataToAPI(payload) {
 
   try {
 
+    console.log(token, payload, "asdasdasd")
     const response = await fetch('http://localhost:4200/api/summary/generate', {
       method: 'POST',
       headers: {
