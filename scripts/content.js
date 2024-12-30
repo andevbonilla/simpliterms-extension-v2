@@ -253,5 +253,4 @@ for (const anchorTag of anchorTags) {
 // send possible links of policies of the current page
 chrome.runtime.sendMessage({ termsLinks });
 chrome.runtime.sendMessage({ privacyLinks });
-chrome.runtime.sendMessage({ likos });
 

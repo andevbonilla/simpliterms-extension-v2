@@ -183,7 +183,8 @@ h2{
 }
 
 .main-content{
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .msg-hi{
@@ -220,8 +221,9 @@ h2{
 }
 
 .odometer{
-    margin-top: 2rem;
     display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
     justify-content: center;
     align-items: center;
     background-color: #F5F5F5;

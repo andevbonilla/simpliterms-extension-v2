@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
+    let sumamriesOfCurrentPage = {
+        id: "",
+        terms: [],
+        privacy: []
+    }
+
     // principal pages
     // ========================================================================================
     const questionPage = document.getElementById("question-page");
@@ -295,6 +301,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.add("green-light-ball");
                 greenBall.classList.remove("green-light-ball-active");
+                gradeLevel.style.color = "red"
                 return "Critical"
             }
             case "2": {
@@ -306,6 +313,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.add("green-light-ball");
                 greenBall.classList.remove("green-light-ball-active");
+                gradeLevel.style.color = "yellow"
                 return "Moderate"
             }         
             default:
@@ -317,6 +325,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
                 greenBall.classList.remove("green-light-ball");
                 greenBall.classList.add("green-light-ball-active");
+                gradeLevel.style.color = "rgb(0, 182, 0)"
                 return "Minor"
         }
     }
@@ -346,14 +355,23 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const showSummariesResult = (result, type) => {
         if (result.data && result.data.status && result.data.status === "success" && result.data.formatedResponse) {
+
             setIsLoading(false);
+
             dashboardPage.style.display = "block";
             dashboard.style.display = "block";
             warningInfo.style.display = "block";
+
+            // hide other pages
+            infoOfThePage.style.display = "none";
+            questionPage.style.display = "none";
+            warningClosePopup.style.display = "none";
+            
+
             if (type === "terms") {
                 const response = result.data.formatedResponse;
                 // odometer
-                odometer.style.display = "block";
+                odometer.style.display = "flex";
                 gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
                 gradeText.textContent = response.gradeJustification;
                 // summary list
@@ -362,7 +380,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (type === "privacy") {
                 const response = result.data.formatedResponse;
                 // odometer
-                odometer.style.display = "block";
+                odometer.style.display = "flex";
                 gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
                 gradeText.textContent = response.gradeJustification;
                 // summary list
@@ -452,25 +470,23 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (!!isServerError) {
                 return;
             }
+            console.log("flagg 1 termos")
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
                 return;
             };
+            console.log("flagg 2 termos")
             // 3. error: All types of errors except server errors
             const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
             }
+            console.log("flagg 3 termos")
             // 4. if success request 
-            // TODO: fill the info of the result into the summary page
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(() => {
-            }).catch((error) => {
-                console.error('Error storing the object:', error);
-            });
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage});
             showSummariesResult(message.result, "terms");
 
             
@@ -482,7 +498,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             const isServerError = validateIfServerError(message.result);
             if (!!isServerError) {
                 return;
-            }
+            };
+            console.log("flagg 1 priva")
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
@@ -492,21 +509,17 @@ document.addEventListener("DOMContentLoaded", async() => {
                 dashboardPage.style.display = "none";
                 return;
             };
+            console.log("flagg 2 priva")
             // 3. error: All types of errors except server errors
             const isBackError = validateIfNormalError(message.result);
             if (!!isBackError) {
                 return;
-            }
+            };
+            console.log("flagg 3 priva")
             // 4. if success request
-            // TODO: fill the info of the result into the summary page
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(() => {
-            }).catch((error) => {
-                console.error('Error storing the object:', error);
-            });
-
+            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage});
             showSummariesResult(message.result, "privacy");
         }
 
