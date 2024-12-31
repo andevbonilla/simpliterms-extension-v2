@@ -35,6 +35,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         
     };
 
+    // request two summaries and other info to backend
+    // =================================================================================
+    if (message.action === 'DELETE_TOKEN') {
+        token = "";   
+    };
+
     // review if there is already a summary info for the current host
     // =================================================================================
     if (message.action === 'CHECK_FOR_INFO') {
@@ -43,10 +49,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
        chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
           if (cookie && cookie.value && cookie.value !== "") {
             token = cookie.value;
+            sendResponse({data: { privacyAndTermsForPage, token: cookie.value } });
           }
         }); 
       };
-      sendResponse({privacyAndTermsForPage});
     };
 
     // save links for possible terms of use pages

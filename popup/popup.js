@@ -383,26 +383,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     // UX functions
     // ========================================================================================
 
-    // Initializate: 
-    // IF info in session store, then show it
-    // If not, then show the answer page to make the request for AI response
-    setIsLoading(true);
-    // Validate Info
-    chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
-        const {id, terms, privacy} = response.privacyAndTermsForPage; 
-        if (id !== "" && terms !== null && privacy !== null) {
-            // there is already terms for the page
-            sumamriesOfCurrentPage.id = id;
-            sumamriesOfCurrentPage.privacy = terms;
-            sumamriesOfCurrentPage.terms = privacy;
-            showSummariesResult(privacy, "privacy");
-            showSummariesResult(terms, "terms");
-            setIsLoading(false);
-        }else{ 
-            setIsLoading(false);
-        }
-    });
-
     // make the resques to backend
     startButton.addEventListener("click", ()=>{
         setIsLoading(true);
@@ -414,18 +394,22 @@ document.addEventListener("DOMContentLoaded", async() => {
         // 0 -> privacy
         // 1 -> terms
         if (type === 1) {
-            // odometer
-            gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.terms.grade);
-            gradeText.textContent = sumamriesOfCurrentPage.terms.gradeJustification;
+            if (sumamriesOfCurrentPage.terms) {
+                // odometer
+                gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.terms.grade);
+                gradeText.textContent = sumamriesOfCurrentPage.terms.gradeJustification;  
+            };
 
             termsUL.style.display = "flex";
             privacyUL.style.display = "none";
             selectPrivacyButton.classList.remove("privacy-selected");
             selectTermsButton.classList.add("terms-selected");
         }else if(type === 0){
-            // odometer
-            gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.privacy.grade);
-            gradeText.textContent = sumamriesOfCurrentPage.privacy.gradeJustification;
+            if (sumamriesOfCurrentPage.privacy) {
+                // odometer
+                gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.privacy.grade);
+                gradeText.textContent = sumamriesOfCurrentPage.privacy.gradeJustification;   
+            };
 
             termsUL.style.display = "none";
             privacyUL.style.display = "flex";
@@ -435,11 +419,11 @@ document.addEventListener("DOMContentLoaded", async() => {
     };
 
     selectTermsButton.addEventListener("click", ()=>{
-        changeTypeOfSummary(0);
+        changeTypeOfSummary(1);
     });
 
     selectPrivacyButton.addEventListener("click", ()=>{
-        changeTypeOfSummary(1);
+        changeTypeOfSummary(0);
     });
 
     // open info page
@@ -462,6 +446,41 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     });
 
+
+    // ==============================================================================================
+    // First proccess: validate authentication and after if the user have already a summary in cache 
+    setIsLoading(true);
+    chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
+        setIsLoading(false);
+        // Validate authentication
+        if (response.data.token !== "") {
+            // is authenticated
+            const {id, terms, privacy} = response.data.privacyAndTermsForPage; 
+            if (id !== "" && terms !== null && privacy !== null) {
+                // there is already terms for the page
+                authPage.style.display = "none";
+                questionPage.style.display = "none";
+                dashboardPage.style.display = "block";
+                sumamriesOfCurrentPage.id = id;
+                sumamriesOfCurrentPage.privacy = terms;
+                sumamriesOfCurrentPage.terms = privacy;
+                showSummariesResult(privacy, "privacy");
+                showSummariesResult(terms, "terms");
+                setIsLoading(false);
+            };
+
+            authPage.style.display = "none";
+            questionPage.style.display = "flex";
+            dashboardPage.style.display = "none";
+
+        }else{ 
+            // isn't authenticated
+            authPage.style.display = "flex";
+            questionPage.style.display = "none";
+            dashboardPage.style.display = "none";
+        };
+    });
+
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         if (message.action === 'TERMS_RESPOND') {
@@ -474,6 +493,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
+                chrome.runtime.sendMessage({ action: "DELETE_TOKEN" });
                 return;
             };
             // 3. error: All types of errors except server errors
@@ -500,6 +520,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
+                chrome.runtime.sendMessage({ action: "DELETE_TOKEN" });
                 return;
             };
             // 3. error: All types of errors except server errors
@@ -519,41 +540,5 @@ document.addEventListener("DOMContentLoaded", async() => {
         };
 
     });
-
-
-// ========================================================================================
-
-// "use strict";
-
-// console.log("Hello, world from popup!")
-
-// function setBadgeText(enabled) {
-//     const text = enabled ? "ON" : "OFF"
-//     void chrome.action.setBadgeText({text: text})
-// }
-
-// // Handle the ON/OFF switch
-// const checkbox = document.getElementById("enabled")
-// chrome.storage.sync.get("enabled", (data) => {
-//     checkbox.checked = !!data.enabled
-//     void setBadgeText(data.enabled)
-// })
-// checkbox.addEventListener("change", (event) => {
-//     if (event.target instanceof HTMLInputElement) {
-//         void chrome.storage.sync.set({"enabled": event.target.checked})
-//         void setBadgeText(event.target.checked)
-//     }
-// })
-
-// // Handle the input field
-// const input = document.getElementById("item")
-// chrome.storage.sync.get("item", (data) => {
-//     input.value = data.item || ""
-// });
-// input.addEventListener("change", (event) => {
-//     if (event.target instanceof HTMLInputElement) {
-//         void chrome.storage.sync.set({"item": event.target.value})
-//     }
-// })
 
 });
