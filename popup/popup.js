@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     let sumamriesOfCurrentPage = {
         id: "",
-        terms: [],
-        privacy: []
+        terms: null,
+        privacy: null
     }
 
     // principal pages
@@ -330,12 +330,8 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     }
 
-    const showKeyPointsOfSUMMARIES = (summary, policiesType) => {
-        let policiesUL = termsUL;
-        if (policiesType === "privacy") {
-            policiesUL = privacyUL;
-        }
-        policiesUL.style.display = "block";
+    const showKeyPointsOfSUMMARIES = (summary, policiesUL) => {
+
         for (const keyPoint of summary) {
 
             const li = document.createElement("li");
@@ -350,17 +346,21 @@ document.addEventListener("DOMContentLoaded", async() => {
             li.appendChild(text);
 
             policiesUL.appendChild(li);
+
         };
-    }
+    };
 
     const showSummariesResult = (result, type) => {
+
         if (result.data && result.data.status && result.data.status === "success" && result.data.formatedResponse) {
 
             setIsLoading(false);
 
+            // show mandatory pages for response
             dashboardPage.style.display = "block";
             dashboard.style.display = "block";
             warningInfo.style.display = "block";
+            odometer.style.display = "flex";
 
             // hide other pages
             infoOfThePage.style.display = "none";
@@ -371,22 +371,17 @@ document.addEventListener("DOMContentLoaded", async() => {
 
             if (type === "terms") {
                 const response = result.data.formatedResponse;
-                // odometer
-                odometer.style.display = "flex";
-                gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
-                gradeText.textContent = response.gradeJustification;
+                changeTypeOfSummary(1);
                 // summary list
-                showKeyPointsOfSUMMARIES(response.summary, "terms");      
+                showKeyPointsOfSUMMARIES(response.summary, termsUL);      
             }
             if (type === "privacy") {
                 const response = result.data.formatedResponse;
-                // odometer
-                odometer.style.display = "flex";
-                gradeLevel.textContent = adjustTitleAndLightGrade(response.grade);
-                gradeText.textContent = response.gradeJustification;
+                changeTypeOfSummary(0);
                 // summary list
-                showKeyPointsOfSUMMARIES(response.summary, "privacy");  
-            }
+                showKeyPointsOfSUMMARIES(response.summary, privacyUL);  
+            };
+
         }
     };
 
@@ -417,18 +412,26 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     // terms and privacy menu bar
     const changeTypeOfSummary = (type) => {
-        // 0 -> terms
-        // 1 -> privacy
+        // 0 -> privacy
+        // 1 -> terms
         if (type === 1) {
+            // odometer
+            gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.terms.grade);
+            gradeText.textContent = sumamriesOfCurrentPage.terms.gradeJustification;
+
             termsUL.style.display = "flex";
             privacyUL.style.display = "none";
-            selectPrivacyButton.classList.add("privacy-selected");
-            selectTermsButton.classList.remove("terms-selected");
-        }else{
+            selectPrivacyButton.classList.remove("privacy-selected");
+            selectTermsButton.classList.add("terms-selected");
+        }else if(type === 0){
+            // odometer
+            gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.privacy.grade);
+            gradeText.textContent = sumamriesOfCurrentPage.privacy.gradeJustification;
+
             termsUL.style.display = "none";
             privacyUL.style.display = "flex";
-            selectTermsButton.classList.add("terms-selected");
-            selectPrivacyButton.classList.remove("privacy-selected");
+            selectTermsButton.classList.remove("terms-selected");
+            selectPrivacyButton.classList.add("privacy-selected");
         }
     };
 
