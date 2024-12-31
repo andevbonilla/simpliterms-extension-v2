@@ -350,39 +350,34 @@ document.addEventListener("DOMContentLoaded", async() => {
         };
     };
 
-    const showSummariesResult = (result, type) => {
+    const showSummariesResult = (response, type) => {
 
-        if (result.data && result.data.status && result.data.status === "success" && result.data.formatedResponse) {
+        setIsLoading(false);
 
-            setIsLoading(false);
+        // show mandatory pages for response
+        dashboardPage.style.display = "block";
+        dashboard.style.display = "block";
+        warningInfo.style.display = "block";
+        odometer.style.display = "flex";
 
-            // show mandatory pages for response
-            dashboardPage.style.display = "block";
-            dashboard.style.display = "block";
-            warningInfo.style.display = "block";
-            odometer.style.display = "flex";
-
-            // hide other pages
-            infoOfThePage.style.display = "none";
-            questionPage.style.display = "none";
-            warningClosePopup.style.display = "none";
-            errorBox.style.display = "none";
+        // hide other pages
+        infoOfThePage.style.display = "none";
+        questionPage.style.display = "none";
+        warningClosePopup.style.display = "none";
+        errorBox.style.display = "none";
             
 
-            if (type === "terms") {
-                const response = result.data.formatedResponse;
-                changeTypeOfSummary(1);
-                // summary list
-                showKeyPointsOfSUMMARIES(response.summary, termsUL);      
-            }
-            if (type === "privacy") {
-                const response = result.data.formatedResponse;
-                changeTypeOfSummary(0);
-                // summary list
-                showKeyPointsOfSUMMARIES(response.summary, privacyUL);  
-            };
-
+        if (type === "terms") {
+            changeTypeOfSummary(1);
+            // summary list
+            showKeyPointsOfSUMMARIES(response.summary, termsUL);      
         }
+        if (type === "privacy") {
+            changeTypeOfSummary(0);
+            // summary list
+            showKeyPointsOfSUMMARIES(response.summary, privacyUL);  
+        };
+
     };
 
     // UX functions
@@ -397,7 +392,11 @@ document.addEventListener("DOMContentLoaded", async() => {
         const {id, terms, privacy} = response.privacyAndTermsForPage; 
         if (id !== "" && terms !== null && privacy !== null) {
             // there is already terms for the page
-            // TODO: show the summary directly 
+            sumamriesOfCurrentPage.id = id;
+            sumamriesOfCurrentPage.privacy = terms;
+            sumamriesOfCurrentPage.terms = privacy;
+            showSummariesResult(privacy, "privacy");
+            showSummariesResult(terms, "terms");
             setIsLoading(false);
         }else{ 
             setIsLoading(false);
@@ -483,12 +482,13 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 4. if success request 
-            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-            sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
-                showSummariesResult(message.result, "terms");
-            });
-            
+            if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
+                sumamriesOfCurrentPage.id = message.result.host.toString().trim();
+                sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
+                chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
+                    showSummariesResult(message.result.data.formatedResponse, "terms");
+                });
+            };
             
         } else if (message.action === 'PRIVACY_RESPOND') {
 
@@ -508,13 +508,15 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 4. if success request 
-            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-            sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-            chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
-                showSummariesResult(message.result, "privacy");
-            });
-        
-        }
+            if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
+                sumamriesOfCurrentPage.id = message.result.host.toString().trim();
+                sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
+                chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
+                    showSummariesResult(message.result.data.formatedResponse, "privacy");
+                });
+            };
+            
+        };
 
     });
 
