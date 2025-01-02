@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", async() => { 
 
     let sumamriesOfCurrentPage = {
-        id: "",
         terms: null,
         privacy: null
     }
@@ -514,19 +513,18 @@ document.addEventListener("DOMContentLoaded", async() => {
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
 
             // is authenticated
-            const {terms, privacy} = message.data; 
+            const {terms, privacy} = message.data;
+            setIsLoading(false); 
 
             if (terms && privacy) {
                 // There is a summary saved
                 authPage.style.display = "none";
                 questionPage.style.display = "none";
                 dashboardPage.style.display = "block";
-                sumamriesOfCurrentPage.id = id;
-                sumamriesOfCurrentPage.privacy = terms;
-                sumamriesOfCurrentPage.terms = privacy;
+                sumamriesOfCurrentPage.privacy = privacy;
+                sumamriesOfCurrentPage.terms = terms;
                 showSummariesResult(privacy.summary, "privacy");
-                showSummariesResult(terms.summary, "terms");
-                setIsLoading(false);                        
+                showSummariesResult(terms.summary, "terms");                        
             }else{
                 // There isn't a summary saved
                 authPage.style.display = "none";
@@ -534,9 +532,10 @@ document.addEventListener("DOMContentLoaded", async() => {
                 dashboardPage.style.display = "none"
             };
 
-                    ;
             
         }else if(message.action === 'FIRST_VALIDATION_NOT_AUTH') {
+
+            setIsLoading(false);
 
             // Isn't authenticated
             authPage.style.display = "flex";
