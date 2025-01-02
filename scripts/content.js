@@ -227,9 +227,6 @@ const termsKeyWords = [
     '法律公告'
 ];
 
-// send host to background
-chrome.runtime.sendMessage({ urlComplete: window.location });
-
 let termsLinks = [];
 let privacyLinks = [];
 
@@ -249,7 +246,14 @@ for (const anchorTag of anchorTags) {
   
 };
 
-// send possible links of policies of the current page
-chrome.runtime.sendMessage({ termsLinks });
-chrome.runtime.sendMessage({ privacyLinks });
+const info = {
+  urlComplete: window.location,
+  termsLinks,
+  privacyLinks
+};
+
+// send all the neccesary info to do the summary 
+chrome.runtime.sendMessage({ action: "IMPORTANT_INFO_FROM_PAGE", info});
+
+
 

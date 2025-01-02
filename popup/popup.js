@@ -450,7 +450,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // ==============================================================================================
     // First proccess: validate authentication and after if the user have already a summary in cache 
     setIsLoading(true);
-    setTimeout(() => {
+
         chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
                 setIsLoading(false);
                 console.log("OOOO8888", response.privacyAndTermsForPage)
@@ -483,7 +483,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                     dashboardPage.style.display = "none";
                 };
         });
-    }, 200);
+
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
@@ -544,6 +544,10 @@ document.addEventListener("DOMContentLoaded", async() => {
                     }
                 });
             };
+            
+        }else if(message.action === 'FIRST_VALIDATION') {
+            
+        }else if(message.action === 'FIRST_VALIDATION_NOT_AUTH') {
             
         };
 
