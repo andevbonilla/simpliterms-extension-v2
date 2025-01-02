@@ -73,6 +73,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
 
+        if (resultTERMS) {
+          
+        };
+
+        if (resultPRIVACY) {
+          
+        }
+
         chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: hostPage}});
         chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: hostPage}});
         
