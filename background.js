@@ -38,26 +38,21 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
               });
             };
 
-        }
-
-        let infoForFirstValidation = {
-            token,
-
         };
+
         // get the summary of the webpage in case is auth and there is one in the storage
         if (token !== "") {
+            // AUTH
+            // send all the neccesary info to the popup.js
             chrome.storage.session.get("SummariesSaved", (result) => {
-              
+              const data = result[hostPage];
+              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data });
             });
         }else{
             // NOT AUTH
             // send all the neccesary info to the popup.js
-            chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH', infoForFirstValidation });
-        }
-
-        
-        
-        
+            chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH'});
+        };
 
       };
 

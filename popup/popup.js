@@ -451,40 +451,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     // First proccess: validate authentication and after if the user have already a summary in cache 
     setIsLoading(true);
 
-        chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
-                setIsLoading(false);
-                console.log("OOOO8888", response.privacyAndTermsForPage)
-                // Validate authentication
-                if (response.privacyAndTermsForPage.token !== "") {
-                    // is authenticated
-                    const {id, terms, privacy} = response.privacyAndTermsForPage; 
-                    console.log("asdsssssssssss", response.privacyAndTermsForPage)
-                    if (id && id !== "" && terms && privacy) {
-                        // there is already terms for the page
-                        authPage.style.display = "none";
-                        questionPage.style.display = "none";
-                        dashboardPage.style.display = "block";
-                        sumamriesOfCurrentPage.id = id;
-                        sumamriesOfCurrentPage.privacy = terms;
-                        sumamriesOfCurrentPage.terms = privacy;
-                        showSummariesResult(privacy.summary, "privacy");
-                        showSummariesResult(terms.summary, "terms");
-                        setIsLoading(false);                        
-                    }else{
-                        authPage.style.display = "none";
-                        questionPage.style.display = "flex";
-                        dashboardPage.style.display = "none";
-                    }
-
-                }else{ 
-                    // isn't authenticated
-                    authPage.style.display = "flex";
-                    questionPage.style.display = "none";
-                    dashboardPage.style.display = "none";
-                };
-        });
-
-
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         if (message.action === 'TERMS_RESPOND') {
@@ -545,10 +511,38 @@ document.addEventListener("DOMContentLoaded", async() => {
                 });
             };
             
-        }else if(message.action === 'FIRST_VALIDATION') {
+        }else if(message.action === 'FIRST_VALIDATION_AUTH') {
+
+            // is authenticated
+            const {terms, privacy} = message.data; 
+
+            if (terms && privacy) {
+                // There is a summary saved
+                authPage.style.display = "none";
+                questionPage.style.display = "none";
+                dashboardPage.style.display = "block";
+                sumamriesOfCurrentPage.id = id;
+                sumamriesOfCurrentPage.privacy = terms;
+                sumamriesOfCurrentPage.terms = privacy;
+                showSummariesResult(privacy.summary, "privacy");
+                showSummariesResult(terms.summary, "terms");
+                setIsLoading(false);                        
+            }else{
+                // There isn't a summary saved
+                authPage.style.display = "none";
+                questionPage.style.display = "flex";
+                dashboardPage.style.display = "none"
+            };
+
+                    ;
             
         }else if(message.action === 'FIRST_VALIDATION_NOT_AUTH') {
-            
+
+            // Isn't authenticated
+            authPage.style.display = "flex";
+            questionPage.style.display = "none";
+            dashboardPage.style.display = "none";
+
         };
 
     });
