@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         };
     };
 
-    const showSummariesResult = (response, type) => {
+    const showSummariesResult = (summary, type) => {
 
         setIsLoading(false);
 
@@ -370,12 +370,12 @@ document.addEventListener("DOMContentLoaded", async() => {
         if (type === "terms") {
             changeTypeOfSummary(1);
             // summary list
-            showKeyPointsOfSUMMARIES(response.summary, termsUL);      
+            showKeyPointsOfSUMMARIES(summary, termsUL);      
         }
         if (type === "privacy") {
             changeTypeOfSummary(0);
             // summary list
-            showKeyPointsOfSUMMARIES(response.summary, privacyUL);  
+            showKeyPointsOfSUMMARIES(summary, privacyUL);  
         };
 
     };
@@ -450,36 +450,40 @@ document.addEventListener("DOMContentLoaded", async() => {
     // ==============================================================================================
     // First proccess: validate authentication and after if the user have already a summary in cache 
     setIsLoading(true);
-    chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
-        setIsLoading(false);
-        // Validate authentication
-        if (response.data.token !== "") {
-            // is authenticated
-            const {id, terms, privacy} = response.data.privacyAndTermsForPage; 
-            if (id !== "" && terms !== null && privacy !== null) {
-                // there is already terms for the page
-                authPage.style.display = "none";
-                questionPage.style.display = "none";
-                dashboardPage.style.display = "block";
-                sumamriesOfCurrentPage.id = id;
-                sumamriesOfCurrentPage.privacy = terms;
-                sumamriesOfCurrentPage.terms = privacy;
-                showSummariesResult(privacy, "privacy");
-                showSummariesResult(terms, "terms");
+    setTimeout(() => {
+        chrome.runtime.sendMessage({ action: "CHECK_FOR_INFO" }, function(response) {
                 setIsLoading(false);
-            };
+                console.log("OOOO8888", response.privacyAndTermsForPage)
+                // Validate authentication
+                if (response.privacyAndTermsForPage.token !== "") {
+                    // is authenticated
+                    const {id, terms, privacy} = response.privacyAndTermsForPage; 
+                    console.log("asdsssssssssss", response.privacyAndTermsForPage)
+                    if (id && id !== "" && terms && privacy) {
+                        // there is already terms for the page
+                        authPage.style.display = "none";
+                        questionPage.style.display = "none";
+                        dashboardPage.style.display = "block";
+                        sumamriesOfCurrentPage.id = id;
+                        sumamriesOfCurrentPage.privacy = terms;
+                        sumamriesOfCurrentPage.terms = privacy;
+                        showSummariesResult(privacy.summary, "privacy");
+                        showSummariesResult(terms.summary, "terms");
+                        setIsLoading(false);                        
+                    }else{
+                        authPage.style.display = "none";
+                        questionPage.style.display = "flex";
+                        dashboardPage.style.display = "none";
+                    }
 
-            authPage.style.display = "none";
-            questionPage.style.display = "flex";
-            dashboardPage.style.display = "none";
-
-        }else{ 
-            // isn't authenticated
-            authPage.style.display = "flex";
-            questionPage.style.display = "none";
-            dashboardPage.style.display = "none";
-        };
-    });
+                }else{ 
+                    // isn't authenticated
+                    authPage.style.display = "flex";
+                    questionPage.style.display = "none";
+                    dashboardPage.style.display = "none";
+                };
+        });
+    }, 200);
 
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
@@ -505,8 +509,10 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
                 sumamriesOfCurrentPage.id = message.result.host.toString().trim();
                 sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-                chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
-                    showSummariesResult(message.result.data.formatedResponse, "terms");
+                chrome.runtime.sendMessage({ action: "SAVE_OR_UPDATE_SUMMARY_INFO", sumamriesOfCurrentPage}, (res) => {
+                    if (res.sessionSummariesSaved) {
+                        showSummariesResult(res.sessionSummariesSaved[sumamriesOfCurrentPage.id].terms.summary, "terms");
+                    };
                 });
             };
             
@@ -532,8 +538,10 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
                 sumamriesOfCurrentPage.id = message.result.host.toString().trim();
                 sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-                chrome.storage.session.set({[sumamriesOfCurrentPage.id]: sumamriesOfCurrentPage}).then(()=>{
-                    showSummariesResult(message.result.data.formatedResponse, "privacy");
+                chrome.runtime.sendMessage({ action: "SAVE_OR_UPDATE_SUMMARY_INFO", sumamriesOfCurrentPage}, (res) => {
+                    if (res.sessionSummariesSaved) {
+                        showSummariesResult(res.sessionSummariesSaved[sumamriesOfCurrentPage.id].privacy.summary, "privacy");
+                    }
                 });
             };
             

@@ -228,7 +228,6 @@ const termsKeyWords = [
 ];
 
 // send host to background
-chrome.runtime.sendMessage({ hostInfo: window.location.host });
 chrome.runtime.sendMessage({ urlComplete: window.location });
 
 let termsLinks = [];

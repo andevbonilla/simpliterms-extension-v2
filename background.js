@@ -10,6 +10,9 @@ let privacyAndTermsForPage = {
   privacy: null
 };
 
+let sessionSummariesSaved = {};
+
+
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     // request two summaries and other info to backend
@@ -27,9 +30,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
 
-        console.log(resultTERMS, "terrnrnrn");
-        console.log(resultPRIVACY, "privaciiu");
-
         chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: currentPage}});
         chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: currentPage}});
         
@@ -44,15 +44,19 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // review if there is already a summary info for the current host
     // =================================================================================
     if (message.action === 'CHECK_FOR_INFO') {
-      const simplitermsValidOrigins = ["www.simpliterms.com", "simpliterms.com", "localhost:3000"];
-      if (simplitermsValidOrigins.includes(currentPage)) {
-       chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
-          if (cookie && cookie.value && cookie.value !== "") {
-            token = cookie.value;
-            sendResponse({data: { privacyAndTermsForPage, token: cookie.value } });
-          }
-        }); 
-      };
+      sendResponse({ privacyAndTermsForPage: {...privacyAndTermsForPage, token} }); 
+    };
+
+    // save or update the info of a summary for one webpage in order to cache it and avoid 
+    // unnecessary future request
+    // =================================================================================
+    if (message.action === 'SAVE_OR_UPDATE_SUMMARY_INFO') {
+        console.log(message, "oooooo[psss")
+        console.log(message.action, "oooooo[psss")
+        console.log(message.sumamriesOfCurrentPage, "oooooo[psss")
+        sessionSummariesSaved[message.sumamriesOfCurrentPage.id] = {...sessionSummariesSaved[message.sumamriesOfCurrentPage.id], ...message.sumamriesOfCurrentPage};
+        console.log(sessionSummariesSaved, "sessionSummariesSaved333")
+        sendResponse({ sessionSummariesSaved }); 
     };
 
     // save links for possible terms of use pages
@@ -73,19 +77,24 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     // save info of the current host page
     // =================================================================================
-    if (message.hostInfo) {
-      currentPage = validateHost(message.hostInfo) ? message.hostInfo : "";
-      chrome.storage.local.get([currentPage], function(result) {
-        if (result[currentPage]) {
-          privacyAndTermsForPage = result[currentPage];
-        };
-      });
-    };
-
-    // save info of the current host page
-    // =================================================================================
     if (message.urlComplete) {
+
       pageURLcomplete = message.urlComplete;
+      currentPage = validateHost(message.urlComplete.host) ? message.urlComplete.host.toString().trim() : "";
+
+      if (sessionSummariesSaved.length > 0 && sessionSummariesSaved[currentPage]) {
+        privacyAndTermsForPage = sessionSummariesSaved[currentPage]; 
+      };
+
+      const simplitermsValidOrigins = ["www.simpliterms.com", "simpliterms.com", "localhost:3000"];
+      if (simplitermsValidOrigins.includes(currentPage)) {
+        chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
+          if (cookie && cookie.value && cookie.value !== "") {
+              token = cookie.value;
+          }
+        });
+      };
+
     };
 
 });
@@ -95,7 +104,6 @@ async function sendDataToAPI(payload) {
 
   try {
 
-    console.log(token, payload, "asdasdasd")
     const response = await fetch('http://localhost:4200/api/summary/generate', {
       method: 'POST',
       headers: {
