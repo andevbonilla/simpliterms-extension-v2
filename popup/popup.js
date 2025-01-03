@@ -537,7 +537,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                 dashboardPage.style.display = "none"
             };
             
-        }else if(message.action === 'FIRST_VALIDATION_NOT_AUTH') {
+        }else if(message.action === 'NOT_AUTH') {
             console.log("fleg valiadtion not auth")
 
             setIsLoading(false);

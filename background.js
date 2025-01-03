@@ -63,7 +63,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   }
                });
             }else{
-              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH' });
+              chrome.runtime.sendMessage({ action: 'NOT_AUTH' });
             }
         });
 
@@ -105,25 +105,42 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   };
 
                   // step 2: Validate if normal error
+                  if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.status) {
+                  };
 
                   // step 3: Validate if Success respond
-
+                  if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
+                  };
 
                   chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: hostPage}});
                 };
 
                 if (resultPRIVACY) {
 
+                  // step 0: Validate if Server error
+                  if (resultPRIVACY.serverError && resultPRIVACY.serverError === true) {
+                  };
 
+                  // step 1: Validate if Auth error
+                  if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
+                  };
 
+                  // step 2: Validate if normal error
+                  if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.status) {
+                  };
 
-                  chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: hostPage}});
+                  // step 3: Validate if Success respond
+                  if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
+                  };
+
+                  chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: hostPage}});
                 };
                
-              
             }else{
-              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH' });
-            }
+              // Isn't authenticated
+              chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
+              chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
+            };
         });
 
     };
