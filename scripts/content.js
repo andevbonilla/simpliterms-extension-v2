@@ -253,7 +253,11 @@ const info = {
 };
 
 // send all the neccesary info to do the summary 
-chrome.runtime.sendMessage({ action: "IMPORTANT_INFO_FROM_PAGE", info});
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  if (message.action === 'SEND_INFO') {
+    chrome.runtime.sendMessage({ action: "IMPORTANT_INFO_FROM_PAGE", info});
+  }
+});
 
 
 

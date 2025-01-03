@@ -2,7 +2,6 @@ let termsLinksFound = [];
 let privacyLinksFound = [];
 let hostPage = "";
 let pageURLcomplete = {}; // object with all the info of url
-let token = "";
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -31,28 +30,42 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             const simplitermsValidOrigins = ["www.simpliterms.com", "simpliterms.com", "localhost:3000"];
 
             if (simplitermsValidOrigins.includes(hostPage)) {
-              chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
-                if (cookie && cookie.value && cookie.value !== "") {
-                    token = cookie.value;
-                }
-              });
+              
+                // is in simpliterms webpage
+                chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
+
+                  if (cookie && cookie.value && cookie.value !== "") {
+
+                      chrome.storage.sync.set({
+                        'xtoken': cookie.value
+                      });
+
+                  };
+
+                });
+                
             };
 
         };
 
         // get the summary of the webpage in case is auth and there is one in the storage
-        if (token !== "") {
-            // AUTH
-            // send all the neccesary info to the popup.js
-            chrome.storage.session.get("SummariesSaved", (result) => {
-              const data = result[hostPage];
-              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data });
-            });
-        }else{
-            // NOT AUTH
-            // send all the neccesary info to the popup.js
-            chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH'});
-        };
+        chrome.storage.sync.get('xtoken', ({xtoken}) => {
+            if (xtoken && xtoken !== "") {
+               // AUTH
+               // send all the neccesary info to the popup.js
+               chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
+                  let data = null;
+                  if (SummariesSaved && SummariesSaved[hostPage]) {
+                      data = SummariesSaved[hostPage];
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data }); 
+                  }else{
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data }); 
+                  }
+               });
+            }else{
+              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH' });
+            }
+        });
 
       };
 
@@ -71,43 +84,55 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
           politicsType: "privacy"   
         };
 
-        const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms), sendDataToAPI(payloadPrivacy)]);
+        // Validate if user has a token
+        chrome.storage.sync.get('xtoken', async({xtoken}) => {
+            if (xtoken && xtoken !== "") {
 
-        if (resultTERMS) {
-          
-        };
+                // IS AUTH
+                const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms, xtoken), sendDataToAPI(payloadPrivacy, xtoken)]);
 
-        if (resultPRIVACY) {
-          
-        }
+                console.log(resultTERMS , "resultTERMS")
+                console.log(resultPRIVACY , "resultPRIVACY")
 
-        chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: hostPage}});
-        chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: hostPage}});
-        
+                if (resultTERMS) {
+
+                  // step 0: Validate if Server error
+                  if (resultTERMS.serverError && resultTERMS.serverError === true) {
+                  };
+
+                  // step 1: Validate if Auth error
+                  if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
+                  };
+
+                  // step 2: Validate if normal error
+
+                  // step 3: Validate if Success respond
+
+
+                  chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {...resultTERMS, host: hostPage}});
+                };
+
+                if (resultPRIVACY) {
+
+
+
+
+                  chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {...resultPRIVACY, host: hostPage}});
+                };
+               
+              
+            }else{
+              chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_NOT_AUTH' });
+            }
+        });
+
     };
 
-    // request two summaries and other info to backend
-    // =================================================================================
-    if (message.action === 'DELETE_TOKEN') {
-        token = "";   
-    };
-
-    // save or update the info of a summary for one webpage in order to cache it and avoid 
-    // unnecessary future request
-    // =================================================================================
-    if (message.action === 'SAVE_OR_UPDATE_SUMMARY_INFO') {
-        console.log(message, "oooooo[psss")
-        console.log(message.action, "oooooo[psss")
-        console.log(message.sumamriesOfhostPage, "oooooo[psss")
-        sessionSummariesSaved[message.sumamriesOfhostPage.id] = {...sessionSummariesSaved[message.sumamriesOfhostPage.id], ...message.sumamriesOfhostPage};
-        console.log(sessionSummariesSaved, "sessionSummariesSaved333")
-        sendResponse({ sessionSummariesSaved }); 
-    };
 
 });
 
 
-async function sendDataToAPI(payload) {
+async function sendDataToAPI(payload, token) {
 
   try {
 

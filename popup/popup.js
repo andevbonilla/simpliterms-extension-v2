@@ -450,6 +450,13 @@ document.addEventListener("DOMContentLoaded", async() => {
     // First proccess: validate authentication and after if the user have already a summary in cache 
     setIsLoading(true);
 
+    // Send authorization to send info from the content.js towards the background.js
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const tabId = tabs[0].id;
+        chrome.tabs.sendMessage(tabId, { action: 'SEND_INFO' });
+    });
+
+
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         if (message.action === 'TERMS_RESPOND') {
@@ -462,7 +469,6 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 2. validate is auth
             const isAuth = validateIsAuthenticated(message.result);
             if (!isAuth) {
-                chrome.runtime.sendMessage({ action: "DELETE_TOKEN" });
                 return;
             };
             // 3. error: All types of errors except server errors
@@ -511,12 +517,12 @@ document.addEventListener("DOMContentLoaded", async() => {
             };
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
+            console.log("fleg valiadtion auth")
 
-            // is authenticated
-            const {terms, privacy} = message.data;
             setIsLoading(false); 
-
-            if (terms && privacy) {
+            // Is Authenticated
+            if (message.data && message.data !== null) {
+                const {terms, privacy} = message.data;
                 // There is a summary saved
                 authPage.style.display = "none";
                 questionPage.style.display = "none";
@@ -524,19 +530,17 @@ document.addEventListener("DOMContentLoaded", async() => {
                 sumamriesOfCurrentPage.privacy = privacy;
                 sumamriesOfCurrentPage.terms = terms;
                 showSummariesResult(privacy.summary, "privacy");
-                showSummariesResult(terms.summary, "terms");                        
+                showSummariesResult(terms.summary, "terms");          
             }else{
-                // There isn't a summary saved
                 authPage.style.display = "none";
                 questionPage.style.display = "flex";
                 dashboardPage.style.display = "none"
             };
-
             
         }else if(message.action === 'FIRST_VALIDATION_NOT_AUTH') {
+            console.log("fleg valiadtion not auth")
 
             setIsLoading(false);
-
             // Isn't authenticated
             authPage.style.display = "flex";
             questionPage.style.display = "none";
