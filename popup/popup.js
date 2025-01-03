@@ -224,68 +224,18 @@ document.addEventListener("DOMContentLoaded", async() => {
         }
     };
 
-    const validateIsAuthenticated = (result) => {
-        if (result.data && result.data.msj && result.data.msj === "Auth failed" && result.data.res === false) {
-            setIsLoading(false);
-            authPage.style.display = "flex";
-            questionPage.style.display = "none";
-            dashboardPage.style.display = "none";
-            return false;
-        }else{
-            return true;
-        }
-    };
-
-    const validateIfNormalError = (result) => {
-        if (result.data && result.data.res === false && !result.data.status) {
-
-            setIsLoading(false);
-            questionPage.style.display = "none";
-            termsUL.style.display = "none";
-            privacyUL.style.display = "none";
-            odometer.style.display = "none";
-            warningInfo.style.display = "none";
-            warningClosePopup.style.display = "none";
-            infoOfThePage.style.display = "none";
-
-            dashboardPage.style.display = "block";
-            dashboard.style.display = "block";
-            errorBox.style.display = "block";
-            errorBoxBody.textContent = result.data.message;
-
-            return true;
-
-        }else{
-
-            return false;
-
-        }
-    };
-
-    const validateIfServerError = (result) => {
-        if (result.serverError && result.serverError === true) {
-
-            setIsLoading(false);
-            questionPage.style.display = "none";
-            infoOfThePage.style.display = "none";
-            termsUL.style.display = "none";
-            privacyUL.style.display = "none";
-            odometer.style.display = "none";
-            warningInfo.style.display = "none";
-            warningClosePopup.style.display = "none";
-
-            dashboardPage.style.display = "block";
-            dashboard.style.display = "block";
-            errorBox.style.display = "block";
-            errorBoxBody.textContent = result.message;
-
-            return true;
-
-        }else{
-
-            return false;
-
-        }
+    const showError = () => {
+        setIsLoading(false);
+        questionPage.style.display = "none";
+        infoOfThePage.style.display = "none";
+        termsUL.style.display = "none";
+        privacyUL.style.display = "none";
+        odometer.style.display = "none";
+        warningInfo.style.display = "none";
+        warningClosePopup.style.display = "none";
+        dashboardPage.style.display = "block";
+        dashboard.style.display = "block";
+        errorBox.style.display = "block";
     };
 
     // aux functions for showSummariesResult
@@ -461,60 +411,42 @@ document.addEventListener("DOMContentLoaded", async() => {
         
         if (message.action === 'TERMS_RESPOND') {
 
-            // 1. validate not server error
-            const isServerError = validateIfServerError(message.result);
-            if (!!isServerError) {
+            // 1. validate as server error
+            if (message.result.type === "SERVER_ERROR") {
+                showError();
+                errorBoxBody.textContent = result.message;
                 return;
-            };
-            // 2. validate is auth
-            const isAuth = validateIsAuthenticated(message.result);
-            if (!isAuth) {
+            }
+            // 2. validate as normal error
+            if (message.result.type === "NORMAL_ERROR") {
+                showError();
+                errorBoxBody.textContent = result.data.message;
                 return;
-            };
-            // 3. error: All types of errors except server errors
-            const isBackError = validateIfNormalError(message.result);
-            if (!!isBackError) {
-                return;
-            };
-            // 4. if success request 
-            if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
-                sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-                sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-                chrome.runtime.sendMessage({ action: "SAVE_OR_UPDATE_SUMMARY_INFO", sumamriesOfCurrentPage}, (res) => {
-                    if (res.sessionSummariesSaved) {
-                        showSummariesResult(res.sessionSummariesSaved[sumamriesOfCurrentPage.id].terms.summary, "terms");
-                    };
-                });
-            };
+            }
+            // 4. if success request  
+            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
+            sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
+            showSummariesResult(message.result.data.formatedResponse, "terms");
+            
             
         } else if (message.action === 'PRIVACY_RESPOND') {
 
-            // 1. validate not server error
-            const isServerError = validateIfServerError(message.result);
-            if (!!isServerError) {
+            // 1. validate as server error
+            if (message.result.type === "SERVER_ERROR") {
+                showError();
+                errorBoxBody.textContent = result.message;
                 return;
-            };
-            // 2. validate is auth
-            const isAuth = validateIsAuthenticated(message.result);
-            if (!isAuth) {
-                chrome.runtime.sendMessage({ action: "DELETE_TOKEN" });
+            }
+            // 2. validate as normal error
+            if (message.result.type === "NORMAL_ERROR") {
+                showError();
+                errorBoxBody.textContent = result.data.message;
                 return;
-            };
-            // 3. error: All types of errors except server errors
-            const isBackError = validateIfNormalError(message.result);
-            if (!!isBackError) {
-                return;
-            };
-            // 4. if success request 
-            if (message.result.data && message.result.data.status && message.result.data.status === "success" && message.result.data.formatedResponse) {
-                sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-                sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-                chrome.runtime.sendMessage({ action: "SAVE_OR_UPDATE_SUMMARY_INFO", sumamriesOfCurrentPage}, (res) => {
-                    if (res.sessionSummariesSaved) {
-                        showSummariesResult(res.sessionSummariesSaved[sumamriesOfCurrentPage.id].privacy.summary, "privacy");
-                    }
-                });
-            };
+            }
+            // 4. if success request  
+            sumamriesOfCurrentPage.id = message.result.host.toString().trim();
+            sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
+            showSummariesResult(message.result.data.formatedResponse, "privacy");
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
             console.log("fleg valiadtion auth")
@@ -538,10 +470,9 @@ document.addEventListener("DOMContentLoaded", async() => {
             };
             
         }else if(message.action === 'NOT_AUTH') {
-            console.log("fleg valiadtion not auth")
 
-            setIsLoading(false);
             // Isn't authenticated
+            setIsLoading(false);
             authPage.style.display = "flex";
             questionPage.style.display = "none";
             dashboardPage.style.display = "none";

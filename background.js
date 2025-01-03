@@ -98,7 +98,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                   // step 0: Validate if Server error
                   if (resultTERMS.serverError && resultTERMS.serverError === true) {
-                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "ERROR", ...resultTERMS, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", host: hostPage}});
                   };
 
                   // step 1: Validate if Auth error
@@ -108,7 +108,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                   // step 2: Validate if normal error
                   if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.status) {
-                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "ERROR", ...resultTERMS, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
                   };
 
                   // step 3: Validate if Success respond
@@ -122,7 +122,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                   // step 0: Validate if Server error
                   if (resultPRIVACY.serverError && resultPRIVACY.serverError === true) {
-                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "ERROR", ...resultPRIVACY, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
                   };
 
                   // step 1: Validate if Auth error
@@ -132,7 +132,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                   // step 2: Validate if normal error
                   if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.status) {
-                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "ERROR", ...resultPRIVACY, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
                   };
 
                   // step 3: Validate if Success respond
@@ -175,7 +175,7 @@ async function sendDataToAPI(payload, token) {
   } catch (error) {
     return {
         serverError: true,
-        message: "Oops sorry there was a server error please try again later."
+        message: "Oops sorry there was a server error please try again later." 
       };
   }
 }
