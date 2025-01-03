@@ -406,7 +406,6 @@ document.addEventListener("DOMContentLoaded", async() => {
         chrome.tabs.sendMessage(tabId, { action: 'SEND_INFO' });
     });
 
-
     chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         
         if (message.action === 'TERMS_RESPOND') {
@@ -449,7 +448,6 @@ document.addEventListener("DOMContentLoaded", async() => {
             showSummariesResult(message.result.data.formatedResponse, "privacy");
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
-            console.log("fleg valiadtion auth")
 
             setIsLoading(false); 
             // Is Authenticated

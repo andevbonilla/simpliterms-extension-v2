@@ -2,6 +2,7 @@ let termsLinksFound = [];
 let privacyLinksFound = [];
 let hostPage = "";
 let pageURLcomplete = {}; // object with all the info of url
+let allSumamriesSaved = {};
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -56,6 +57,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
                   let data = null;
                   if (SummariesSaved && SummariesSaved[hostPage]) {
+                      allSumamriesSaved = SummariesSaved;
                       data = SummariesSaved[hostPage];
                       chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data }); 
                   }else{
@@ -96,23 +98,21 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                 if (resultTERMS) {
 
-                  // step 0: Validate if Server error
                   if (resultTERMS.serverError && resultTERMS.serverError === true) {
-                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", host: hostPage}});
-                  };
-
-                  // step 1: Validate if Auth error
-                  if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
+                      // step 0: Validate if Server error
+                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
+                  }else if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
+                      // step 1: Validate if Auth error
                       chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
-                  };
-
-                  // step 2: Validate if normal error
-                  if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.status) {
+                  }else if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.status) {
+                      // step 2: Validate if normal error
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
-                  };
-
-                  // step 3: Validate if Success respond
-                  if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
+                  }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
+                      // step 3: Validate if Success respond 
+                      allSumamriesSaved = {...allSumamriesSaved, hostPage: {...allSumamriesSaved[hostPage], terms: resultTERMS.data}}
+                      chrome.storage.sync.set({
+                        'SummariesSaved': allSumamriesSaved
+                      });
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SUCCESS", ...resultTERMS, host: hostPage}});
                   };
                   
@@ -120,23 +120,21 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                 if (resultPRIVACY) {
 
-                  // step 0: Validate if Server error
                   if (resultPRIVACY.serverError && resultPRIVACY.serverError === true) {
+                      // step 0: Validate if Server error  
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
-                  };
-
-                  // step 1: Validate if Auth error
-                  if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
+                  }else if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
+                      // step 1: Validate if Auth error  
                       chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
-                  };
-
-                  // step 2: Validate if normal error
-                  if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.status) {
+                  }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.status) {
+                      // step 2: Validate if normal error  
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
-                  };
-
-                  // step 3: Validate if Success respond
-                  if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
+                  }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
+                      // step 3: Validate if Success respond  
+                      allSumamriesSaved = {...allSumamriesSaved, hostPage: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data}}
+                      chrome.storage.sync.set({
+                        'SummariesSaved': allSumamriesSaved
+                      });
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SUCCESS", ...resultPRIVACY, host: hostPage}});
                   };
        
