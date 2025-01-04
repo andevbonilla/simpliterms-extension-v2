@@ -41,7 +41,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                         'xtoken': cookie.value
                       });
 
-                  };
+                  }else{
+                    
+                      chrome.storage.sync.set({
+                          'xtoken': ""
+                      });
+
+                  }
 
                 });
                 
