@@ -71,13 +71,13 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                // AUTH
                // send all the neccesary info to the popup.js
                chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
-                  console.log(SummariesSaved, "bellet")
                   let data = null;
                   if (SummariesSaved && SummariesSaved[hostPage]) {
                       allSumamriesSaved = SummariesSaved;
                       data = SummariesSaved[hostPage];
                       chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
                   }else{
+                      allSumamriesSaved = SummariesSaved;
                       chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
                   }
                });
