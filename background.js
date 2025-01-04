@@ -109,7 +109,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
                   }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                       // step 3: Validate if Success respond 
-                      allSumamriesSaved = {...allSumamriesSaved, hostPage: {...allSumamriesSaved[hostPage], terms: resultTERMS.data}}
+                      allSumamriesSaved = {...allSumamriesSaved, hostPage, terms: resultTERMS.data}
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
@@ -131,7 +131,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
                   }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                       // step 3: Validate if Success respond  
-                      allSumamriesSaved = {...allSumamriesSaved, hostPage: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data}}
+                      allSumamriesSaved = {...allSumamriesSaved, hostPage, terms: resultPRIVACY.data}
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
