@@ -248,7 +248,7 @@ h2{
     padding: .5rem .8rem;
 }
 
-.red-light-ball,.yellow-light-ball,.green-light-ball {
+.red-light-ball,.yellow-light-ball,.green-light-ball,.red-light-ball-active, .yellow-light-ball-active, .green-light-ball-active {
     width: 1.3rem;
     height: 1.3rem;
     border-radius: 100%;

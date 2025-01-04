@@ -425,7 +425,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 4. if success request  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-            showSummariesResult(message.result.data.formatedResponse, "terms");
+            showSummariesResult(message.result.data.formatedResponse.summary, "terms");
             
             
         } else if (message.action === 'PRIVACY_RESPOND') {
@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 4. if success request  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-            showSummariesResult(message.result.data.formatedResponse, "privacy");
+            showSummariesResult(message.result.data.formatedResponse.summary, "privacy");
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
 

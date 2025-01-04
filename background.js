@@ -61,6 +61,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                // AUTH
                // send all the neccesary info to the popup.js
                chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
+                  console.log(SummariesSaved, "bellet")
                   let data = null;
                   if (SummariesSaved && SummariesSaved[hostPage]) {
                       allSumamriesSaved = SummariesSaved;
@@ -99,9 +100,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 // IS AUTH
                 const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms, xtoken), sendDataToAPI(payloadPrivacy, xtoken)]);
 
-                console.log(resultTERMS , "resultTERMS")
-                console.log(resultPRIVACY , "resultPRIVACY")
-
                 if (resultTERMS) {
 
                   if (resultTERMS.serverError && resultTERMS.serverError === true) {
@@ -115,7 +113,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
                   }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                       // step 3: Validate if Success respond 
-                      allSumamriesSaved = {...allSumamriesSaved, hostPage, terms: resultTERMS.data}
+                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], terms: resultTERMS.data.formatedResponse}};
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
@@ -137,7 +135,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
                   }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                       // step 3: Validate if Success respond  
-                      allSumamriesSaved = {...allSumamriesSaved, hostPage, terms: resultPRIVACY.data}
+                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data.formatedResponse}};
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
