@@ -3,6 +3,7 @@ let privacyLinksFound = [];
 let hostPage = "";
 let pageURLcomplete = {}; // object with all the info of url
 let allSumamriesSaved = {};
+let usernameTemp = "";
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -33,22 +34,31 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             if (simplitermsValidOrigins.includes(hostPage)) {
               
                 // is in simpliterms webpage
+                // 1. save or delete the token from cookies
                 chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
-
                   if (cookie && cookie.value && cookie.value !== "") {
-
                       chrome.storage.sync.set({
                         'xtoken': cookie.value
                       });
-
                   }else{
-                    
                       chrome.storage.sync.set({
                           'xtoken': ""
                       });
-
                   }
+                });
 
+                // 2. save or delete the username from cookies
+                chrome.cookies.get({ url: pageURLcomplete.origin, name: "username" }, (username) => {
+                  if (username && username.value && username.value !== "") {
+                      usernameTemp = username.value;
+                      chrome.storage.sync.set({
+                        'username': username.value
+                      });
+                  }else{
+                      chrome.storage.sync.set({
+                          'username': ""
+                      });
+                  }
                 });
                 
             };
@@ -66,9 +76,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   if (SummariesSaved && SummariesSaved[hostPage]) {
                       allSumamriesSaved = SummariesSaved;
                       data = SummariesSaved[hostPage];
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data }); 
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
                   }else{
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data }); 
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
                   }
                });
             }else{

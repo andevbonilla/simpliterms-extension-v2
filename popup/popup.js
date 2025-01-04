@@ -206,6 +206,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     const redBall = document.getElementById("red-ball");
     const yellowBall = document.getElementById("yellow-ball");
     const greenBall = document.getElementById("green-ball");
+    const usernameText = document.getElementById("username-element");
 
     // set programming UI functions
     // ========================================================================================
@@ -449,7 +450,10 @@ document.addEventListener("DOMContentLoaded", async() => {
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
 
-            setIsLoading(false); 
+            setIsLoading(false);
+            if (message.username && message.username !== "") {
+                usernameText.textContent = message.username;
+            }; 
             // Is Authenticated
             if (message.data && message.data !== null) {
                 const {terms, privacy} = message.data;
