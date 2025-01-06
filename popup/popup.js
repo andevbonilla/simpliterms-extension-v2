@@ -53,6 +53,12 @@ document.addEventListener("DOMContentLoaded", async() => {
     const labelTermsPage = document.getElementById("terms-page-label");
     labelTermsPage.textContent = chrome.i18n.getMessage('labelTermsPage');
 
+    const questionPageHeader = document.getElementById("question-page-header");
+    questionPageHeader.textContent = chrome.i18n.getMessage('questionPageHeader');
+
+    const startButton = document.getElementById("start-button");
+    startButton.textContent = chrome.i18n.getMessage('buttonStartQuestionPage');
+
     // randomly display curious data 
     let idiom = chrome.i18n.getMessage('@@ui_locale').split("_")[0]
     let curiosidades = [
@@ -193,7 +199,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     const infoButton = document.getElementById("info-button");
     const closeInfoButton = document.getElementById("close-info-button");
     const reloadButton = document.getElementById("reload-button");
-    const startButton = document.getElementById("start-button");
     const dashboard = document.getElementById("dashboard");
     const odometer = document.getElementById("odometer");
     const errorBox = document.getElementById("error-box");
@@ -454,7 +459,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             reloadButton.style.display = "block";
             infoButton.style.display = "block";
             termsExtratedFrom = message.result.extractedFrom;
-            h4CurrentPage.textContent = message.result.host;  
+            h4CurrentPage.textContent = message.result.host;
+            currentHost = message.result.host;  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
             showSummariesResult(message.result.data.formatedResponse.summary, "terms");
@@ -479,7 +485,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             reloadButton.style.display = "block";
             infoButton.style.display = "block"; 
             privacyExtratedFrom = message.result.extractedFrom;
-            h4CurrentPage.textContent = message.result.host; 
+            h4CurrentPage.textContent = message.result.host;
+            currentHost = message.result.host; 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
             showSummariesResult(message.result.data.formatedResponse.summary, "privacy");
@@ -489,7 +496,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             setIsLoading(false);
             if (message.username && message.username !== "") {
                 usernameText.textContent = message.username;
-            }; 
+            };
+            currentHost = message.hostPage; 
             // Is Authenticated
             if (message.data && message.data !== null) {
                 const {terms, privacy} = message.data;
@@ -497,7 +505,6 @@ document.addEventListener("DOMContentLoaded", async() => {
                 termsExtratedFrom = terms.extractedFrom;
                 privacyExtratedFrom = privacy.extractedFrom;
                 h4CurrentPage.textContent = message.hostPage;
-                currentHost = message.hostPage;
                 reloadButton.style.display = "block";
                 infoButton.style.display = "block"; 
                 authPage.style.display = "none";
