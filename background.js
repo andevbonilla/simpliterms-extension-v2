@@ -118,7 +118,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   }else if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
                       // step 1: Validate if Auth error
                       chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
-                  }else if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.status) {
+                  }else if (resultTERMS.data && resultTERMS.data.res === false) {
                       // step 2: Validate if normal error
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
                   }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
@@ -140,7 +140,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   }else if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
                       // step 1: Validate if Auth error  
                       chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
-                  }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.status) {
+                  }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
                       // step 2: Validate if normal error  
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
                   }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
