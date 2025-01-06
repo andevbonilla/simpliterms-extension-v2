@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", async() => {
         privacy: null
     }
 
+    let termsExtratedFrom = "";
+    let privacyExtratedFrom = "";
+
     // principal pages
     // ========================================================================================
     const questionPage = document.getElementById("question-page");
@@ -46,15 +49,8 @@ document.addEventListener("DOMContentLoaded", async() => {
     const labelCurrentPage = document.getElementById("current-page-label");
     labelCurrentPage.textContent = chrome.i18n.getMessage('labelCurrentPage');
 
-    const labelPrivacyPage = document.getElementById("privacy-page-label");
-    labelPrivacyPage.textContent = chrome.i18n.getMessage('labelPrivacyPage');
-
     const labelTermsPage = document.getElementById("terms-page-label");
     labelTermsPage.textContent = chrome.i18n.getMessage('labelTermsPage');
-
-    const labelAboutSimpli = document.getElementById("about-simpli-label");
-    labelAboutSimpli.textContent = chrome.i18n.getMessage('labelAboutSimpli');
-
 
     // randomly display curious data 
     let idiom = chrome.i18n.getMessage('@@ui_locale').split("_")[0]
@@ -209,6 +205,10 @@ document.addEventListener("DOMContentLoaded", async() => {
     const greenBall = document.getElementById("green-ball");
     const usernameText = document.getElementById("username-element");
 
+    const h4CurrentPage = document.getElementById("current-page-h4");
+    const h4PrivacyPage = document.getElementById("privacy-page-h4");
+    const h4TermsPage = document.getElementById("terms-page-h4");
+
     // set programming UI functions
     // ========================================================================================
 
@@ -225,6 +225,14 @@ document.addEventListener("DOMContentLoaded", async() => {
             mainContainer.style.display = "flex";
         }
     };
+
+    const showQuestionPage = () => {
+        reloadButton.style.display = "none";
+        infoButton.style.display = "none";
+        authPage.style.display = "none";
+        questionPage.style.display = "flex";
+        dashboardPage.style.display = "none";
+    }
 
     const showError = () => {
         setIsLoading(false);
@@ -348,7 +356,9 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (sumamriesOfCurrentPage.terms) {
                 // odometer
                 gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.terms.grade);
-                gradeText.textContent = sumamriesOfCurrentPage.terms.gradeJustification;  
+                gradeText.textContent = sumamriesOfCurrentPage.terms.gradeJustification;
+                // info page  
+                h4TermsPage.textContent = termsExtratedFrom;
             };
 
             termsUL.style.display = "flex";
@@ -359,7 +369,9 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (sumamriesOfCurrentPage.privacy) {
                 // odometer
                 gradeLevel.textContent = adjustTitleAndLightGrade(sumamriesOfCurrentPage.privacy.grade);
-                gradeText.textContent = sumamriesOfCurrentPage.privacy.gradeJustification;   
+                gradeText.textContent = sumamriesOfCurrentPage.privacy.gradeJustification;  
+                // info page  
+                h4TermsPage.textContent = privacyExtratedFrom; 
             };
 
             termsUL.style.display = "none";
@@ -383,9 +395,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         chrome.runtime.sendMessage({ action: 'RELOAD_SUMMARY' }, (res) => {
             if (res.result === true) {
                 setIsLoading(false);
-                authPage.style.display = "none";
-                questionPage.style.display = "flex";
-                dashboardPage.style.display = "none";
+                showQuestionPage();
             }
         });
     });
@@ -438,7 +448,11 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = result.data.message;
                 return;
             }
-            // 4. if success request  
+            // 4. if success request
+            reloadButton.style.display = "block";
+            infoButton.style.display = "block";
+            termsExtratedFrom = message.result.extractedFrom;
+            h4CurrentPage.textContent = message.result.host;  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
             showSummariesResult(message.result.data.formatedResponse.summary, "terms");
@@ -459,7 +473,11 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = result.data.message;
                 return;
             }
-            // 4. if success request  
+            // 4. if success request
+            reloadButton.style.display = "block";
+            infoButton.style.display = "block"; 
+            privacyExtratedFrom = message.result.extractedFrom;
+            h4CurrentPage.textContent = message.result.host; 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
             sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
             showSummariesResult(message.result.data.formatedResponse.summary, "privacy");
@@ -474,6 +492,11 @@ document.addEventListener("DOMContentLoaded", async() => {
             if (message.data && message.data !== null) {
                 const {terms, privacy} = message.data;
                 // There is a summary saved
+                termsExtratedFrom = terms.extractedFrom;
+                privacyExtratedFrom = privacy.extractedFrom;
+                h4CurrentPage.textContent = message.hostPage;
+                reloadButton.style.display = "block";
+                infoButton.style.display = "block"; 
                 authPage.style.display = "none";
                 questionPage.style.display = "none";
                 dashboardPage.style.display = "block";
@@ -482,9 +505,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                 showSummariesResult(privacy.summary, "privacy");
                 showSummariesResult(terms.summary, "terms");          
             }else{
-                authPage.style.display = "none";
-                questionPage.style.display = "flex";
-                dashboardPage.style.display = "none";
+                showQuestionPage();
             };
             
         }else if(message.action === 'NOT_AUTH') {

@@ -75,10 +75,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                   if (SummariesSaved && SummariesSaved[hostPage]) {
                       allSumamriesSaved = SummariesSaved;
                       data = SummariesSaved[hostPage];
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp, hostPage }); 
                   }else{
                       allSumamriesSaved = SummariesSaved;
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp }); 
+                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', data, username: usernameTemp, hostPage }); 
                   }
                });
             }else{
@@ -123,11 +123,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS, host: hostPage}});
                   }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                       // step 3: Validate if Success respond 
-                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], terms: resultTERMS.data.formatedResponse}};
+                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], terms: {...resultTERMS.data.formatedResponse, extractedFrom: resultTERMS.data.extractedFrom}}};
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
-                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SUCCESS", ...resultTERMS, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SUCCESS", ...resultTERMS, extractedFrom: resultTERMS.data.extractedFrom, host: hostPage}});
                   };
                   
                 };
@@ -145,11 +145,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY, host: hostPage}});
                   }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                       // step 3: Validate if Success respond  
-                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data.formatedResponse}};
+                      allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], privacy: {...resultPRIVACY.data.formatedResponse, extractedFrom: resultPRIVACY.data.extractedFrom}}};
                       chrome.storage.sync.set({
                         'SummariesSaved': allSumamriesSaved
                       });
-                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SUCCESS", ...resultPRIVACY, host: hostPage}});
+                      chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SUCCESS", ...resultPRIVACY, extractedFrom: resultPRIVACY.data.extractedFrom, host: hostPage}});
                   };
        
                 };

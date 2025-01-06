@@ -381,8 +381,11 @@ h2{
     transition-duration: 200ms;
 }
 
-
-
+.h4-info{
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 80%;
+}
 
 @keyframes rotate {
   from {
