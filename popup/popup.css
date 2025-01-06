@@ -194,10 +194,6 @@ h2{
     font-size: .9rem;
 }
 
-.navbar-icon-button:last-child{
-    margin-right: 0
-};
-
 .navbar-icon-button{
     cursor: pointer;
     display: flex;
@@ -209,7 +205,17 @@ h2{
     padding: .57rem;
     background-color: #F5F5F5;
     border: none;
-    margin-right: .7rem;
+    margin-left: .7rem;
+}
+
+.navbar-icon-button:hover{
+    transition: all;
+    transition-duration: 300ms;
+    background-color: #dddddd;
+}
+
+.navbar-icon-button:first-of-type{
+    margin-left: 0;
 }
 
 .navbar-icon-button:last-of-type{
@@ -252,11 +258,12 @@ h2{
     height: 1.3rem;
     border-radius: 100%;
     opacity: 50%;
-    margin-bottom: .5rem;
+    margin-bottom: .4rem;
 }
 
 .red-light-ball{
     background-color: red;
+    margin-bottom: 0;
 }
 .yellow-light-ball{
     background-color: yellow;
@@ -267,6 +274,7 @@ h2{
 
 .red-light-ball-active {
     opacity: 100%;
+    margin-bottom: 0;
     background-color: red;
     box-shadow: 
         0 0 20px red,
@@ -360,6 +368,19 @@ h2{
     border: none;
     cursor: pointer;
 }
+
+.start-button:hover{
+    background-color: #6324DF;
+    transition: all;
+    transform: scale(120%);
+    transition-duration: 200ms;
+}
+
+.start-button{
+    transition: all;
+    transition-duration: 200ms;
+}
+
 
 
 
