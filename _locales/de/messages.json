@@ -43,12 +43,12 @@
     "message": "Die Bedingungen wurden von dieser Seite übernommen:",
     "description": "Zeigt die Seite, von der die Nutzungsbedingungen stammen"
   },
-  "labelPrivacyPage": {
-    "message": "Die Richtlinien wurden von dieser Seite übernommen:",
-    "description": "Zeigt die Seite, von der die Datenschutzrichtlinien stammen"
+  "questionPageHeader": {
+    "message": "Erfahren Sie, was die rechtlichen und Datenschutzbedingungen über diese Seite sagen:",
+    "description": "Stellt Informationen zu den rechtlichen und Datenschutzbedingungen der Seite bereit"
   },
-  "labelAboutSimpli": {
-    "message": "Über SimpliTerms:",
-    "description": "Bietet eine kurze Übersicht über SimpliTerms"
+  "buttonStartQuestionPage": {
+    "message": "Starten",
+    "description": "Beginnt den Frageprozess"
   }
 }

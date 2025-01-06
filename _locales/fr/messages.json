@@ -43,12 +43,12 @@
     "message": "Les conditions ont été obtenues depuis cette page :",
     "description": "Indique la page d'où les Conditions d'utilisation ont été obtenues"
   },
-  "labelPrivacyPage": {
-    "message": "Les politiques ont été obtenues depuis cette page :",
-    "description": "Indique la page d'où la Politique de confidentialité a été obtenue"
+  "questionPageHeader": {
+    "message": "Découvrez ce que disent les conditions légales et de confidentialité sur cette page :",
+    "description": "Fournit des informations sur les conditions légales et de confidentialité de la page"
   },
-  "labelAboutSimpli": {
-    "message": "À propos de SimpliTerms :",
-    "description": "Fournit un aperçu succinct de SimpliTerms"
+  "buttonStartQuestionPage": {
+    "message": "Commencer",
+    "description": "Démarre le processus de questions"
   }
 }

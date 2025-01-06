@@ -43,12 +43,12 @@
     "message": "利用規約はこのページから取得されました:",
     "description": "利用規約が取得されたページを示します"
   },
-  "labelPrivacyPage": {
-    "message": "ポリシーはこのページから取得されました:",
-    "description": "プライバシーポリシーが取得されたページを示します"
+  "questionPageHeader": {
+    "message": "このページの法的およびプライバシー条件について確認してください：",
+    "description": "ページの法的およびプライバシー条件に関する情報を提供します"
   },
-  "labelAboutSimpli": {
-    "message": "SimpliTermsについて:",
-    "description": "SimpliTermsの概要を簡潔に説明します"
+  "buttonStartQuestionPage": {
+    "message": "開始",
+    "description": "質問プロセスを開始する"
   }
 }

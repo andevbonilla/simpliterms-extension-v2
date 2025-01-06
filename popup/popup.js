@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     let termsExtratedFrom = "";
     let privacyExtratedFrom = "";
+    let currentHost = "";
 
     // principal pages
     // ========================================================================================
@@ -206,8 +207,8 @@ document.addEventListener("DOMContentLoaded", async() => {
     const usernameText = document.getElementById("username-element");
 
     const h4CurrentPage = document.getElementById("current-page-h4");
-    const h4PrivacyPage = document.getElementById("privacy-page-h4");
     const h4TermsPage = document.getElementById("terms-page-h4");
+    const hostPage = document.getElementById("host-page");
 
     // set programming UI functions
     // ========================================================================================
@@ -227,6 +228,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     };
 
     const showQuestionPage = () => {
+        hostPage.textContent = currentHost;
         reloadButton.style.display = "none";
         infoButton.style.display = "none";
         authPage.style.display = "none";
@@ -495,6 +497,7 @@ document.addEventListener("DOMContentLoaded", async() => {
                 termsExtratedFrom = terms.extractedFrom;
                 privacyExtratedFrom = privacy.extractedFrom;
                 h4CurrentPage.textContent = message.hostPage;
+                currentHost = message.hostPage;
                 reloadButton.style.display = "block";
                 infoButton.style.display = "block"; 
                 authPage.style.display = "none";

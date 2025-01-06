@@ -43,12 +43,12 @@
     "message": "条款来源页面：",
     "description": "指示获取使用条款的页面"
   },
-  "labelPrivacyPage": {
-    "message": "政策来源页面：",
-    "description": "指示获取隐私政策的页面"
+  "questionPageHeader": {
+    "message": "了解此页面的法律和隐私条款内容：",
+    "description": "显示关于页面法律和隐私条款的信息"
   },
-  "labelAboutSimpli": {
-    "message": "关于SimpliTerms：",
-    "description": "提供SimpliTerms的简要概述"
+  "buttonStartQuestionPage": {
+    "message": "开始",
+    "description": "Inicia el proceso de preguntas"
   }
 }

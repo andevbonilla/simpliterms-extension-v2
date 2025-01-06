@@ -43,12 +43,12 @@
     "message": "Los términos se obtuvieron de esta página:",
     "description": "Indica la página de origen de los Términos de uso"
   },
-  "labelPrivacyPage": {
-    "message": "Las políticas se obtuvieron de esta página:",
-    "description": "Indica la página de origen de las Políticas de privacidad"
+  "questionPageHeader": {
+    "message": "Descubre lo que dicen los términos legales y de privacidad sobre esta página:",
+    "description": "Proporciona información sobre los términos legales y de privacidad de la página"
   },
-  "labelAboutSimpli": {
-    "message": "Acerca de SimpliTerms:",
-    "description": "Proporciona un breve resumen sobre SimpliTerms"
+  "buttonStartQuestionPage": {
+    "message": "Comenzar",
+    "description": "Inicia el proceso de preguntas"
   }
 }

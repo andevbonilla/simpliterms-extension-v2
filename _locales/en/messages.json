@@ -43,12 +43,12 @@
     "message": "The terms were retrieved from this page:",
     "description": "Indicates the page where the Terms of Use were obtained"
   },
-  "labelPrivacyPage": {
-    "message": "The policies were retrieved from this page:",
-    "description": "Indicates the page where the Privacy Policy was obtained"
+  "questionPageHeader": {
+    "message": "Find out what the legal and privacy terms say about this page:",
+    "description": "Provides information about the legal and privacy terms of the page"
   },
-  "labelAboutSimpli": {
-    "message": "About SimpliTerms:",
-    "description": "Provides a brief overview of SimpliTerms"
+  "buttonStartQuestionPage": {
+    "message": "Start",
+    "description": "Initiates the question process"
   }
 }
