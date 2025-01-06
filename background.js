@@ -162,6 +162,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
     };
 
+    if (message.action === 'RELOAD_SUMMARY') {
+          // delete the current saved summmary
+          delete allSumamriesSaved[hostPage];
+          chrome.storage.sync.set({
+            'SummariesSaved': allSumamriesSaved
+          });
+          sendResponse({result: true});
+    };
+
 
 });
 

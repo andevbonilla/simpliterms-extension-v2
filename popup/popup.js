@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     const privacyUL = document.getElementById("simpli-summary-privacy");
     const infoButton = document.getElementById("info-button");
     const closeInfoButton = document.getElementById("close-info-button");
+    const reloadButton = document.getElementById("reload-button");
     const startButton = document.getElementById("start-button");
     const dashboard = document.getElementById("dashboard");
     const odometer = document.getElementById("odometer");
@@ -376,6 +377,19 @@ document.addEventListener("DOMContentLoaded", async() => {
         changeTypeOfSummary(0);
     });
 
+    // delete summary
+    reloadButton.addEventListener("click", ()=>{
+        setIsLoading(true);
+        chrome.runtime.sendMessage({ action: 'RELOAD_SUMMARY' }, (res) => {
+            if (res.result === true) {
+                setIsLoading(false);
+                authPage.style.display = "none";
+                questionPage.style.display = "flex";
+                dashboardPage.style.display = "none";
+            }
+        });
+    });
+
     // open info page
     infoButton.addEventListener("click", ()=>{
 
@@ -411,6 +425,7 @@ document.addEventListener("DOMContentLoaded", async() => {
         
         if (message.action === 'TERMS_RESPOND') {
 
+            setIsLoading(false);
             // 1. validate as server error
             if (message.result.type === "SERVER_ERROR") {
                 showError();
@@ -431,6 +446,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             
         } else if (message.action === 'PRIVACY_RESPOND') {
 
+            setIsLoading(false);
             // 1. validate as server error
             if (message.result.type === "SERVER_ERROR") {
                 showError();
@@ -468,7 +484,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             }else{
                 authPage.style.display = "none";
                 questionPage.style.display = "flex";
-                dashboardPage.style.display = "none"
+                dashboardPage.style.display = "none";
             };
             
         }else if(message.action === 'NOT_AUTH') {

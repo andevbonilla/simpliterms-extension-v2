@@ -200,6 +200,10 @@ h2{
     color: black;
 } */
 
+.navbar-icon-button:last-child{
+    margin-right: 0
+};
+
 .navbar-icon-button{
     cursor: pointer;
     display: flex;
@@ -211,6 +215,7 @@ h2{
     padding: .57rem;
     background-color: #F5F5F5;
     border: none;
+    margin-right: .7rem;
 }
 
 .navbar-icon-button:last-of-type{
@@ -253,6 +258,7 @@ h2{
     height: 1.3rem;
     border-radius: 100%;
     opacity: 50%;
+    margin-bottom: .5rem;
 }
 
 .red-light-ball{
