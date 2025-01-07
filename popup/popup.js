@@ -349,6 +349,28 @@ document.addEventListener("DOMContentLoaded", async() => {
     // UX functions
     // ========================================================================================
 
+    // show typical errors translated
+    const messageNoPoliciesTranslated = () => {
+        switch (idiom) {
+            case "es":
+                return "Lo sentimos, no se encontraron políticas para resumir en esta página. Intenta en la página de inicio de sesión donde usualmente están.";
+            case "fr":
+                return "Désolé, aucune politique n'a été trouvée à résumer sur cette page. Veuillez essayer sur la page de connexion où elles se trouvent habituellement.";
+            case "hi":
+                return "क्षमा करें, इस पृष्ठ पर संक्षेपित करने के लिए कोई नीतियां नहीं मिलीं। कृपया उस लॉगिन पृष्ठ पर प्रयास करें जहां वे आमतौर पर होती हैं।";
+            case "ja":
+                return "申し訳ありませんが、このページでは要約できるポリシーが見つかりませんでした。通常あるログインページでお試しください。";
+            case "ru":
+                return "Извините, на этой странице не найдено политик для резюмирования. Попробуйте на странице входа, где они обычно находятся.";
+            case "zh_CH":
+                return "抱歉，在此页面上未找到可总结的政策，请尝试访问通常所在的登录页面。";
+            case "de":
+                return "Entschuldigung, auf dieser Seite wurden keine Richtlinien zum Zusammenfassen gefunden. Bitte versuchen Sie es auf der Anmeldeseite, wo sie normalerweise zu finden sind.";
+            default:
+                return "Sorry, no policies were found to summarize on this page. Please try on the login page where they are usually located.";
+        };
+    };
+
     // make the resques to backend
     startButton.addEventListener("click", ()=>{
         setIsLoading(true);
@@ -448,13 +470,19 @@ document.addEventListener("DOMContentLoaded", async() => {
                 showError();
                 errorBoxBody.textContent = result.message;
                 return;
-            }
+            };
             // 2. validate as normal error
             if (message.result.type === "NORMAL_ERROR") {
                 showError();
                 errorBoxBody.textContent = result.data.message;
                 return;
-            }
+            };
+            // 3. if error of no policies
+            if (message.result.type === "NO_POLICIES_ERROR") {
+                showError();
+                errorBoxBody.textContent = messageNoPoliciesTranslated();
+                return;
+            };
             // 4. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block";
@@ -474,13 +502,19 @@ document.addEventListener("DOMContentLoaded", async() => {
                 showError();
                 errorBoxBody.textContent = result.message;
                 return;
-            }
+            };
             // 2. validate as normal error
             if (message.result.type === "NORMAL_ERROR") {
                 showError();
                 errorBoxBody.textContent = result.data.message;
                 return;
-            }
+            };
+            // 3. if error of no policies
+            if (message.result.type === "NO_POLICIES_ERROR") {
+                showError();
+                errorBoxBody.textContent = messageNoPoliciesTranslated();
+                return;
+            };
             // 4. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block"; 
