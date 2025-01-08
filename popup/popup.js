@@ -471,27 +471,21 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = result.message;
                 return;
             };
-            // 2. validate as normal error
-            if (message.result.type === "NORMAL_ERROR") {
-                showError();
-                errorBoxBody.textContent = result.data.message;
-                return;
-            };
-            // 3. if error of no policies
+            // 2. if error of no policies
             if (message.result.type === "NO_POLICIES_ERROR") {
                 showError();
                 errorBoxBody.textContent = messageNoPoliciesTranslated();
                 return;
             };
-            // 4. if success request
+            // 3. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block";
             termsExtratedFrom = message.result.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
             currentHost = message.result.host;  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-            sumamriesOfCurrentPage.terms = message.result.data.formatedResponse;
-            showSummariesResult(message.result.data.formatedResponse.summary, "terms");
+            sumamriesOfCurrentPage.terms = message.result.formatedResponse;
+            showSummariesResult(message.result.formatedResponse.summary, "terms");
             
             
         } else if (message.action === 'PRIVACY_RESPOND') {
@@ -503,42 +497,34 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = result.message;
                 return;
             };
-            // 2. validate as normal error
-            if (message.result.type === "NORMAL_ERROR") {
-                showError();
-                errorBoxBody.textContent = result.data.message;
-                return;
-            };
-            // 3. if error of no policies
+            // 2. if error of no policies
             if (message.result.type === "NO_POLICIES_ERROR") {
                 showError();
                 errorBoxBody.textContent = messageNoPoliciesTranslated();
                 return;
             };
-            // 4. if success request
+            // 3. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block"; 
             privacyExtratedFrom = message.result.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
             currentHost = message.result.host; 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
-            sumamriesOfCurrentPage.privacy = message.result.data.formatedResponse;
-            showSummariesResult(message.result.data.formatedResponse.summary, "privacy");
+            sumamriesOfCurrentPage.privacy = message.result.formatedResponse;
+            showSummariesResult(message.result.formatedResponse.summary, "privacy");
             
         }else if(message.action === 'FIRST_VALIDATION_AUTH') {
 
             setIsLoading(false);
-            if (message.username && message.username !== "") {
-                usernameText.textContent = message.username;
-            };
+            usernameText.textContent = message.username;
             currentHost = message.hostPage; 
+            h4CurrentPage.textContent = message.hostPage;
             // Is Authenticated
-            if (message.data && message.data !== null) {
+            if (message.data && message.data.privacy && message.data.terms) {
                 const {terms, privacy} = message.data;
                 // There is a summary saved
                 termsExtratedFrom = terms.extractedFrom;
                 privacyExtratedFrom = privacy.extractedFrom;
-                h4CurrentPage.textContent = message.hostPage;
                 reloadButton.style.display = "block";
                 infoButton.style.display = "block"; 
                 authPage.style.display = "none";
