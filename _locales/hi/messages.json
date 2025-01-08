@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "शुरू करें",
     "description": "प्रश्न प्रक्रिया शुरू करें"
+  },
+  "serverErrorMessage": {
+    "message": "उफ़, क्षमा करें, सर्वर में त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।",
+    "description": "सर्वर में त्रुटि होने पर प्रदर्शित संदेश"
   }
 }

@@ -263,18 +263,17 @@ h2{
 
 .red-light-ball{
     background-color: red;
-    margin-bottom: 0;
 }
 .yellow-light-ball{
     background-color: yellow;
 }
 .green-light-ball {
+    margin-bottom: 0;
     background-color: rgb(0, 182, 0);
 }
 
 .red-light-ball-active {
     opacity: 100%;
-    margin-bottom: 0;
     background-color: red;
     box-shadow: 
         0 0 20px red,
@@ -296,6 +295,7 @@ h2{
 .green-light-ball-active {
     opacity: 100%;
     background-color: rgb(0, 182, 0);
+    margin-bottom: 0;
     box-shadow: 
         0 0 20px rgb(0, 182, 0),
         0 0 40px rgb(0, 182, 0),

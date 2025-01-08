@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "Commencer",
     "description": "Démarre le processus de questions"
+  },
+  "serverErrorMessage": {
+    "message": "Oups, désolé, une erreur de serveur s'est produite. Veuillez réessayer plus tard.",
+    "description": "Message affiché lorsqu'une erreur de serveur se produit"
   }
 }

@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "開始",
     "description": "質問プロセスを開始する"
+  },
+  "serverErrorMessage": {
+    "message": "おっと、申し訳ありませんが、サーバーエラーが発生しました。後でもう一度お試しください。",
+    "description": "サーバーエラーが発生したときに表示されるメッセージ"
   }
 }

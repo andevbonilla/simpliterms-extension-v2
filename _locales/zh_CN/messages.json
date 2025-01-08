@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "开始",
     "description": "Inicia el proceso de preguntas"
+  },
+  "serverErrorMessage": {
+    "message": "抱歉，服务器发生错误，请稍后再试。",
+    "description": "服务器发生错误时显示的消息"
   }
 }

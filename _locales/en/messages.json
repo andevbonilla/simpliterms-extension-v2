@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "Start",
     "description": "Initiates the question process"
+  },
+  "serverErrorMessage": {
+    "message": "Oops, sorry there was a server error. Please try again later.",
+    "description": "Message displayed when a server error occurs"
   }
 }

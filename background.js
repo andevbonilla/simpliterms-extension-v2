@@ -183,6 +183,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
 async function sendDataToAPI(payload, token) {
 
+  const serverErrorMessage = chrome.i18n.getMessage("serverErrorMessage");
+
   try {
 
     const response = await fetch('http://localhost:4200/api/summary/generate', {
@@ -193,8 +195,16 @@ async function sendDataToAPI(payload, token) {
       },
       body: JSON.stringify(payload)
     });
+    
 
     const data = await response.json();
+    if (!data) {
+      return {
+        serverError: true,
+        message: serverErrorMessage 
+      };
+    }
+
     return {
         data
     };
@@ -202,7 +212,7 @@ async function sendDataToAPI(payload, token) {
   } catch (error) {
     return {
         serverError: true,
-        message: "Oops sorry there was a server error please try again later." 
+        message: serverErrorMessage 
       };
   }
 }
@@ -210,4 +220,4 @@ async function sendDataToAPI(payload, token) {
 function validateHost(host) {
   const urlRegex = /^(https?:\/\/)?((([a-zA-Z\d]([a-zA-Z\d-]*[a-zA-Z\d])*)\.)+[a-zA-Z]{2,}|localhost|(\d{1,3}\.){3}\d{1,3})(:\d+)?(\/[-a-zA-Z\d%@_.~+&:]*)*(\?[;&a-zA-Z\d%@_.,~+&:=-]*)?(#[-a-zA-Z\d_]*)?$/;
   return urlRegex.test(host);
-}
+};

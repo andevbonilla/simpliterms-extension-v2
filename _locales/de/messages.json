@@ -50,5 +50,9 @@
   "buttonStartQuestionPage": {
     "message": "Starten",
     "description": "Beginnt den Frageprozess"
+  },
+  "serverErrorMessage": {
+    "message": "Ups, entschuldigung, es gab einen Serverfehler. Bitte versuchen Sie es später noch einmal.",
+    "description": "Nachricht, die angezeigt wird, wenn ein Serverfehler auftritt"
   }
 }
