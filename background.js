@@ -3,7 +3,6 @@ let privacyLinksFound = [];
 let hostPage = "";
 let pageURLcomplete = {}; // object with all the info of url
 let allSumamriesSaved = {};
-let usernameTemp = "";
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -50,7 +49,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 // 2. save or delete the username from cookies
                 chrome.cookies.get({ url: pageURLcomplete.origin, name: "username" }, (username) => {
                   if (username && username.value && username.value !== "") {
-                      usernameTemp = username.value;
                       chrome.storage.sync.set({
                         'username': username.value
                       });
@@ -68,19 +66,23 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         // get the summary of the webpage in case is auth and there is one in the storage
         chrome.storage.sync.get('xtoken', ({xtoken}) => {
             if (xtoken && xtoken !== "") {
-               // AUTH
-               // send all the neccesary info to the popup.js
-               chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
-                  let summaryInfo = null;
-                  if (SummariesSaved && SummariesSaved[hostPage]) {
-                      allSumamriesSaved = SummariesSaved;
-                      summaryInfo = SummariesSaved[hostPage];
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
-                  }else{
-                      allSumamriesSaved = SummariesSaved;
-                      chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
-                  }
-               });
+              chrome.storage.sync.get('username', ({username}) => {
+                // AUTH
+                // send all the neccesary info to the popup.js
+                const usernameTemp = username || "";
+                chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
+                    let summaryInfo = null;
+                    if (SummariesSaved && SummariesSaved[hostPage]) {
+                        allSumamriesSaved = SummariesSaved;
+                        summaryInfo = SummariesSaved[hostPage];
+                        chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
+                    }else{
+                        allSumamriesSaved = SummariesSaved;
+                        chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
+                    }
+                });
+              });
+               
             }else{
               chrome.runtime.sendMessage({ action: 'NOT_AUTH' });
             }
@@ -116,12 +118,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       if (resultTERMS.serverError && resultTERMS.serverError === true) {
                           // step 0: Validate if Server error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
+
                       }else if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
                           // step 1: Validate if Auth error
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
+
                       }else if (resultTERMS.data && resultTERMS.data.res === false) {
                           // step 2: Validate if normal error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS.data, host: hostPage}});
+
                       }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                           // step 3: Validate if Success respond 
                           allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], terms: resultTERMS.data.formatedResponse}};
@@ -129,6 +134,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                             'SummariesSaved': allSumamriesSaved
                           });
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SUCCESS", ...resultTERMS.data, host: hostPage}});
+
                       };
                       
                     };
@@ -138,12 +144,15 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                       if (resultPRIVACY.serverError && resultPRIVACY.serverError === true) {
                           // step 0: Validate if Server error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
+
                       }else if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
                           // step 1: Validate if Auth error  
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
+
                       }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
                           // step 2: Validate if normal error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY.data, host: hostPage}});
+
                       }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                           // step 3: Validate if Success respond  
                           allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data.formatedResponse}};
@@ -151,6 +160,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                             'SummariesSaved': allSumamriesSaved
                           });
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SUCCESS", ...resultPRIVACY.data, host: hostPage}});
+
                       };
           
                     };

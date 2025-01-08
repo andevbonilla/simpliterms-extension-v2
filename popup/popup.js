@@ -520,8 +520,8 @@ document.addEventListener("DOMContentLoaded", async() => {
             currentHost = message.hostPage; 
             h4CurrentPage.textContent = message.hostPage;
             // Is Authenticated
-            if (message.data && message.data.privacy && message.data.terms) {
-                const {terms, privacy} = message.data;
+            if (message.summaryInfo && message.summaryInfo.privacy && message.summaryInfo.terms) {
+                const {terms, privacy} = message.summaryInfo;
                 // There is a summary saved
                 termsExtratedFrom = terms.extractedFrom;
                 privacyExtratedFrom = privacy.extractedFrom;
