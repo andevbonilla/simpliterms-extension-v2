@@ -70,17 +70,23 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 // AUTH
                 // send all the neccesary info to the popup.js
                 const usernameTemp = username || "";
-                chrome.storage.sync.get('SummariesSaved', ({SummariesSaved}) => {
-                    let summaryInfo = null;
-                    if (SummariesSaved && SummariesSaved[hostPage]) {
-                        allSumamriesSaved = SummariesSaved;
-                        summaryInfo = SummariesSaved[hostPage];
-                        chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
-                    }else{
-                        allSumamriesSaved = SummariesSaved;
-                        chrome.runtime.sendMessage({ action: 'FIRST_VALIDATION_AUTH', summaryInfo, username: usernameTemp, hostPage }); 
-                    }
+                chrome.storage.sync.get('SummariesSaved', ({ SummariesSaved }) => {
+
+                  allSumamriesSaved = SummariesSaved || {};  
+
+                  let summaryInfo = null;
+                  if (allSumamriesSaved[hostPage]) {
+                      summaryInfo = allSumamriesSaved[hostPage];
+                  }
+
+                  chrome.runtime.sendMessage({
+                    action: 'FIRST_VALIDATION_AUTH', 
+                    summaryInfo, 
+                    username: usernameTemp, 
+                    hostPage
+                  });
                 });
+
               });
                
             }else{
@@ -129,7 +135,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                           // step 3: Validate if Success respond 
-                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], terms: resultTERMS.data.formatedResponse}};
+                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...(allSumamriesSaved[hostPage] || {}), terms: resultTERMS.data.formatedResponse}};
                           chrome.storage.sync.set({
                             'SummariesSaved': allSumamriesSaved
                           });
@@ -155,7 +161,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                           // step 3: Validate if Success respond  
-                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...allSumamriesSaved[hostPage], privacy: resultPRIVACY.data.formatedResponse}};
+                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...(allSumamriesSaved[hostPage] || {}), privacy: resultPRIVACY.data.formatedResponse}};
                           chrome.storage.sync.set({
                             'SummariesSaved': allSumamriesSaved
                           });
@@ -179,13 +185,14 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     };
 
     if (message.action === 'RELOAD_SUMMARY') {
-          // delete the current saved summmary
-          delete allSumamriesSaved[hostPage];
-          chrome.storage.sync.set({
-            'SummariesSaved': allSumamriesSaved
-          });
-          sendResponse({result: true});
+        allSumamriesSaved = allSumamriesSaved || {};
+        delete allSumamriesSaved[hostPage];
+        chrome.storage.sync.set({
+          'SummariesSaved': allSumamriesSaved
+        });
+        sendResponse({result: true});
     };
+
 
 
 });
