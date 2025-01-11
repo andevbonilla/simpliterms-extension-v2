@@ -213,7 +213,7 @@ async function sendDataToAPI(payload, token) {
 
   try {
 
-    const response = await fetch('http://localhost:4200/api/summary/generate', {
+    const response = await fetch('https://simpliterms-backend-production.up.railway.app/api/summary/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
