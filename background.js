@@ -90,6 +90,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
               });
                
             }else{
+              chrome.storage.sync.set({
+                'xtoken': ""
+              });
               chrome.runtime.sendMessage({ action: 'NOT_AUTH' });
             }
         });
@@ -127,6 +130,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
                           // step 1: Validate if Auth error
+                          chrome.storage.sync.set({
+                              'xtoken': ""
+                          });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
 
                       }else if (resultTERMS.data && resultTERMS.data.res === false) {
@@ -153,6 +159,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
                           // step 1: Validate if Auth error  
+                          chrome.storage.sync.set({
+                              'xtoken': ""
+                          });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
@@ -178,6 +187,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                
             }else{
               // Isn't authenticated
+              chrome.storage.sync.set({
+                'xtoken': ""
+              });
               chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
             };
         });
