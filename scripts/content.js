@@ -1,5 +1,5 @@
 const extractLinksAlgorithm = () => {
-  
+
     const privacyKeyWords = [
       "datenschutz",      // Alemán
       "privacy",          // Inglés
@@ -53,7 +53,6 @@ const extractLinksAlgorithm = () => {
     });
 
     return {
-      urlComplete: window.location,
       termsLinks,
       privacyLinks
     };

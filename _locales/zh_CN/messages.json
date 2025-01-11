@@ -54,5 +54,9 @@
   "serverErrorMessage": {
     "message": "抱歉，服务器发生错误，请稍后再试。",
     "description": "服务器发生错误时显示的消息"
+  },
+  "errorNoPoliciesFound": {
+      "message": "很抱歉，未能在此页面找到可供摘要的策略。请尝试在通常可找到它们的登录页面。",
+      "description": "未找到任何策略时显示的消息"
   }
 }

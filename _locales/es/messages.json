@@ -54,5 +54,9 @@
   "serverErrorMessage": {
     "message": "Ups, lo sentimos, hubo un error en el servidor. Por favor, inténtalo de nuevo más tarde.",
     "description": "Mensaje mostrado cuando ocurre un error en el servidor"
+  },
+  "errorNoPoliciesFound": {
+      "message": "Lo sentimos, no se encontraron políticas para resumir en esta página. Intenta en la página de inicio de sesión donde usualmente están.",
+      "description": "Mensaje mostrado cuando no se encuentran políticas"
   }
 }

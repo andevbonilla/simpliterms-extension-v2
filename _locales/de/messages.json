@@ -54,5 +54,9 @@
   "serverErrorMessage": {
     "message": "Ups, entschuldigung, es gab einen Serverfehler. Bitte versuchen Sie es später noch einmal.",
     "description": "Nachricht, die angezeigt wird, wenn ein Serverfehler auftritt"
+  },
+  "errorNoPoliciesFound": {
+      "message": "Es tut uns leid, es wurden keine Richtlinien gefunden, die auf dieser Seite zusammengefasst werden können. Versuchen Sie es auf der Anmeldeseite, wo sie sich normalerweise befinden.",
+      "description": "Nachricht, die angezeigt wird, wenn keine Richtlinien gefunden werden"
   }
 }

@@ -54,5 +54,9 @@
   "serverErrorMessage": {
     "message": "Oups, désolé, une erreur de serveur s'est produite. Veuillez réessayer plus tard.",
     "description": "Message affiché lorsqu'une erreur de serveur se produit"
+  },
+  "errorNoPoliciesFound": {
+      "message": "Nous sommes désolés, aucune politique n'a été trouvée à résumer sur cette page. Essayez sur la page de connexion où elles se trouvent habituellement.",
+      "description": "Message affiché lorsqu'aucune politique n'est trouvée"
   }
 }

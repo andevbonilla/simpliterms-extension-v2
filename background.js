@@ -1,8 +1,34 @@
 let termsLinksFound = [];
 let privacyLinksFound = [];
 let hostPage = "";
-let pageURLcomplete = {}; // object with all the info of url
 let allSumamriesSaved = {};
+
+chrome.webNavigation.onCompleted.addListener((details) => {
+  const url = new URL(details.url);
+  hostPage = url.hostname.toString().trim();
+  if (url.hostname.endsWith('simpliterms.com')) {
+
+    // extract token
+    getCookieValue(details.url, 'x-token', (token) => {
+      if (token) {
+        console.log('Token:', token);
+        chrome.storage.sync.set({
+          'xtoken': token
+        });
+      }
+    });
+
+    // extract username
+    getCookieValue(details.url, 'username', (username) => {
+      if (username) {
+        console.log('Username:', username);
+        chrome.storage.sync.set({
+          'username': username
+        });
+      }
+    });
+  }
+}, { url: [{ hostSuffix: 'simpliterms.com' }] });
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -13,7 +39,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       if (message.info) {
 
-        const {urlComplete, termsLinks, privacyLinks} = message.info;
+        const {termsLinks, privacyLinks} = message.info;
 
         if (termsLinks && termsLinks.length > 0 && termsLinks.length <= 10) {
             termsLinksFound = termsLinks;
@@ -23,49 +49,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
             privacyLinksFound = privacyLinks;
         };
 
-        if (urlComplete) {
-
-            pageURLcomplete = urlComplete;
-            hostPage = validateHost(urlComplete.host) ? urlComplete.host.toString().trim() : "";
-
-            const simplitermsValidOrigins = ["www.simpliterms.com", "simpliterms.com", "localhost:3000"];
-
-            if (simplitermsValidOrigins.includes(hostPage)) {
-              
-                // is in simpliterms webpage
-                // 1. save or delete the token from cookies
-                chrome.cookies.get({ url: pageURLcomplete.origin, name: "x-token" }, (cookie) => {
-                  if (cookie && cookie.value && cookie.value !== "") {
-                      chrome.storage.sync.set({
-                        'xtoken': cookie.value
-                      });
-                  }else{
-                      chrome.storage.sync.set({
-                          'xtoken': ""
-                      });
-                  }
-                });
-
-                // 2. save or delete the username from cookies
-                chrome.cookies.get({ url: pageURLcomplete.origin, name: "username" }, (username) => {
-                  if (username && username.value && username.value !== "") {
-                      chrome.storage.sync.set({
-                        'username': username.value
-                      });
-                  }else{
-                      chrome.storage.sync.set({
-                          'username': ""
-                      });
-                  }
-                });
-                
-            };
-
-        };
-
         // get the summary of the webpage in case is auth and there is one in the storage
         chrome.storage.sync.get('xtoken', ({xtoken}) => {
             if (xtoken && xtoken !== "") {
+
               chrome.storage.sync.get('username', ({username}) => {
                 // AUTH
                 // send all the neccesary info to the popup.js
@@ -124,7 +111,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                     if (resultTERMS) {
 
-                      if (resultTERMS.serverError && resultTERMS.serverError === true) {
+                      if (!!resultTERMS.serverError) {
                           // step 0: Validate if Server error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
 
@@ -153,7 +140,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                     if (resultPRIVACY) {
 
-                      if (resultPRIVACY.serverError && resultPRIVACY.serverError === true) {
+                      if (!!resultPRIVACY.serverError) {
                           // step 0: Validate if Server error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
 
@@ -209,6 +196,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
 });
 
+// UTILS functions
 
 async function sendDataToAPI(payload, token) {
 
@@ -246,7 +234,12 @@ async function sendDataToAPI(payload, token) {
   }
 }
 
-function validateHost(host) {
-  const urlRegex = /^(https?:\/\/)?((([a-zA-Z\d]([a-zA-Z\d-]*[a-zA-Z\d])*)\.)+[a-zA-Z]{2,}|localhost|(\d{1,3}\.){3}\d{1,3})(:\d+)?(\/[-a-zA-Z\d%@_.~+&:]*)*(\?[;&a-zA-Z\d%@_.,~+&:=-]*)?(#[-a-zA-Z\d_]*)?$/;
-  return urlRegex.test(host);
-};
+function getCookieValue(domain, name, callback) {
+  chrome.cookies.get({ url: domain, name: name }, (cookie) => {
+    if (cookie) {
+      callback(cookie.value);
+    } else {
+      callback(null);
+    }
+  });
+}

@@ -54,5 +54,9 @@
   "serverErrorMessage": {
     "message": "Oops, sorry there was a server error. Please try again later.",
     "description": "Message displayed when a server error occurs"
+  },
+  "errorNoPoliciesFound": {
+      "message": "We're sorry, no policies were found to summarize on this page. Try on the login page where they are usually found.",
+      "description": "Message displayed when no policies are found"
   }
 }
