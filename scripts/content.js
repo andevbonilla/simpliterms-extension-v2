@@ -54,7 +54,8 @@ const extractLinksAlgorithm = () => {
 
     return {
       termsLinks,
-      privacyLinks
+      privacyLinks,
+      host: window.location.host
     };
 
 }

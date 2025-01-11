@@ -36,7 +36,7 @@ chrome.webNavigation.onCompleted.addListener((details) => {
       }
     });
   }
-}, { url: [{ hostSuffix: 'simpliterms.com' }] });
+});
 
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
@@ -47,7 +47,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       if (message.info) {
 
-        const {termsLinks, privacyLinks} = message.info;
+        const {host, termsLinks, privacyLinks} = message.info;
+        hostPage = host.toString().trim();
 
         if (termsLinks && termsLinks.length > 0 && termsLinks.length <= 10) {
             termsLinksFound = termsLinks;

@@ -458,7 +458,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 3. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block";
-            termsExtratedFrom = message.result.extractedFrom;
+            termsExtratedFrom = message.result.formatedResponse.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
             currentHost = message.result.host;  
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
@@ -484,7 +484,7 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 3. if success request
             reloadButton.style.display = "block";
             infoButton.style.display = "block"; 
-            privacyExtratedFrom = message.result.extractedFrom;
+            privacyExtratedFrom = message.result.formatedResponse.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
             currentHost = message.result.host; 
             sumamriesOfCurrentPage.id = message.result.host.toString().trim();
