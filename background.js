@@ -15,6 +15,10 @@ chrome.webNavigation.onCompleted.addListener((details) => {
         chrome.storage.sync.set({
           'xtoken': token
         });
+      }else{
+        chrome.storage.sync.set({
+          'xtoken': ""
+        });
       }
     });
 
@@ -24,6 +28,10 @@ chrome.webNavigation.onCompleted.addListener((details) => {
         console.log('Username:', username);
         chrome.storage.sync.set({
           'username': username
+        });
+      }else{
+        chrome.storage.sync.set({
+          'username': ""
         });
       }
     });
