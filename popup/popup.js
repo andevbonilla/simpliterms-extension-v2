@@ -542,6 +542,8 @@ document.addEventListener("DOMContentLoaded", async() => {
 
             // Isn't authenticated
             setIsLoading(false);
+            reloadButton.style.display = "none";
+            infoButton.style.display = "none";
             authPage.style.display = "flex";
             questionPage.style.display = "none";
             dashboardPage.style.display = "none";
