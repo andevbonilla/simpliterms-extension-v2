@@ -3,7 +3,7 @@
   "name": "Simpliterms",
   "description": "Summarize with IA the terms of use and privacy policies of any site",
   "default_locale": "en",
-  "version": "2.0",
+  "version": "2.0.1",
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",
