@@ -11,7 +11,6 @@ chrome.webNavigation.onCompleted.addListener((details) => {
     // extract token
     getCookieValue(details.url, 'x-token', (token) => {
       if (token) {
-        console.log('Token:', token);
         chrome.storage.sync.set({
           'xtoken': token
         });
@@ -25,7 +24,6 @@ chrome.webNavigation.onCompleted.addListener((details) => {
     // extract username
     getCookieValue(details.url, 'username', (username) => {
       if (username) {
-        console.log('Username:', username);
         chrome.storage.sync.set({
           'username': username
         });
@@ -50,17 +48,18 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         const {host, termsLinks, privacyLinks} = message.info;
         hostPage = host.toString().trim();
 
-        if (termsLinks && termsLinks.length > 0 && termsLinks.length <= 10) {
+        if (termsLinks && termsLinks.length > 0) {
             termsLinksFound = termsLinks;
         };
 
-        if (privacyLinks && privacyLinks.length > 0 && privacyLinks.length <= 10) {
+        if (privacyLinks && privacyLinks.length > 0) {
             privacyLinksFound = privacyLinks;
         };
 
         // get the summary of the webpage in case is auth and there is one in the storage
         chrome.storage.sync.get('xtoken', ({xtoken}) => {
-            if (xtoken && xtoken !== "") {
+
+            if (xtoken && xtoken.length > 0) {
 
               chrome.storage.sync.get('username', ({username}) => {
                 // AUTH
@@ -91,6 +90,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
               });
               chrome.runtime.sendMessage({ action: 'NOT_AUTH' });
             }
+
         });
 
       };
@@ -112,9 +112,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
         // Validate if user has a token
         chrome.storage.sync.get('xtoken', async({xtoken}) => {
-            if (xtoken && xtoken !== "") {
+
+            if (xtoken && xtoken.length > 0) {
                 // Validate if there is terms in the page
                 if (payloadTerms.urlList.length > 0 && payloadPrivacy.urlList.length > 0) {
+
                     // IS AUTH
                     const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms, xtoken), sendDataToAPI(payloadPrivacy, xtoken)]);
 
@@ -124,6 +126,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                           // step 0: Validate if Server error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
 
+                      }else if(resultTERMS.data && resultTERMS.data.res === false && resultTERMS.data.message === "there was a server error, please wait or try later") {
+                          // step 0.5: Validate if is also a Server error 
+                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
+                      
                       }else if (resultTERMS.data && resultTERMS.data.msj && resultTERMS.data.msj === "Auth failed" && resultTERMS.data.res === false) {
                           // step 1: Validate if Auth error
                           chrome.storage.sync.set({
@@ -133,7 +139,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultTERMS.data && resultTERMS.data.res === false) {
                           // step 2: Validate if normal error
-                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS.data, host: hostPage}});
+                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NO_POLICIES_FOUND", ...resultTERMS.data, host: hostPage}});
 
                       }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                           // step 3: Validate if Success respond 
@@ -153,6 +159,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                           // step 0: Validate if Server error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
 
+                      }else if(resultPRIVACY.data && resultPRIVACY.data.res === false && resultPRIVACY.data.message === "there was a server error, please wait or try later") {
+                          // step 0.5: Validate if is also a Server error 
+                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SERVER_ERROR", ...resultPRIVACY, host: hostPage}});
+                      
                       }else if (resultPRIVACY.data && resultPRIVACY.data.msj && resultPRIVACY.data.msj === "Auth failed" && resultPRIVACY.data.res === false) {
                           // step 1: Validate if Auth error  
                           chrome.storage.sync.set({
@@ -162,7 +172,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
                           // step 2: Validate if normal error  
-                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY.data, host: hostPage}});
+                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NO_POLICIES_FOUND", ...resultPRIVACY.data, host: hostPage}});
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                           // step 3: Validate if Success respond  
@@ -206,7 +216,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 });
 
 // UTILS functions
-
 async function sendDataToAPI(payload, token) {
 
   const serverErrorMessage = chrome.i18n.getMessage("serverErrorMessage");

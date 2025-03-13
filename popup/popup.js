@@ -446,11 +446,11 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 1. validate as server error
             if (message.result.type === "SERVER_ERROR") {
                 showError();
-                errorBoxBody.textContent = message.result.message;
+                errorBoxBody.textContent = chrome.i18n.getMessage('serverErrorMessage');
                 return;
             };
             // 2. if error of no policies
-            if (message.result.type === "NO_POLICIES_ERROR") {
+            if (message.result.type === "NO_POLICIES_FOUND") {
                 showError();
                 errorBoxBody.textContent = chrome.i18n.getMessage('errorNoPoliciesFound');
                 return;
@@ -472,11 +472,11 @@ document.addEventListener("DOMContentLoaded", async() => {
             // 1. validate as server error
             if (message.result.type === "SERVER_ERROR") {
                 showError();
-                errorBoxBody.textContent = message.result.message;
+                errorBoxBody.textContent = chrome.i18n.getMessage('serverErrorMessage');
                 return;
             };
             // 2. if error of no policies
-            if (message.result.type === "NO_POLICIES_ERROR") {
+            if (message.result.type === "NO_POLICIES_FOUND") {
                 showError();
                 errorBoxBody.textContent = chrome.i18n.getMessage('errorNoPoliciesFound');
                 return;
