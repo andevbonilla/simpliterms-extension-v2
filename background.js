@@ -118,6 +118,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                     console.log("oooooo")
                     if (resultTERMS) {
 
+                      console.log(resultTERMS, "resultTERMS")
+
                       if (!!resultTERMS.serverError) {
                           // step 0: Validate if Server error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SERVER_ERROR", ...resultTERMS, host: hostPage}});
@@ -133,11 +135,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                           });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
 
-                      }else if (resultTERMS.data && resultTERMS.data.res === false && resultTERMS.data.noAccess === true) {
+                      }else if (resultTERMS.data && resultTERMS.data.res === false && !!resultTERMS.data.noAccess) {
                           // step 2: Validate if normal error  
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NO_ACCESS", ...resultTERMS.data, host: hostPage}});
 
-                      }else if (resultTERMS.data && resultTERMS.data.res === false) {
+                      }else if (resultTERMS.data && resultTERMS.data.res === false && !resultTERMS.data.noAccess) {
                           // step 2: Validate if normal error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS.data, host: hostPage}});
 
@@ -166,11 +168,11 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                           });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
 
-                      }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && resultPRIVACY.data.noAccess === true) {
+                      }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && !!resultPRIVACY.data.noAccess) {
                           // step 2: Validate if normal error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NO_ACCESS", ...resultPRIVACY.data, host: hostPage}});
 
-                      }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
+                      }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && !resultPRIVACY.data.noAccess) {
                           // step 2: Validate if normal error  
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY.data, host: hostPage}});
 
