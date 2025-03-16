@@ -1,7 +1,10 @@
 let termsLinksFound = [];
 let privacyLinksFound = [];
 let hostPage = "";
-let allSumamriesSaved = {};
+let summaryToSave = {
+  terms: null,
+  privacy: null
+}; // privacy and terms to save
 
 chrome.webNavigation.onCompleted.addListener((details) => {
   const url = new URL(details.url);
@@ -45,7 +48,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
       if (message.info) {
 
-        const {host, termsLinks, privacyLinks} = message.info;
+        const {host, termsLinks, privacyLinks, summaryOfThisPage} = message.info;
         hostPage = host.toString().trim();
 
         if (termsLinks && termsLinks.length > 0) {
@@ -65,21 +68,12 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                 // AUTH
                 // send all the neccesary info to the popup.js
                 const usernameTemp = username || "";
-                chrome.storage.sync.get('SummariesSaved', ({ SummariesSaved }) => {
 
-                  allSumamriesSaved = SummariesSaved || {};  
-
-                  let summaryInfo = null;
-                  if (allSumamriesSaved[hostPage]) {
-                      summaryInfo = allSumamriesSaved[hostPage];
-                  }
-
-                  chrome.runtime.sendMessage({
+                chrome.runtime.sendMessage({
                     action: 'FIRST_VALIDATION_AUTH', 
-                    summaryInfo, 
+                    summaryInfo: summaryOfThisPage, 
                     username: usernameTemp, 
                     hostPage
-                  });
                 });
 
               });
@@ -101,6 +95,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     // =================================================================================
     if (message.action === 'RESQUEST_SUMMARIES') {
 
+        console.log("pppppp")
         const payloadTerms = {
           urlList: termsLinksFound, 
           politicsType: "terms"   
@@ -120,6 +115,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                     // IS AUTH
                     const [resultTERMS, resultPRIVACY] = await Promise.all([sendDataToAPI(payloadTerms, xtoken), sendDataToAPI(payloadPrivacy, xtoken)]);
 
+                    console.log("oooooo")
                     if (resultTERMS) {
 
                       if (!!resultTERMS.serverError) {
@@ -143,12 +139,8 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                           // step 3: Validate if Success respond 
-                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...(allSumamriesSaved[hostPage] || {}), terms: resultTERMS.data.formatedResponse}};
-                          chrome.storage.sync.set({
-                            'SummariesSaved': allSumamriesSaved
-                          });
+                          summaryToSave = {...summaryToSave, terms: resultTERMS.data.formatedResponse};
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "SUCCESS", ...resultTERMS.data, host: hostPage}});
-
                       };
                       
                     };
@@ -176,15 +168,20 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                           // step 3: Validate if Success respond  
-                          allSumamriesSaved = {...allSumamriesSaved, [hostPage]: {...(allSumamriesSaved[hostPage] || {}), privacy: resultPRIVACY.data.formatedResponse}};
-                          chrome.storage.sync.set({
-                            'SummariesSaved': allSumamriesSaved
-                          });
+                          summaryToSave = {...summaryToSave, privacy: resultPRIVACY.data.formatedResponse};
                           chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "SUCCESS", ...resultPRIVACY.data, host: hostPage}});
-
                       };
           
                     };
+
+                    if (summaryToSave.privacy !== null && summaryToSave.terms !== null) {
+                        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                          if (tabs[0]?.id) {
+                            chrome.tabs.sendMessage(tabs[0].id, { action: 'SAVE_SUMMARY', summaryToSave});
+                          }
+                        });                   
+                    }
+
 
                 }else{
                   chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NO_POLICIES_ERROR", host: hostPage}});
@@ -201,17 +198,6 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         });
 
     };
-
-    if (message.action === 'RELOAD_SUMMARY') {
-        allSumamriesSaved = allSumamriesSaved || {};
-        delete allSumamriesSaved[hostPage];
-        chrome.storage.sync.set({
-          'SummariesSaved': allSumamriesSaved
-        });
-        sendResponse({result: true});
-    };
-
-
 
 });
 

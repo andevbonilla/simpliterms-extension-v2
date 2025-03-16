@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     const privacyUL = document.getElementById("simpli-summary-privacy");
     const infoButton = document.getElementById("info-button");
     const closeInfoButton = document.getElementById("close-info-button");
-    const reloadButton = document.getElementById("reload-button");
     const dashboard = document.getElementById("dashboard");
     const odometer = document.getElementById("odometer");
     const errorBox = document.getElementById("error-box");
@@ -234,7 +233,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
     const showQuestionPage = () => {
         hostPage.textContent = currentHost;
-        reloadButton.style.display = "none";
         infoButton.style.display = "none";
         authPage.style.display = "none";
         questionPage.style.display = "flex";
@@ -396,17 +394,6 @@ document.addEventListener("DOMContentLoaded", async() => {
         changeTypeOfSummary(0);
     });
 
-    // delete summary
-    reloadButton.addEventListener("click", ()=>{
-        setIsLoading(true);
-        chrome.runtime.sendMessage({ action: 'RELOAD_SUMMARY' }, (res) => {
-            if (res.result === true) {
-                setIsLoading(false);
-                showQuestionPage();
-            }
-        });
-    });
-
     // open info page
     infoButton.addEventListener("click", ()=>{
 
@@ -456,7 +443,6 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 3. if success request
-            reloadButton.style.display = "block";
             infoButton.style.display = "block";
             termsExtratedFrom = message.result.formatedResponse.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
@@ -482,7 +468,6 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 3. if success request
-            reloadButton.style.display = "block";
             infoButton.style.display = "block"; 
             privacyExtratedFrom = message.result.formatedResponse.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
@@ -503,7 +488,6 @@ document.addEventListener("DOMContentLoaded", async() => {
                 // There is a summary saved
                 termsExtratedFrom = terms.extractedFrom;
                 privacyExtratedFrom = privacy.extractedFrom;
-                reloadButton.style.display = "block";
                 infoButton.style.display = "block"; 
                 authPage.style.display = "none";
                 questionPage.style.display = "none";
@@ -520,7 +504,6 @@ document.addEventListener("DOMContentLoaded", async() => {
 
             // Isn't authenticated
             setIsLoading(false);
-            reloadButton.style.display = "none";
             infoButton.style.display = "none";
             authPage.style.display = "flex";
             questionPage.style.display = "none";

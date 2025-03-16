@@ -1,3 +1,8 @@
+let summaryOfThisPage = {
+  terms: null,
+  privacy: null 
+};
+
 const extractLinksAlgorithm = () => {
 
     const privacyKeyWords = [
@@ -62,10 +67,21 @@ const extractLinksAlgorithm = () => {
 
 // send all the neccesary info to do the summary 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  
   if (message.action === 'SEND_INFO') {
-    const info = extractLinksAlgorithm();
+
+    const extractedInfo = extractLinksAlgorithm();
+
+    const info = {...extractedInfo, summaryOfThisPage};
+
     chrome.runtime.sendMessage({ action: "IMPORTANT_INFO_FROM_PAGE", info});
-  }
+
+  };
+
+  if (message.action === 'SAVE_SUMMARY') {
+    summaryOfThisPage = message.summaryToSave;
+  };
+
 });
 
 
