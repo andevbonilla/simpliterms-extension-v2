@@ -395,8 +395,6 @@ h2{
 
 .buy-access{
     display: none;
-    flex-direction: column;
-    align-items: start;
 }
 
 .buy-access p{
