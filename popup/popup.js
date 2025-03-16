@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", async() => {
     const h2MsgNotLogged = document.getElementById("title-notlogged");
     h2MsgNotLogged.textContent = chrome.i18n.getMessage('NotLoggedTitle');
 
+    const timeLoadingText = document.getElementById("time-loading-text");
+    timeLoadingText.textContent = chrome.i18n.getMessage('waitingTimeMessage');
+
     const linkSignup = document.getElementById("link-signup");
     linkSignup.textContent = chrome.i18n.getMessage('buttonSingUp');
 

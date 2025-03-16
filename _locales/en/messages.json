@@ -58,5 +58,9 @@
   "errorNoPoliciesFound": {
       "message": "We're sorry, no policies were found to summarize on this page. Try on the login page where they are usually found.",
       "description": "Message displayed when no policies are found"
+  },
+  "waitingTimeMessage": {
+    "message": "This may take between 20 seconds and up to 2 minutes. If it takes longer than that, we recommend reloading the page and trying again. If the error persists, please contact us by email here: contact@simpliterms.com",
+    "description": "Message explaining the delay time"
   }
 }

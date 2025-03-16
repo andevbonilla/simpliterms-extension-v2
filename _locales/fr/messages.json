@@ -58,5 +58,9 @@
   "errorNoPoliciesFound": {
       "message": "Nous sommes désolés, aucune politique n'a été trouvée à résumer sur cette page. Essayez sur la page de connexion où elles se trouvent habituellement.",
       "description": "Message affiché lorsqu'aucune politique n'est trouvée"
+  },
+  "waitingTimeMessage": {
+    "message": "Cela peut prendre entre 20 secondes et jusqu'à 2 minutes. Si cela dure plus longtemps, nous vous recommandons de recharger la page et de réessayer. Si l'erreur persiste, veuillez nous contacter par e-mail ici : contact@simpliterms.com",
+    "description": "Message expliquant le temps de délai"
   }
 }

@@ -58,5 +58,9 @@
   "errorNoPoliciesFound": {
       "message": "Es tut uns leid, es wurden keine Richtlinien gefunden, die auf dieser Seite zusammengefasst werden können. Versuchen Sie es auf der Anmeldeseite, wo sie sich normalerweise befinden.",
       "description": "Nachricht, die angezeigt wird, wenn keine Richtlinien gefunden werden"
+  },
+  "waitingTimeMessage": {
+    "message": "Dies kann zwischen 20 Sekunden und maximal 2 Minuten dauern. Wenn es länger dauert, empfehlen wir, die Seite neu zu laden und es erneut zu versuchen. Wenn der Fehler weiterhin besteht, kontaktiere uns bitte per E-Mail hier: contact@simpliterms.com",
+    "description": "Nachricht, die die Verzögerungszeit erklärt"
   }
 }

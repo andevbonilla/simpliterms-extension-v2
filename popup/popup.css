@@ -161,7 +161,7 @@ h2{
 
 .loading-container{
     display: none;
-    margin: 4rem .5rem 4rem .5rem;
+    margin: 4rem .5rem 2rem .5rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -386,6 +386,11 @@ h2{
     font-size: 1rem;
     font-weight: 500;
     opacity: 80%;
+}
+
+.time-loading-text{
+    font-size: .8rem;
+    color: rgba(0, 0, 0, 0.4);
 }
 
 @keyframes rotate {
