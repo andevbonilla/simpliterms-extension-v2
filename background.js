@@ -135,7 +135,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultTERMS.data && resultTERMS.data.res === false) {
                           // step 2: Validate if normal error
-                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NO_POLICIES_FOUND", ...resultTERMS.data, host: hostPage}});
+                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS.data, host: hostPage}});
 
                       }else if (resultTERMS.data && resultTERMS.data.status && resultTERMS.data.status === "success" && resultTERMS.data.formatedResponse) {
                           // step 3: Validate if Success respond 
@@ -164,7 +164,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
                           // step 2: Validate if normal error  
-                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NO_POLICIES_FOUND", ...resultPRIVACY.data, host: hostPage}});
+                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NORMAL_ERROR", ...resultPRIVACY.data, host: hostPage}});
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.status && resultPRIVACY.data.status === "success" && resultPRIVACY.data.formatedResponse) {
                           // step 3: Validate if Success respond  

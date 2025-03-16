@@ -55,10 +55,6 @@
     "message": "抱歉，服务器发生错误，请稍后再试。",
     "description": "服务器发生错误时显示的消息"
   },
-  "errorNoPoliciesFound": {
-      "message": "很抱歉，未能在此页面找到可供摘要的策略。请尝试在通常可找到它们的登录页面。",
-      "description": "未找到任何策略时显示的消息"
-  },
   "waitingTimeMessage": {
     "message": "这可能需要20秒到最多2分钟。如果超过这个时间，我们建议您刷新页面并重试。如果错误仍然存在，请通过以下邮箱联系我们：contact@simpliterms.com",
     "description": "说明延迟时间的消息"

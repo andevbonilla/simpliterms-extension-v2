@@ -440,9 +440,9 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 2. if error of no policies
-            if (message.result.type === "NO_POLICIES_FOUND") {
+            if (message.result.type === "NORMAL_ERROR") {
                 showError();
-                errorBoxBody.textContent = chrome.i18n.getMessage('errorNoPoliciesFound');
+                errorBoxBody.textContent = message.result.message;
                 return;
             };
             // 3. if success request
@@ -465,9 +465,9 @@ document.addEventListener("DOMContentLoaded", async() => {
                 return;
             };
             // 2. if error of no policies
-            if (message.result.type === "NO_POLICIES_FOUND") {
+            if (message.result.type === "NORMAL_ERROR") {
                 showError();
-                errorBoxBody.textContent = chrome.i18n.getMessage('errorNoPoliciesFound');
+                errorBoxBody.textContent = message.result.message
                 return;
             };
             // 3. if success request
