@@ -133,6 +133,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                           });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
 
+                      }else if (resultTERMS.data && resultTERMS.data.res === false && resultTERMS.data.noAccess === true) {
+                          // step 2: Validate if normal error  
+                          chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NO_ACCESS", ...resultTERMS.data, host: hostPage}});
+
                       }else if (resultTERMS.data && resultTERMS.data.res === false) {
                           // step 2: Validate if normal error
                           chrome.runtime.sendMessage({ action: 'TERMS_RESPOND', result: {type: "NORMAL_ERROR", ...resultTERMS.data, host: hostPage}});
@@ -161,6 +165,10 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
                               'xtoken': ""
                           });
                           chrome.runtime.sendMessage({ action: 'NOT_AUTH'});
+
+                      }else if (resultPRIVACY.data && resultPRIVACY.data.res === false && resultPRIVACY.data.noAccess === true) {
+                          // step 2: Validate if normal error  
+                          chrome.runtime.sendMessage({ action: 'PRIVACY_RESPOND', result: {type: "NO_ACCESS", ...resultPRIVACY.data, host: hostPage}});
 
                       }else if (resultPRIVACY.data && resultPRIVACY.data.res === false) {
                           // step 2: Validate if normal error  

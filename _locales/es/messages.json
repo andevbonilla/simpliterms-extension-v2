@@ -58,5 +58,13 @@
   "waitingTimeMessage": {
     "message": "Esto puede tardar entre 20 segundos y máximo 2 minutos. Si dura más que esto, te recomendamos recargar la página y volver a intentarlo. Si el error persiste, contáctanos por email aquí: contact@simpliterms.com",
     "description": "Mensaje que explica el tiempo de demora"
+  },
+  "buyAccessTextMessage": {
+    "message": "Aún no tienes ningún plan, compra uno en el siguiente enlace y comienza a enterarte de qué estás aceptando.",
+    "description": "Mensaje que explica que el usuario no tiene ningun plan"
+  },
+  "buyAccessButtonMessage": {
+    "message": "Adquirir un plan",
+    "description": "Mensaje del boton para adquirir un plan"
   }
 }

@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", async() => {
     const pNotAccount = document.getElementById("msg-notaccount");
     pNotAccount.textContent = chrome.i18n.getMessage('ifAccountText');
 
+    const buyAccessText = document.getElementById("buy-access-text");
+    buyAccessText.textContent = chrome.i18n.getMessage('buyAccessTextMessage');
+
+    const buyAccessButton = document.getElementById("buy-access-button");
+    buyAccessButton.textContent = chrome.i18n.getMessage('buyAccessButtonMessage');
+
     const linkSignIn = document.getElementById("link-signin");
     linkSignIn.textContent = chrome.i18n.getMessage('buttonSingIn');
 
@@ -196,6 +202,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // call othe DOM elements
     // ========================================================================================
     const navbarContainer = document.getElementById("navbar");
+    const buyAccessContainer = document.getElementById("buy-access");
     const mainContainer = document.getElementById("main-content");
     const termsUL = document.getElementById("simpli-summary-terms");
     const privacyUL = document.getElementById("simpli-summary-privacy");
@@ -439,13 +446,18 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = chrome.i18n.getMessage('serverErrorMessage');
                 return;
             };
-            // 2. if error of no policies
+            // 2. if NOT ACCESS
+            if (message.result.type === "NO_ACCESS") {
+                buyAccessContainer.style.display = "flex";
+                return;
+            };
+            // 3. if error of no policies
             if (message.result.type === "NORMAL_ERROR") {
                 showError();
                 errorBoxBody.textContent = message.result.message;
                 return;
             };
-            // 3. if success request
+            // 4. if success request
             infoButton.style.display = "block";
             termsExtratedFrom = message.result.formatedResponse.extractedFrom;
             h4CurrentPage.textContent = message.result.host;
@@ -464,7 +476,12 @@ document.addEventListener("DOMContentLoaded", async() => {
                 errorBoxBody.textContent = chrome.i18n.getMessage('serverErrorMessage');
                 return;
             };
-            // 2. if error of no policies
+            // 2. if NOT ACCESS
+            if (message.result.type === "NO_ACCESS") {
+                buyAccessContainer.style.display = "flex";
+                return;
+            };
+            // 3. if error of no policies
             if (message.result.type === "NORMAL_ERROR") {
                 showError();
                 errorBoxBody.textContent = message.result.message

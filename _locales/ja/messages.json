@@ -58,5 +58,13 @@
   "waitingTimeMessage": {
     "message": "これは20秒から最大2分ほどかかる場合があります。これ以上かかる場合は、ページを再読み込みして再度お試しください。エラーが解消しない場合は、こちらのメールアドレスまでご連絡ください: contact@simpliterms.com",
     "description": "待機時間を説明するメッセージ"
+  },
+  "buyAccessTextMessage": {
+    "message": "まだプランをお持ちでないため、以下のリンクから購入し、何を受け入れているのかを理解し始めてください。",
+    "description": "ユーザーにプランがないことを説明するメッセージ"
+  },
+  "buyAccessButtonMessage": {
+    "message": "プランを購入する",
+    "description": "プラン購入用ボタンのメッセージ"
   }
 }

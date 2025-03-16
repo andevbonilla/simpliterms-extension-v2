@@ -393,6 +393,31 @@ h2{
     color: rgba(0, 0, 0, 0.4);
 }
 
+.buy-access{
+    display: none;
+    flex-direction: column;
+    align-items: start;
+}
+
+.buy-access p{
+    margin-bottom: 1rem;
+    font-size: .9rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.buy-access a{
+   background-color: #8345ff;
+   color: white;
+   border-radius: .5rem;
+   padding: 1rem 1.5rem;
+   text-decoration: none;
+   font-size: .9rem;
+   width: auto;
+}
+.buy-access a:hover{
+   background-color: #7437ef;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
