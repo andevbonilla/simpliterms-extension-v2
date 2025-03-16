@@ -395,15 +395,17 @@ h2{
 
 .buy-access{
     display: none;
+    flex-direction: column;
+    align-items: start;
 }
 
 .buy-access p{
-    margin-bottom: 1rem;
     font-size: .9rem;
     color: rgba(0, 0, 0, 0.9);
 }
 
 .buy-access a{
+    margin-top: 1rem;
    background-color: #8345ff;
    color: white;
    border-radius: .5rem;
@@ -411,6 +413,7 @@ h2{
    text-decoration: none;
    font-size: .9rem;
    width: auto;
+   font-weight: bold;
 }
 .buy-access a:hover{
    background-color: #7437ef;

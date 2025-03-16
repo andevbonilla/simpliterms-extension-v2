@@ -448,7 +448,9 @@ document.addEventListener("DOMContentLoaded", async() => {
             };
             // 2. if NOT ACCESS
             if (message.result.type === "NO_ACCESS") {
-                buyAccessContainer.style.display = "block";
+                showError();
+                errorBoxBody.textContent = message.result.message;
+                buyAccessContainer.style.display = "flex";
                 return;
             };
             // 3. if error of no policies
@@ -478,7 +480,9 @@ document.addEventListener("DOMContentLoaded", async() => {
             };
             // 2. if NOT ACCESS
             if (message.result.type === "NO_ACCESS") {
-                buyAccessContainer.style.display = "block";
+                showError();
+                errorBoxBody.textContent = message.result.message;
+                buyAccessContainer.style.display = "flex";
                 return;
             };
             // 3. if error of no policies
